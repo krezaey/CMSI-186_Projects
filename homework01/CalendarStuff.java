@@ -66,11 +66,12 @@ public class CalendarStuff {
    }
 
   /**
-   * A method to determine if the year argument is a leap year or not<br />
+   * A method to determine if the year argument is a leap year or not
    *  Leap years are every four years, except for even-hundred years, except for every 400
    * @param    year  long containing four-digit year
    * @return         boolean which is true if the parameter is a leap year
    */
+
    public static boolean isLeapYear( long year ) {
      if ( ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))) ) {
        return true;
@@ -89,7 +90,6 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
 
-   // [!] remember for february that we need to see if leap year
    public static long daysInMonth( long month, long year ) {
      int response = 0;
      switch ( (int) month ) {
@@ -128,7 +128,12 @@ public class CalendarStuff {
    */
 
    public static boolean dateEquals( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      return true;  // replace this with the actual code
+      if ( (month1 == month2) && ( day1 == day2) && ( year1 == year2 ) ) {
+        return true;
+      }
+      else {
+        return false;
+      }
    }
 
   /**
