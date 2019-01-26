@@ -29,14 +29,27 @@ public class CalendarStuff {
    */
    private static final int SUNDAY    = 0;
    private static final int MONDAY    = SUNDAY    + 1;
-  // you can finish the rest on your own
+   private static final int TUESDAY   = MONDAY    + 1;
+   private static final int WEDNESDAY = TUESDAY   + 1;
+   private static final int THURSDAY  = WEDNESDAY + 1;
+   private static final int FRIDAY    = THURSDAY  + 1;
+   private static final int SATURDAY  = FRIDAY    + 1;
 
   /**
    * A listing of the months of the year, assigning numbers; I suppose these could be ENUMs instead, but whatever
    */
    private static final int JANUARY    = 0;
    private static final int FEBRUARY   = JANUARY   + 1;
-  // you can finish these on your own, too
+   private static final int MARCH      = FEBRUARY  + 1;
+   private static final int APRIL      = MARCH     + 1;
+   private static final int MAY        = APRIL     + 1;
+   private static final int JUNE       = MAY       + 1;
+   private static final int JULY       = JUNE      + 1;
+   private static final int AUGUST     = JULY      + 1;
+   private static final int SEPTEMBER  = AUGUST    + 1;
+   private static final int OCTOBER    = SEPTEMBER + 1;
+   private static final int NOVEMBER   = OCTOBER   + 1;
+   private static final int DECEMBER   = NOVEMBER  + 1;
 
   /**
    * An array containing the number of days in each month
@@ -78,7 +91,29 @@ public class CalendarStuff {
 
    // [!] remember for february that we need to see if leap year
    public static long daysInMonth( long month, long year ) {
-      return 33;  // replace this with the actual code
+     int response = 0;
+     switch ( (int) month ) {
+       case 1: response = days[JANUARY]; break;
+       case 2:
+         if ( isLeapYear(year) == true ) {
+           response = (days[FEBRUARY] + 1);
+         }
+         else {
+           response = days[FEBRUARY];
+         }
+         break;
+       case 3: response = days[MARCH]; break;
+       case 4: response = days[APRIL]; break;
+       case 5: response = days[MAY]; break;
+       case 6: response = days[JUNE]; break;
+       case 7: response = days[JULY]; break;
+       case 8: response = days[AUGUST]; break;
+       case 9: response = days[SEPTEMBER]; break;
+       case 10: response = days[OCTOBER]; break;
+       case 11: response = days[NOVEMBER]; break;
+       case 12: response = days[DECEMBER]; break;
+     }
+     return response;
    }
 
   /**

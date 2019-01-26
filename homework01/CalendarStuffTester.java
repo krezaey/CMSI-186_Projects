@@ -4,7 +4,7 @@
  *  Author        :  B.J. Johnson (prototype)
  *  Date          :  2017-01-02 (prototype)
  *  Author        :  Keziah Rezaey
- *  Date          : due 2018-01-31
+ *  Date          :  due 2018-01-31
  *  Description   :  This file provides the "test harness" for checking out the methods which are part of
  *                   the homework01 assignment.  It also provides examples of proper documentation, and
  *                   uses the source file header template as specified in the "Greeter.java" template file
@@ -31,8 +31,8 @@ public class CalendarStuffTester {
    * @return void
    */
    public static void main ( String [] args ) {
-      test_isLeapYear();         // 11 tests
-      // test_daysInMonth();        // 13 tests
+      // test_isLeapYear();         // 11 tests
+      test_daysInMonth();        // 13 tests
       // test_isValidDate();        //  8 tests
       // test_dateEquals();         //  5 tests
       // test_compareDate();        //  7 tests
