@@ -169,8 +169,16 @@ public class CalendarStuff {
    * notes: remember that the month and day variables are used as indices, and so must
    *         be decremented to make the appropriate index value
    */
+
+   //error: cannot find symbol
    public static boolean isValidDate( long month, long day, long year ) {
-     return true;
+     if ( ((month > 1) && (month <= 12))
+        && (days.asList(days).contains(daysInMonthNote) == true) ) {
+       return true;
+     }
+     else {
+       return false;
+     }
    }
 
   /**
@@ -178,21 +186,23 @@ public class CalendarStuff {
    * @param    month long   containing month number, starting with "1" for "January"
    * @return         String containing the string value of the month (no spaces)
    */
+
+//why isn't may working? also june - december is weird
    public static String toMonthString( int month ) {
-      String monthResponse = "";
+     String monthResponse = "";
       switch( month ) {
         case 1: monthResponse = months[JANUARY]; break;
         case 2: monthResponse = months[FEBRUARY]; break;
         case 3: monthResponse = months[MARCH]; break;
         case 4: monthResponse = months[APRIL]; break;
         case 5: monthResponse = months[MAY]; break;
-        case 6: monthResponse = months[JUNE]; break;
-        case 7: monthResponse = months[JULY]; break;
-        case 8: monthResponse = months[AUGUST]; break;
-        case 9: monthResponse = months[SEPTEMBER]; break;
-        case 10: monthResponse = months[OCTOBER]; break;
-        case 11: monthResponse = months[NOVEMBER]; break;
-        case 12: monthResponse = months[DECEMBER]; break;
+        case 6: monthResponse = months[JUNE - 1]; break;
+        case 7: monthResponse = months[JULY - 1]; break;
+        case 8: monthResponse = months[AUGUST - 1]; break;
+        case 9: monthResponse = months[SEPTEMBER - 1]; break;
+        case 10: monthResponse = months[OCTOBER - 1]; break;
+        case 11: monthResponse = months[NOVEMBER - 1]; break;
+        case 12: monthResponse = months[DECEMBER - 1]; break;
         default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
       }
       return monthResponse;
