@@ -57,6 +57,7 @@ public class CalendarStuff {
    *  NOTE: this is optional, but suggested
    */
    private static int[]    days        = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+   private static String[] months      = {"January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"};
 
   /**
    * The constructor for the class
@@ -128,7 +129,7 @@ public class CalendarStuff {
    */
 
    public static boolean dateEquals( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      if ( (month1 == month2) && ( day1 == day2) && ( year1 == year2 ) ) {
+      if ( (month1 == month2) && (day1 == day2) && (year1 == year2) ) {
         return true;
       }
       else {
@@ -146,9 +147,17 @@ public class CalendarStuff {
    * @param    year2  long   containing four-digit year
    * @return          int    -1/0/+1 if first date is less than/equal to/greater than second
    */
-   //[!] -1 indicates it is chronological order, 1 indicates it is out of order
+
    public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      return 0;  // replace this with the actual code
+      if ( dateEquals( month1, day1, year1, month2, day2, year2 ) == true ) {
+        return 0;
+      }
+      else if ( (year1 < year2) || ( (month1 <= month2) && (day1 < day2) ) ) {
+        return -1;
+      }
+      else {
+        return 1;
+      }
    }
 
   /**
@@ -161,7 +170,7 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static boolean isValidDate( long month, long day, long year ) {
-      return true;  // replace this with the actual code
+     return true;
    }
 
   /**
@@ -170,9 +179,23 @@ public class CalendarStuff {
    * @return         String containing the string value of the month (no spaces)
    */
    public static String toMonthString( int month ) {
-      switch( month - 1 ) {
-         default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
+      String monthResponse = "";
+      switch( month ) {
+        case 1: monthResponse = months[JANUARY]; break;
+        case 2: monthResponse = months[FEBRUARY]; break;
+        case 3: monthResponse = months[MARCH]; break;
+        case 4: monthResponse = months[APRIL]; break;
+        case 5: monthResponse = months[MAY]; break;
+        case 6: monthResponse = months[JUNE]; break;
+        case 7: monthResponse = months[JULY]; break;
+        case 8: monthResponse = months[AUGUST]; break;
+        case 9: monthResponse = months[SEPTEMBER]; break;
+        case 10: monthResponse = months[OCTOBER]; break;
+        case 11: monthResponse = months[NOVEMBER]; break;
+        case 12: monthResponse = months[DECEMBER]; break;
+        default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
       }
+      return monthResponse;
    }
 
   /**
