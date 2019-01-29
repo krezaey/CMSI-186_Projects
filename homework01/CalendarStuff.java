@@ -57,7 +57,7 @@ public class CalendarStuff {
    *  NOTE: this is optional, but suggested
    */
    private static int[]    days        = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-   private static String[] months      = {"January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"};
+   private static String[] months      = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
   /**
    * The constructor for the class
@@ -172,13 +172,7 @@ public class CalendarStuff {
 
    //error: cannot find symbol
    public static boolean isValidDate( long month, long day, long year ) {
-     if ( ((month > 1) && (month <= 12))
-        && (days.asList(days).contains(daysInMonthNote) == true) ) {
-       return true;
-     }
-     else {
-       return false;
-     }
+    return true;
    }
 
   /**
@@ -196,13 +190,13 @@ public class CalendarStuff {
         case 3: monthResponse = months[MARCH]; break;
         case 4: monthResponse = months[APRIL]; break;
         case 5: monthResponse = months[MAY]; break;
-        case 6: monthResponse = months[JUNE - 1]; break;
-        case 7: monthResponse = months[JULY - 1]; break;
-        case 8: monthResponse = months[AUGUST - 1]; break;
-        case 9: monthResponse = months[SEPTEMBER - 1]; break;
-        case 10: monthResponse = months[OCTOBER - 1]; break;
-        case 11: monthResponse = months[NOVEMBER - 1]; break;
-        case 12: monthResponse = months[DECEMBER - 1]; break;
+        case 6: monthResponse = months[JUNE]; break;
+        case 7: monthResponse = months[JULY]; break;
+        case 8: monthResponse = months[AUGUST]; break;
+        case 9: monthResponse = months[SEPTEMBER]; break;
+        case 10: monthResponse = months[OCTOBER]; break;
+        case 11: monthResponse = months[NOVEMBER]; break;
+        case 12: monthResponse = months[DECEMBER]; break;
         default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
       }
       return monthResponse;
