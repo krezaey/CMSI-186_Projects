@@ -11,7 +11,7 @@
  *                   own at "compile time".  It also provides examples of proper documentation, and uses
  *                   the source file header template as specified in the "Greeter.java" template program
  *                   file for use in CMSI 186, Spring 2017.
- *  Notes         :  [!] keep these in mind
+ *  Notes         :
  *  Warnings      :  None
  *  Exceptions    :  None
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,6 +22,7 @@
  *  @version 1.0.0  2017-01-02  B.J. Johnson  Initial writing and release
  *  @version 1.0.1  2017-12-25  B.J. Johnson  Updated for Spring 2018
  */
+
 public class CalendarStuff {
 
   /**
@@ -171,9 +172,13 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
 
-   //error: cannot find symbol
    public static boolean isValidDate( long month, long day, long year ) {
-    return true;
+    if ( ((day <= (long) daysInMonth(month, year) && (day >= 1))) && ((month >= 1) && (month <= 12)) && (year > 0) ) {
+      return true;
+    }
+    else {
+      return false;
+    }
    }
 
   /**
@@ -233,7 +238,6 @@ public class CalendarStuff {
    * @return          long   count of total number of days
    */
 
-   // [!] check if the same date, same year, is in chronological order ... essentially use previous methods
    public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
       long dayCount = 0;
       return dayCount;
