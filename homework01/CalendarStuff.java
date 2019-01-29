@@ -58,6 +58,7 @@ public class CalendarStuff {
    */
    private static int[]    days        = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
    private static String[] months      = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+   private static String[] weekDays    = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
   /**
    * The constructor for the class
@@ -181,9 +182,8 @@ public class CalendarStuff {
    * @return         String containing the string value of the month (no spaces)
    */
 
-//why isn't may working? also june - december is weird
    public static String toMonthString( int month ) {
-     String monthResponse = "";
+      String monthResponse = "";
       switch( month ) {
         case 1: monthResponse = months[JANUARY]; break;
         case 2: monthResponse = months[FEBRUARY]; break;
@@ -208,9 +208,18 @@ public class CalendarStuff {
    * @return       String containing the string value of the day (no spaces)
    */
    public static String toDayOfWeekString( int day ) {
-      switch( day - 1 ) {
-         default       : throw new IllegalArgumentException( "Illegal day value given to 'toDayOfWeekString()'." );
+      String dayResponse = "";
+      switch( day ) {
+        case 1: dayResponse = weekDays[SUNDAY]; break;
+        case 2: dayResponse = weekDays[MONDAY]; break;
+        case 3: dayResponse = weekDays[TUESDAY]; break;
+        case 4: dayResponse = weekDays[WEDNESDAY]; break;
+        case 5: dayResponse = weekDays[THURSDAY]; break;
+        case 6: dayResponse = weekDays[FRIDAY]; break;
+        case 7: dayResponse = weekDays[SATURDAY]; break;
+        default: throw new IllegalArgumentException( "Illegal day value given to 'toDayOfWeekString()'." );
       }
+      return dayResponse;
    }
 
   /**
