@@ -11,7 +11,7 @@
  *                   own at "compile time".  It also provides examples of proper documentation, and uses
  *                   the source file header template as specified in the "Greeter.java" template program
  *                   file for use in CMSI 186, Spring 2017.
- *  Notes         :
+ *  Notes         :  None
  *  Warnings      :  None
  *  Exceptions    :  None
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -240,6 +240,48 @@ public class CalendarStuff {
 
    public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
       long dayCount = 0;
+      long leapYearCount = 0;
+      //arrays will be ordered month, day, year
+      long [] firstDate = { 0, 0, 0 };
+      long [] secondDate = { 0, 0, 0 };
+
+      // puts the dates in order
+      switch ( compareDate(month1, day1, year1, month2, day2, year2) ) {
+        case -1:
+        firstDate[0] = month1;
+        firstDate[1] = day1;
+        firstDate[2] = year1;
+        secondDate[0] = month2;
+        secondDate[1] = day2;
+        secondDate[2] = year2;
+        break;
+        case 1:
+        firstDate[0] = month2;
+        firstDate[1] = day2;
+        firstDate[2] = year2;
+        secondDate[0] = month1;
+        secondDate[1] = day1;
+        secondDate[2] = year1;
+        break;
+        case 0: dayCount = 0; break;
+      }
+      //converts yearsDifference to days, checks if year between the indicated years have leap year, adds appropriate count
+      //should include current year, thus + 1
+      long yearDifference = secondDate[2] - firstDate[2] + 1;
+      for ( int x = 0; x < yearDifference + 1; x++ ) {
+        if ( isLeapYear(firstDate[2] + x) == true ) {
+          leapYearCount++;
+        }
+      }
+      dayCount += (365 * yearDifference) + leapYearCount;
+      //converts monthDifference to days, accesses indexed value in array to use to iterate from starting month, subtracts day value from year value
+      long monthDifference = Math.abs( (long) (secondDate[1] - firstDate[1]) );
+      String firstMonthString = toMonthString( (int) firstDate[0]);
+      //how to find indexOf string in an array
+      int monthIndex = months.indexOf(firstMonthString);
+      for ( int y = 0; y < monthDifference + 1; y++ ) {
+        dayCount -= days[monthIndex + y];
+      }
       return dayCount;
    }
 
