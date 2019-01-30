@@ -277,7 +277,7 @@ public class CalendarStuff {
       //converts monthDifference to days, accesses indexed value in array to use to iterate from starting month, subtracts day value from year value
       long monthDifference = Math.abs( (long) (secondDate[1] - firstDate[1]) );
       String firstMonthString = toMonthString( (int) firstDate[0]);
-      //how to find indexOf string in an array
+      //how to find indexOf string in an array?
       int monthIndex = months.indexOf(firstMonthString);
       for ( int y = 0; y < monthDifference + 1; y++ ) {
         dayCount -= days[monthIndex + y];
