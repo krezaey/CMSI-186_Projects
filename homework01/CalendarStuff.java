@@ -262,7 +262,7 @@ public class CalendarStuff {
      }
 
      for (long i = secondDate[2]; i < firstDate[2]; i++) {
-       if ( isLeapYear(i + 1) ) {
+       if ( isLeapYear( i + 1 ) ) {
          dayCount += 366;
        }
        else {
@@ -272,17 +272,18 @@ public class CalendarStuff {
 
      if (firstDate[0] > secondDate[0]) {
        for (long j = secondDate[0]; j < firstDate[0]; j++) {
-         dayCount += (long)days[(int)j];
+         dayCount += (long) days[(int)j];
        }
      }
      else if (secondDate[0] > firstDate[0]) {
-       for (long j = firstDate[0]; j < secondDate[0]; j++) {
-         dayCount -= (long)days[(int)j];
+       for (long k = firstDate[0]; k < secondDate[0]; k++) {
+         dayCount -= (long) days[(int)k];
        }
      }
 
      dayCount -= secondDate[1];
      dayCount += firstDate[1];
+
      System.out.println("D: " + dayCount);
      return dayCount;
    }
