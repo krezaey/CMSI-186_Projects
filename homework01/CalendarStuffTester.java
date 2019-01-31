@@ -311,7 +311,7 @@ public class CalendarStuffTester {
      catch( Exception e ) { System.out.println( false ); }
 
      System.out.print( "   Counting 0001 day  between 03-16-2005 and 03-15-2005 : " );
-     try { System.out.println(    1 == CalendarStuff.daysBetween(  3, 16, 2005,  3, 15, 2005 ) ? "one day   " : "bad count" ); }
+     try { System.out.println(    1 == CalendarStuff.daysBetween(  3, 16, 2005,  3, 15, 2005 ) ? "one day" : "bad count" ); }
      catch( Exception e ) { System.out.println( false ); }
 
    }

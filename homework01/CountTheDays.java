@@ -1,4 +1,3 @@
-
 public class CountTheDays extends CalendarStuff {
   public static void main( String[] args ) {
     long month1 = Long.parseLong( args[0] );
@@ -7,9 +6,8 @@ public class CountTheDays extends CalendarStuff {
     long month2 = Long.parseLong( args[3] );
     long day2 = Long.parseLong( args[4] );
     long year2 = Long.parseLong( args[5] );
-    //check if dates are isValidDate
-    if ( (isValidDate(month1, day1, year1) == true) && (isValidDate(month2, day2, year2) == true) ) {
-      daysBetween(month1, day1, year1, month2, day2, year2);
+    if ( (CalendarStuff.isValidDate(month1, day1, year1) == true) && (CalendarStuff.isValidDate(month2, day2, year2) == true) ) {
+      System.out.print( CalendarStuff.daysBetween(month1, day1, year1, month2, day2, year2) );
     }
     else {
       System.out.print( "These dates are not valid. Please enter a valid date." );

@@ -241,6 +241,12 @@ public class CalendarStuff {
    public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
       long dayCount = 0;
       long leapYearCount = 0;
+      long tempCount = 0;
+      long daysBefore = 0;
+      long daysAfter = 0;
+      long dayDifference = 0;
+      int monthIndex = 0;
+
       //arrays will be ordered month, day, year
       long [] firstDate = { 0, 0, 0 };
       long [] secondDate = { 0, 0, 0 };
@@ -263,26 +269,43 @@ public class CalendarStuff {
         secondDate[1] = day1;
         secondDate[2] = year1;
         break;
-        case 0: dayCount = 0; break;
       }
-      //converts yearsDifference to days, checks if year between the indicated years have leap year, adds appropriate count
-      //should include current year, thus + 1
-      long yearDifference = secondDate[2] - firstDate[2] + 1;
+
+      //converts yearsDifference to days
+      long yearDifference = secondDate[2] - firstDate[2];
       for ( int x = 0; x < yearDifference + 1; x++ ) {
         if ( isLeapYear(firstDate[2] + x) == true ) {
           leapYearCount++;
         }
       }
-      dayCount += (365 * yearDifference) + leapYearCount;
-      //converts monthDifference to days, accesses indexed value in array to use to iterate from starting month, subtracts day value from year value
-      long monthDifference = Math.abs( (long) (secondDate[1] - firstDate[1]) );
-      String firstMonthString = toMonthString( (int) firstDate[0]);
-      //how to find indexOf string in an array?
-      int monthIndex = months.indexOf(firstMonthString);
-      for ( int y = 0; y < monthDifference + 1; y++ ) {
-        dayCount -= days[monthIndex + y];
+      tempCount += (365 * yearDifference) + leapYearCount;
+
+      //converts monthDifference to days
+      // long monthDifference = Math.abs( (long) (secondDate[1] - firstDate[1]) );
+      // String firstMonthString = toMonthString( (int) firstDate[0]);
+      // for ( int i = 0; i < months.length - 1; i++ ) {
+      //   if (months[i] == firstMonthString) {
+      //     monthIndex = i;
+      //   }
+      // }
+
+      //calculates days before and days after
+      // daysAfter = ( daysInMonth(secondDate[0], secondDate[2]) - secondDate[1] );
+      // daysBefore = ( daysInMonth(firstDate[0], firstDate[2]) - firstDate[1] );
+      // if ( firstDate[1] == secondDate[1] ) {
+      //   dayDifference = 0;
+      // } else {
+      //   dayDifference = daysAfter + daysBefore;
+      // }
+
+      //final day count
+      if ( dateEquals(firstDate[0], firstDate[1], firstDate[2], secondDate[0], secondDate[1], secondDate[2]) == true ) {
+        return 0;
+      } else {
+        dayCount = Math.abs(tempCount - dayDifference);
       }
+
+      System.out.println("Number of days: " + dayCount);
       return dayCount;
    }
-
 }
