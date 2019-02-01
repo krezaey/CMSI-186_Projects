@@ -272,7 +272,7 @@ public class CalendarStuff {
 
      if (firstDate[0] > secondDate[0]) {
        for (long j = secondDate[0]; j < firstDate[0]; j++) {
-         dayCount += (long) days[(int)j];
+         dayCount += (long) days[(int)j+1];
        }
      }
      else if (secondDate[0] > firstDate[0]) {
