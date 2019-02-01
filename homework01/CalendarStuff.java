@@ -202,7 +202,6 @@ public class CalendarStuff {
         case 10: monthResponse = months[OCTOBER]; break;
         case 11: monthResponse = months[NOVEMBER]; break;
         case 12: monthResponse = months[DECEMBER]; break;
-        default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
       }
       return monthResponse;
    }
@@ -222,7 +221,6 @@ public class CalendarStuff {
         case 5: dayResponse = weekDays[THURSDAY]; break;
         case 6: dayResponse = weekDays[FRIDAY]; break;
         case 7: dayResponse = weekDays[SATURDAY]; break;
-        default: throw new IllegalArgumentException( "Illegal day value given to 'toDayOfWeekString()'." );
       }
       return dayResponse;
    }
@@ -272,19 +270,18 @@ public class CalendarStuff {
 
      if (firstDate[0] > secondDate[0]) {
        for (long j = secondDate[0]; j < firstDate[0]; j++) {
-         dayCount += (long) days[(int)j+1];
+         dayCount += (long) days[(int)j-1];
        }
      }
      else if (secondDate[0] > firstDate[0]) {
        for (long k = firstDate[0]; k < secondDate[0]; k++) {
-         dayCount -= (long) days[(int)k];
+         dayCount -= (long) days[(int)k-1];
        }
      }
 
      dayCount -= secondDate[1];
      dayCount += firstDate[1];
 
-     System.out.println("D: " + dayCount);
      return Math.abs(dayCount);
    }
 }
