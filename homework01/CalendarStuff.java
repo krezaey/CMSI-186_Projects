@@ -285,6 +285,6 @@ public class CalendarStuff {
      dayCount += firstDate[1];
 
      System.out.println("D: " + dayCount);
-     return dayCount;
+     return Math.abs(dayCount);
    }
 }
