@@ -33,7 +33,8 @@
  *  @version 1.0.0  2017-02-06  B.J. Johnson  Initial writing and release
  *  @version 1.1.0  2017-02-17  B.J. Johnson  Filled in method code
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-public class DieEmpty {
+
+public class Die {
 
   /**
    * private instance data
@@ -49,15 +50,21 @@ public class DieEmpty {
    * @throws       IllegalArgumentException
    * Note: parameter must be checked for validity; invalid value must throw "IllegalArgumentException"
    */
-   public DieEmpty( int nSides ) {
+
+   public Die( int nSides ) {
+     if ( nSides >= MINIMUM_SIDES) {
+       sides = nSides;
+   } else {
+     System.out.println("A die must have 4 sides at the minimum.");
    }
 
   /**
    * Roll THIS die and return the result
    * @return  integer value of the result of the roll, randomly selected
    */
+
    public int roll() {
-      return 0;
+      return (Math.random() * (sides - MINIMUM_SIDES + 1)) + MINIMUM_SIDES;
    }
 
   /**
@@ -67,6 +74,7 @@ public class DieEmpty {
    *  "value"?
    * @return the pip count of THIS die instance
    */
+
    public int getValue() {
       return 0;
    }
@@ -76,6 +84,7 @@ public class DieEmpty {
    * @return      The new number of sides, in case anyone is looking
    * @throws      IllegalArgumentException
    */
+
    public void setSides( int sides ) {
    }
 
@@ -83,6 +92,7 @@ public class DieEmpty {
    * Public Instance method that returns a String representation of THIS die instance
    * @return String representation of this Die
    */
+
    public String toString() {
       return "";
    }
@@ -91,6 +101,7 @@ public class DieEmpty {
    * Class-wide method that returns a String representation of THIS die instance
    * @return String representation of this Die
    */
+
    public static String toString( Die d ) {
       return "";
    }
@@ -98,6 +109,7 @@ public class DieEmpty {
   /**
    * A little test main to check things out
    */
+
    public static void main( String[] args ) {
       System.out.println( "Hello world from the Die class..." );
    }
