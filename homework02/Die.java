@@ -57,6 +57,7 @@ public class Die {
    } else {
      System.out.println("A die must have 4 sides at the minimum.");
    }
+ }
 
   /**
    * Roll THIS die and return the result
@@ -64,7 +65,7 @@ public class Die {
    */
 
    public int roll() {
-      return (Math.random() * (sides - MINIMUM_SIDES + 1)) + MINIMUM_SIDES;
+      return (int) (Math.random() * (sides + 1));
    }
 
   /**
@@ -76,7 +77,7 @@ public class Die {
    */
 
    public int getValue() {
-      return 0;
+      return pips;
    }
 
   /**
@@ -86,6 +87,7 @@ public class Die {
    */
 
    public void setSides( int sides ) {
+     sides = sides;
    }
 
   /**
@@ -94,7 +96,7 @@ public class Die {
    */
 
    public String toString() {
-      return "";
+      return "[" + pips + "]";
    }
 
   /**
@@ -103,7 +105,7 @@ public class Die {
    */
 
    public static String toString( Die d ) {
-      return "";
+      return d.toString();
    }
 
   /**
