@@ -133,14 +133,21 @@ public class DiceSet {
    * @return  tru iff this set is identical to the set passed as an argument
    */
    public boolean isIdentical( DiceSet diceSet ) {
-     boolean response = ds.equals(diceSet);
-      return response;
+     boolean response = false;
+     for (int i = 0; i < ds.length; i++) {
+       for (int j = 0; i < diceSet.ds.length; i++) {
+         if (diceSet.ds[i] == ds[j]) {
+           response = true;
+         }
+       }
+     }
+     return response;
    }
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-      System.out.println("Hello world for Dice set...");
+      System.out.println("Hello world from the DiceSet class...");
    }
 
 }
