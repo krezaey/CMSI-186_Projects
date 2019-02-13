@@ -12,8 +12,8 @@
  *  Warnings      :  None
  *  Exceptions    :  IllegalArgumentException when the number of sides or pips is out of range
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *  Revision Histor
- *  ---------------
+ *  Revision History
+ *  ----------------
  *            Rev      Date     Modified by:  Reason for change/modification
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-09  B.J. Johnson  Initial writing and release
@@ -37,97 +37,97 @@ public class DieAndDiceSetTestHarness {
    */
    public static void main( String[] args ) {
 
-      System.out.println( "TESTING THE DIE CLASS: TEST CONSTRUCTOR FOR INVALID NUMBERS OF SIDES:" );
-      Die d = null;
-      try { d = new Die( -1 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
-      try { d = new Die( 1 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
-      try { d = new Die( 2 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
-      try { d = new Die( 3 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 4-SIDED DIE:" );
-      try { d = new Die( 4 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
-      System.out.println( "   roll() test for 4 sided die: " );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   Current value is: " + d.toString() );
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 5-SIDED DIE:" );
-      try { d = new Die( 5 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
-      System.out.println( "   roll() test for 5 sided die: " );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   Current value is: " + d.toString() );
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 6-SIDED DIE:" );
-      try { d = new Die( 6 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
-      System.out.println( "   roll() test for 6 sided die: " );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   Current value is: " + d.toString() );
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 7-SIDED DIE:" );
-      try { d = new Die( 7 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
-      System.out.println( "   roll() test for 7 sided die: " );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   Current value is: " + d.toString() );
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 8-SIDED DIE:" );
-      try { d = new Die( 8 ); }
-      catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
-      System.out.println( "   roll() test for 8 sided die: " );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   You rolled a " + d.roll() );
-      System.out.println( "   Current value is: " + d.toString() );
-      // System.out.println( "   Current die side count is: " + d.getSides() );
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 11-SIDED DIE USING NEW SIDE COUNT:" );
-      d.setSides( 11 );
-      // System.out.println( "   Resetting - current die side count is now: " + d.getSides() );
-      System.out.println( "   Rolling with new side count -- " );
-      System.out.println( "      You rolled a " + d.roll() );
-      System.out.println( "      You rolled a " + d.roll() );
-      System.out.println( "      You rolled a " + d.roll() );
-      System.out.println( "      You rolled a " + d.roll() );
-      System.out.println( "      You rolled a " + d.roll() );
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 17-SIDED DIE USING NEW SIDE COUNT:" );
-      d.setSides( 17 );
-      // System.out.println( "   Resetting - current die side count is now: " + d.getSides() );
-      System.out.println( "   Rolling with new side count -- " );
-      System.out.println( "      You rolled a " + d.roll() );
-      System.out.println( "      current value is: " + d.getValue() );
-
-      System.out.println( "TESTING THE DIE CLASS: TESTS ON 111-SIDED DIE USING NEW SIDE COUNT:" );
-      d.setSides( 111 );
-      // System.out.println( "   Resetting - current die side count is now: " + d.getSides() );
-      System.out.println( "   Rolling with new side count -- " );
-      System.out.println( "      You rolled a " + d.roll() );
-      System.out.println( "      current value is: " + d.getValue() );
-      System.out.println( "......End of Die Class Testing.....\n\n" );
+      // System.out.println( "TESTING THE DIE CLASS: TEST CONSTRUCTOR FOR INVALID NUMBERS OF SIDES:" );
+      // Die d = null;
+      // try { d = new Die( -1 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
+      // try { d = new Die( 1 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
+      // try { d = new Die( 2 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
+      // try { d = new Die( 3 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 4-SIDED DIE:" );
+      // try { d = new Die( 4 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "   Too few sides requested to constructor...." ); }
+      // System.out.println( "   roll() test for 4 sided die: " );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   Current value is: " + d.toString() );
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 5-SIDED DIE:" );
+      // try { d = new Die( 5 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
+      // System.out.println( "   roll() test for 5 sided die: " );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   Current value is: " + d.toString() );
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 6-SIDED DIE:" );
+      // try { d = new Die( 6 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
+      // System.out.println( "   roll() test for 6 sided die: " );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   Current value is: " + d.toString() );
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 7-SIDED DIE:" );
+      // try { d = new Die( 7 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
+      // System.out.println( "   roll() test for 7 sided die: " );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   Current value is: " + d.toString() );
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 8-SIDED DIE:" );
+      // try { d = new Die( 8 ); }
+      // catch( IllegalArgumentException iae ) { System.out.println( "Too few sides requested to constructor...." ); }
+      // System.out.println( "   roll() test for 8 sided die: " );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   You rolled a " + d.roll() );
+      // System.out.println( "   Current value is: " + d.toString() );
+      // // System.out.println( "   Current die side count is: " + d.getSides() );
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 11-SIDED DIE USING NEW SIDE COUNT:" );
+      // d.setSides( 11 );
+      // // System.out.println( "   Resetting - current die side count is now: " + d.getSides() );
+      // System.out.println( "   Rolling with new side count -- " );
+      // System.out.println( "      You rolled a " + d.roll() );
+      // System.out.println( "      You rolled a " + d.roll() );
+      // System.out.println( "      You rolled a " + d.roll() );
+      // System.out.println( "      You rolled a " + d.roll() );
+      // System.out.println( "      You rolled a " + d.roll() );
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 17-SIDED DIE USING NEW SIDE COUNT:" );
+      // d.setSides( 17 );
+      // // System.out.println( "   Resetting - current die side count is now: " + d.getSides() );
+      // System.out.println( "   Rolling with new side count -- " );
+      // System.out.println( "      You rolled a " + d.roll() );
+      // System.out.println( "      current value is: " + d.getValue() );
+      //
+      // System.out.println( "TESTING THE DIE CLASS: TESTS ON 111-SIDED DIE USING NEW SIDE COUNT:" );
+      // d.setSides( 111 );
+      // // System.out.println( "   Resetting - current die side count is now: " + d.getSides() );
+      // System.out.println( "   Rolling with new side count -- " );
+      // System.out.println( "      You rolled a " + d.roll() );
+      // System.out.println( "      current value is: " + d.getValue() );
+      // System.out.println( "......End of Die Class Testing.....\n\n" );
 
       System.out.println( "TESTING THE DICESET CLASS: TEST CONSTRUCTOR FOR 3 SIX-SIDED DICE:" );
       System.out.println( "  DiceSet: 3 dice, six sided - ds36:" );

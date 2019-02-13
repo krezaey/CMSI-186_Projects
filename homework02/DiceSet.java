@@ -46,13 +46,25 @@ public class DiceSet {
    */
    public DiceSet( int count, int sides ) {
       ds = new Die[ count ];
+      if ((count < 1) || (sides < 4)) {
+        throw new IllegalArgumentException();
+      }
+      for (int i = 0; i < count; i++) {
+        ds[i] = new Die(sides);
+      }
+      count = count;
+      sides = sides;
    }
 
   /**
    * @return the sum of all the dice values in the set
    */
    public int sum() {
-      return 0;
+      int count = 0;
+      for (int i = 0; i < ds.length; i++) {
+        count += ds[i].getValue();
+      }
+      return count;
    }
 
   /**
@@ -61,6 +73,9 @@ public class DiceSet {
    *  the values of the dice in the set
    */
    public void roll() {
+     for (int i = 0; i < ds.length; i++) {
+       ds[i].roll();
+     }
    }
 
   /**
@@ -70,7 +85,14 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int rollIndividual( int dieIndex ) {
-      return 0;
+      int individualRoll = 0;
+      if ((dieIndex < 0) || (dieIndex > ds.length )) {
+        throw new IllegalArgumentException();
+      }
+      else {
+        individualRoll = ds[dieIndex].roll();
+      }
+      return individualRoll;
    }
 
   /**
@@ -79,7 +101,14 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int getIndividual( int dieIndex ) {
-      return -999;
+      int individualValue = 0;
+      if ((dieIndex < 0) || (dieIndex > ds.length )) {
+        throw new IllegalArgumentException();
+      }
+      else {
+        individualValue = ds[dieIndex].getValue();
+      }
+      return individualValue;
    }
 
   /**
@@ -87,6 +116,9 @@ public class DiceSet {
    */
    public String toString() {
       String result = "";
+      for (int i = 0; i < ds.length; i++) {
+        result += ds[i].getValue();
+      }
       return result;
    }
 
@@ -94,20 +126,21 @@ public class DiceSet {
    * @return Class-wide version of the preceding instance method
    */
    public static String toString( DiceSet ds ) {
-      return "";
+      return ds.toString();
    }
 
   /**
    * @return  tru iff this set is identical to the set passed as an argument
    */
-   public boolean isIdentical( DiceSet ds ) {
-      return true;
+   public boolean isIdentical( DiceSet diceSet ) {
+     boolean response = ds.equals(diceSet);
+      return response;
    }
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-      // You do this part!
+      System.out.println("Hello world for Dice set...");
    }
 
 }

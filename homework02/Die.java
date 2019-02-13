@@ -53,10 +53,12 @@ public class Die {
 
    public Die( int nSides ) {
      if ( nSides >= MINIMUM_SIDES) {
+       pips = pips;
        sides = nSides;
    } else {
-     System.out.println("A die must have 4 sides at the minimum.");
+       throw new IllegalArgumentException();
    }
+
  }
 
   /**
@@ -65,7 +67,8 @@ public class Die {
    */
 
    public int roll() {
-      return (int) (Math.random() * (sides + 1));
+      pips = (int) ((Math.random() * sides) + 1);
+      return pips;
    }
 
   /**
