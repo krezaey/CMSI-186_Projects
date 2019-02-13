@@ -117,7 +117,7 @@ public class DiceSet {
    public String toString() {
       String result = "";
       for (int i = 0; i < ds.length; i++) {
-        result += ds[i].getValue();
+        result += "[" + ds[i].getValue() + "]";
       }
       return result;
    }
