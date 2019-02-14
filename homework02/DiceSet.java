@@ -27,127 +27,134 @@
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-09  B.J. Johnson  Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 public class DiceSet {
 
-  /**
-   * private instance data
-   */
-   private int count;
-   private int sides;
-   private Die[] ds = null;
+ /**
+  * private instance data
+  */
 
-   // public constructor:
-  /**
-   * constructor
-   * @param  count int value containing total dice count
-   * @param  sides int value containing the number of pips on each die
-   * @throws IllegalArgumentException if one or both arguments don't make sense
-   * @note   parameters are checked for validity; invalid values throw "IllegalArgumentException"
-   */
-   public DiceSet( int count, int sides ) {
-      ds = new Die[ count ];
-      if ((count < 1) || (sides < 4)) {
-        throw new IllegalArgumentException();
-      }
-      for (int i = 0; i < count; i++) {
-        ds[i] = new Die(sides);
-      }
-      count = count;
-      sides = sides;
-   }
+ private int count;
+ private int sides;
+ private Die[] ds = null;
 
-  /**
-   * @return the sum of all the dice values in the set
-   */
-   public int sum() {
-      int count = 0;
-      for (int i = 0; i < ds.length; i++) {
-        count += ds[i].getValue();
-      }
-      return count;
-   }
+ // public constructor:
+ /**
+  * constructor
+  * @param  count int value containing total dice count
+  * @param  sides int value containing the number of pips on each die
+  * @throws IllegalArgumentException if one or both arguments don't make sense
+  * @note   parameters are checked for validity; invalid values throw "IllegalArgumentException"
+  */
 
-  /**
-   * Randomly rolls all of the dice in this set
-   *  NOTE: you will need to use one of the "toString()" methods to obtain
-   *  the values of the dice in the set
-   */
-   public void roll() {
-     for (int i = 0; i < ds.length; i++) {
-       ds[i].roll();
-     }
-   }
+ public DiceSet(int count, int sides) {
+  ds = new Die[count];
+  if ( (count < 1) || (sides < 4) ) {
+   throw new IllegalArgumentException();
+  }
+  for ( int i = 0; i < count; i++ ) {
+   ds[i] = new Die(sides);
+  }
+  count = count;
+  sides = sides;
+ }
 
-  /**
-   * Randomly rolls a single die of the dice in this set indexed by 'dieIndex'
-   * @param  dieIndex int of which die to roll
-   * @return the integer value of the newly rolled die
-   * @trhows IllegalArgumentException if the index is out of range
-   */
-   public int rollIndividual( int dieIndex ) {
-      int individualRoll = 0;
-      if ((dieIndex < 0) || (dieIndex > ds.length )) {
-        throw new IllegalArgumentException();
-      }
-      else {
-        individualRoll = ds[dieIndex].roll();
-      }
-      return individualRoll;
-   }
+ /**
+  * @return the sum of all the dice values in the set
+  */
+ public int sum() {
+  int count = 0;
+  for ( int i = 0; i < ds.length; i++ ) {
+   count += ds[i].getValue();
+  }
+  return count;
+ }
 
-  /**
-   * Gets the value of the die in this set indexed by 'dieIndex'
-   * @param  dieIndex int of which die to roll
-   * @trhows IllegalArgumentException if the index is out of range
-   */
-   public int getIndividual( int dieIndex ) {
-      int individualValue = 0;
-      if ((dieIndex < 0) || (dieIndex > ds.length )) {
-        throw new IllegalArgumentException();
-      }
-      else {
-        individualValue = ds[dieIndex].getValue();
-      }
-      return individualValue;
-   }
+ /**
+  * Randomly rolls all of the dice in this set
+  *  NOTE: you will need to use one of the "toString()" methods to obtain
+  *  the values of the dice in the set
+  */
+ public void roll() {
+  for ( int i = 0; i < ds.length; i++ ) {
+   ds[i].roll();
+  }
+ }
 
-  /**
-   * @return Public Instance method that returns a String representation of the DiceSet instance
-   */
-   public String toString() {
-      String result = "";
-      for (int i = 0; i < ds.length; i++) {
-        result += "[" + ds[i].getValue() + "]";
-      }
-      return result;
-   }
+ /**
+  * Randomly rolls a single die of the dice in this set indexed by 'dieIndex'
+  * @param  dieIndex int of which die to roll
+  * @return the integer value of the newly rolled die
+  * @trhows IllegalArgumentException if the index is out of range
+  */
+ public int rollIndividual( int dieIndex ) {
+  int individualRoll = 0;
+  if ( (dieIndex < 0) || (dieIndex > ds.length) ) {
+   throw new IllegalArgumentException();
+  } else {
+   individualRoll = ds[dieIndex].roll();
+  }
+  return individualRoll;
+ }
 
-  /**
-   * @return Class-wide version of the preceding instance method
-   */
-   public static String toString( DiceSet ds ) {
-      return ds.toString();
-   }
+ /**
+  * Gets the value of the die in this set indexed by 'dieIndex'
+  * @param  dieIndex int of which die to roll
+  * @trhows IllegalArgumentException if the index is out of range
+  */
 
-  /**
-   * @return  tru iff this set is identical to the set passed as an argument
-   */
-   public boolean isIdentical( DiceSet diceSet ) {
-     boolean response = false;
-     for (int i = 0; i < ds.length; i++) {
-       for (int j = 0; i < diceSet.ds.length; i++) {
-         if (diceSet.ds[i] == ds[j]) {
-           response = true;
-         }
-       }
-     }
-     return response;
+ public int getIndividual( int dieIndex ) {
+  int individualValue = 0;
+  if ( (dieIndex < 0) || (dieIndex > ds.length) ) {
+   throw new IllegalArgumentException();
+  } else {
+   individualValue = ds[dieIndex].getValue();
+  }
+  return individualValue;
+ }
+
+ /**
+  * @return Public Instance method that returns a String representation of the DiceSet instance
+  */
+
+ public String toString() {
+  String result = "";
+  for ( int i = 0; i < ds.length; i++ ) {
+   result += "[" + ds[i].getValue() + "]";
+  }
+  return result;
+ }
+
+ /**
+  * @return Class-wide version of the preceding instance method
+  */
+
+ public static String toString( DiceSet ds ) {
+  return ds.toString();
+ }
+
+ /**
+  * @return  tru iff this set is identical to the set passed as an argument
+  */
+
+ public boolean isIdentical( DiceSet diceSet ) {
+  boolean response = false;
+  for ( int i = 0; i < ds.length; i++ ) {
+   for ( int j = 0; i < diceSet.ds.length; i++ ) {
+    if ( diceSet.ds[i] == ds[j] ) {
+     response = true;
+    }
    }
-  /**
-   * A little test main to check things out
-   */
-   public static void main( String[] args ) {
-      System.out.println("Hello world from the DiceSet class...");
-   }
+  }
+  return response;
+ }
+
+ /**
+  * A little test main to check things out
+  */
+
+ public static void main(String[] args) {
+  System.out.println("Hello world from the DiceSet class...");
+ }
 
 }

@@ -36,87 +36,87 @@
 
 public class Die {
 
-  /**
-   * private instance data
-   */
-   private int sides;
-   private int pips;
-   private final int MINIMUM_SIDES = 4;
+ /**
+  * private instance data
+  */
+ private int sides;
+ private int pips;
+ private final int MINIMUM_SIDES = 4;
 
-   // public constructor:
-  /**
-   * constructor
-   * @param nSides int value containing the number of sides to build on THIS Die
-   * @throws       IllegalArgumentException
-   * Note: parameter must be checked for validity; invalid value must throw "IllegalArgumentException"
-   */
+ // public constructor:
+ /**
+  * constructor
+  * @param nSides int value containing the number of sides to build on THIS Die
+  * @throws       IllegalArgumentException
+  * Note: parameter must be checked for validity; invalid value must throw "IllegalArgumentException"
+  */
 
-   public Die( int nSides ) {
-     if ( nSides >= MINIMUM_SIDES) {
-       pips = pips;
-       sides = nSides;
-   } else {
-       throw new IllegalArgumentException();
-   }
+ public Die( int nSides ) {
+  if ( nSides >= MINIMUM_SIDES ) {
+   pips = pips;
+   sides = nSides;
+  } else {
+   throw new IllegalArgumentException("You must enter more than 4 sides.");
+  }
 
  }
 
-  /**
-   * Roll THIS die and return the result
-   * @return  integer value of the result of the roll, randomly selected
-   */
+ /**
+  * Roll THIS die and return the result
+  * @return  integer value of the result of the roll, randomly selected
+  */
 
-   public int roll() {
-      pips = (int) ((Math.random() * sides) + 1);
-      return pips;
-   }
+ public int roll() {
+  pips = (int)((Math.random() * sides) + 1);
+  return pips;
+ }
 
-  /**
-   * Get the value of THIS die to return to the caller; note that the way
-   *  the count is determined is left as a design decision to the programmer
-   *  For example, what about a four-sided die - which face is considered its
-   *  "value"?
-   * @return the pip count of THIS die instance
-   */
+ /**
+  * Get the value of THIS die to return to the caller; note that the way
+  *  the count is determined is left as a design decision to the programmer
+  *  For example, what about a four-sided die - which face is considered its
+  *  "value"?
+  * @return the pip count of THIS die instance
+  */
 
-   public int getValue() {
-      return pips;
-   }
+ public int getValue() {
+  return pips;
+ }
 
-  /**
-   * @param  int  the number of sides to set/reset for this Die instance
-   * @return      The new number of sides, in case anyone is looking
-   * @throws      IllegalArgumentException
-   */
+ /**
+  * @param  int  the number of sides to set/reset for this Die instance
+  * @return      The new number of sides, in case anyone is looking
+  * @throws      IllegalArgumentException
+  */
 
-   public void setSides( int sides ) {
-     sides = sides;
-   }
+ public void setSides( int sides ) {
+  sides = sides;
+ }
 
-  /**
-   * Public Instance method that returns a String representation of THIS die instance
-   * @return String representation of this Die
-   */
+ /**
+  * Public Instance method that returns a String representation of THIS die instance
+  * @return String representation of this Die
+  */
 
-   public String toString() {
-      return "[" + pips + "]";
-   }
+ public String toString() {
+  return "[" + pips + "]";
+ }
 
-  /**
-   * Class-wide method that returns a String representation of THIS die instance
-   * @return String representation of this Die
-   */
+ /**
+  * Class-wide method that returns a String representation of THIS die instance
+  * @return String representation of this Die
+  */
 
-   public static String toString( Die d ) {
-      return d.toString();
-   }
+ public static String toString( Die d ) {
+  return d.toString();
+ }
 
-  /**
-   * A little test main to check things out
-   */
+ /**
+  * A little test main to check things out
+  */
 
-   public static void main( String[] args ) {
-      System.out.println( "Hello world from the Die class..." );
-   }
+ public static void main( String[] args ) {
+  System.out.println("Hello world from the Die class...");
+ }
 
 }
