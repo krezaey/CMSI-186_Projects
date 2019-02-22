@@ -26,6 +26,8 @@ public class Clock {
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834;
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
+   private static double elapsedTimeSeconds = 0;
+   private static double timeSlice = 60;
 
   /**
    *  Constructor goes here
@@ -40,8 +42,12 @@ public class Clock {
    *  Method to calculate the next tick from the time increment
    *  @return double-precision value of the current clock tick
    */
+
    public double tick() {
-      return 0.0;
+      elapsedTimeSeconds += timeSlice;
+      getHourHandAngle();
+      getMinuteHandAngle();
+      getHandAngle();
    }
 
   /**
@@ -65,6 +71,7 @@ public class Clock {
    *  note: remember that the time slice, if it is small will cause the simulation
    *         to take a VERY LONG TIME to complete!
    */
+
    public double validateTimeSliceArg( String argValue ) {
       return 0.0;
    }
@@ -73,6 +80,7 @@ public class Clock {
    *  Method to calculate and return the current position of the hour hand
    *  @return double-precision value of the hour hand location
    */
+
    public double getHourHandAngle() {
       return 0.0;
    }
@@ -81,6 +89,7 @@ public class Clock {
    *  Method to calculate and return the current position of the minute hand
    *  @return double-precision value of the minute hand location
    */
+
    public double getMinuteHandAngle() {
       return 0.0;
    }
@@ -89,6 +98,7 @@ public class Clock {
    *  Method to calculate and return the angle between the hands
    *  @return double-precision value of the angle between the two hands
    */
+
    public double getHandAngle() {
       return 0.0;
    }
@@ -98,6 +108,7 @@ public class Clock {
    *   we can use this to tell when 12 hours have elapsed
    *  @return double-precision value the total seconds private variable
    */
+
    public double getTotalSeconds() {
       return 0.0;
    }
@@ -106,6 +117,7 @@ public class Clock {
    *  Method to return a String representation of this clock
    *  @return String value of the current clock
    */
+
    public String toString() {
       return "Clock string, dangit!";
    }
@@ -117,6 +129,7 @@ public class Clock {
    *  be sure to make LOTS of tests!!
    *  remember you are trying to BREAK your code, not just prove it works!
    */
+
    public static void main( String args[] ) {
 
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
