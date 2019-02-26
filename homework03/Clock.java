@@ -26,15 +26,14 @@ public class Clock {
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834;
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
+
    private static double elapsedTimeSeconds = 0;
-   private static double timeSlice = 60;
 
   /**
    *  Constructor goes here
    */
-   public Clock() {
 
-   }
+   public Clock() {}
 
   /**
    *  Methods go here
@@ -48,6 +47,7 @@ public class Clock {
       getHourHandAngle();
       getMinuteHandAngle();
       getHandAngle();
+      return elapsedTimeSeconds;
    }
 
   /**
@@ -56,8 +56,13 @@ public class Clock {
    *  @return  double-precision value of the argument
    *  @throws  NumberFormatException
    */
+
    public double validateAngleArg( String argValue ) throws NumberFormatException {
-      return 0.0;
+      double angleValue = Double.parseDouble ( argValue );
+      if ( (angleValue < 0) || (angleValue > MAXIMUM_DEGREE_VALUE) ) {
+        throw new NumberFormatException();
+      }
+      return angleValue;
    }
 
   /**
@@ -73,7 +78,20 @@ public class Clock {
    */
 
    public double validateTimeSliceArg( String argValue ) {
-      return 0.0;
+      double timeSlice = 0;
+      if (args.length == 1) {
+        timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
+      }
+      else {
+        try {
+          timeSlice = Double.parseDouble( argValue );
+        }
+        catch ( NumberFormatException nfe ) {
+          System.out.println("Please enter numbers only.");
+          return -1.0;
+        }
+      }
+      return timeSlice;
    }
 
   /**
@@ -82,7 +100,8 @@ public class Clock {
    */
 
    public double getHourHandAngle() {
-      return 0.0;
+      double hourAngle = elapsedTimeSeconds * HOUR_HAND_DEGREES_PER_SECOND;
+      return hourAngle;
    }
 
   /**
@@ -91,7 +110,8 @@ public class Clock {
    */
 
    public double getMinuteHandAngle() {
-      return 0.0;
+      double minuteAngle = elapsedTimeSeconds * MINUTE_HAND_DEGREES_PER_SECOND;
+      return minuteAngle;
    }
 
   /**
@@ -100,7 +120,8 @@ public class Clock {
    */
 
    public double getHandAngle() {
-      return 0.0;
+      double handAngle = Math.abs(hourAngle - minuteAngle);
+      return handAngle;
    }
 
   /**
