@@ -67,7 +67,7 @@ public class Clock {
 
    public static double validateAngleArg( String argValue ) throws NumberFormatException {
       angleValue = Double.parseDouble ( argValue );
-      if ( (angleValue < 0) || (angleValue >= MAXIMUM_DEGREE_VALUE) ) {
+      if ( (angleValue < 0) || (angleValue > MAXIMUM_DEGREE_VALUE) ) {
         angleValue = INVALID_ARGUMENT_VALUE;
       }
       return angleValue;

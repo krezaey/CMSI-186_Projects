@@ -52,9 +52,24 @@ public class ClockSolver {
                              "   Please try again..........." );
          System.exit( 1 );
       }
+      // if ( args.)
+      // Clock.validateAngleArg( args[0] );
+      //
+      // if ( (Clock.validateAngleArg( args[0] ) == -1.0) ) {
+      //    throw new NumberFormatException("Please enter valid arguments.");
+      // }
+      // if ( args.length == 2 ) {
+      //   if ( (Clock.validateTimeSliceArg( args[1] ) == -1.0) ) {
+      //     throw new NumberFormatException("Please enter valid arguments.");
+      //   }
+      //   Clock.validateTimeSliceArg( args[1] );
+      // }
+      // if ( args.length == 3) {
+      //   EPSILON_VALUE = Double.parseDouble( args[2] );
+      // }
       if ( args.length == 1 ) {
         Clock.validateAngleArg( args[0] );
-        Clock.validateTimeSliceArg( "60.0" );
+        Clock.validateTimeSliceArg("60.0");
         epsilon = 0.1;
         if ( Clock.validateAngleArg( args[0] ) == -1.0 ) {
           throw new NumberFormatException();
@@ -91,16 +106,12 @@ public class ClockSolver {
       Clock clock    = new Clock();
       cs.handleInitialArguments( args );
 
-      System.out.println("\n     Simulation running. Finding times below.");
-      System.out.println("\n     Simulation with angle [" + clock.angleValue + "], time slice [" + clock.timeSlice + "], and epsilon value [" + cs.epsilon + "].\n");
-
       while( clock.getTotalSeconds() <= 43200 ) {
          if (Math.abs(clock.angleValue - clock.handAngle) <= cs.epsilon) {
-           System.out.println("       Found angle: " + clock.angleValue + " at the time: " + clock.toString());
+           System.out.println("Found angle: " + clock.angleValue + " at the time: " + clock.toString());
          }
          clock.tick();
       }
-      System.out.println("__________________________________________________________________________________________\n");
       System.exit( 0 );
    }
 }
