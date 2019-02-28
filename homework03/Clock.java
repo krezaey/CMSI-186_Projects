@@ -89,7 +89,7 @@ public class Clock {
 
    public static double validateTimeSliceArg( String argValue ) {
       timeSlice = Double.parseDouble( argValue );
-      if ( timeSlice < 0.0 || timeSlice > 1800.0 ) {
+      if ( (timeSlice < 0.0) || (timeSlice > 1800.0) ) {
         timeSlice = INVALID_ARGUMENT_VALUE;
       }
       return timeSlice;
@@ -111,7 +111,7 @@ public class Clock {
    */
 
    public static double getMinuteHandAngle() {
-      minuteAngle = (elapsedTimeSeconds * MINUTE_HAND_DEGREES_PER_SECOND) % 360.0;
+      minuteAngle = ( elapsedTimeSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) % 360.0;
       return minuteAngle;
    }
 
@@ -141,23 +141,23 @@ public class Clock {
    */
 
    public String toString() {
-      DecimalFormat hourFormat = new DecimalFormat("00");
-      DecimalFormat minuteFormat = new DecimalFormat("00");
-      DecimalFormat secondFormat = new DecimalFormat("00.00");
+      DecimalFormat hourFormat = new DecimalFormat( "00" );
+      DecimalFormat minuteFormat = new DecimalFormat( "00" );
+      DecimalFormat secondFormat = new DecimalFormat( "00.00" );
 
-      double hoursLeft = (elapsedTimeSeconds / 3600);
+      double hoursLeft = ( elapsedTimeSeconds / 3600 );
       double hourTime = Math.floor(hoursLeft);
-      double minutesLeft = ((hoursLeft - hourTime) * 3600) / 60;
-      double minuteTime = Math.floor(minutesLeft);
-      double secondTime = (minutesLeft - minuteTime) * 60;
+      double minutesLeft = ( (hoursLeft - hourTime) * 3600 ) / 60;
+      double minuteTime = Math.floor( minutesLeft );
+      double secondTime = ( minutesLeft - minuteTime ) * 60;
 
-      if (hourTime == 0) {
+      if ( hourTime == 0 ) {
         hourTime = 12;
       }
 
-      String hour = String.valueOf(hourFormat.format(hourTime));
-      String minute = String.valueOf(minuteFormat.format(minuteTime));
-      String seconds = String.valueOf(secondFormat.format(secondTime));
+      String hour = String.valueOf( hourFormat.format( hourTime ) );
+      String minute = String.valueOf( minuteFormat.format( minuteTime ) );
+      String seconds = String.valueOf( secondFormat.format( secondTime ) );
       String timeString =  hour + ":" + minute + ":" + seconds;
 
       return timeString;

@@ -91,8 +91,8 @@ public class ClockSolver {
       Clock clock    = new Clock();
       cs.handleInitialArguments( args );
 
-      System.out.println("\n     Simulation running. Finding times below.");
-      System.out.println("\n     Simulation with angle [" + clock.angleValue + "], time slice [" + clock.timeSlice + "], and epsilon value [" + cs.epsilon + "].\n");
+      System.out.println( "\n     Simulation running. Finding times below. If no times are found, the simulation will end." );
+      System.out.println( "\n     Simulation with angle [" + clock.angleValue + "], time slice [" + clock.timeSlice + "], and epsilon value [" + cs.epsilon + "].\n" );
 
       while( clock.getTotalSeconds() <= 43200 ) {
          if ( (Math.abs(clock.angleValue - clock.handAngle) <= cs.epsilon) || (Math.abs((360 - clock.handAngle)  - clock.angleValue) <= cs.epsilon) ) {
@@ -100,7 +100,7 @@ public class ClockSolver {
          }
          clock.tick();
       }
-      System.out.println("______________________________________________________________\n");
+      System.out.println( "______________________________________________________________\n" );
       System.exit( 0 );
    }
 }
