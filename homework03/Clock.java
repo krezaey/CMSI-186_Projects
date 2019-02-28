@@ -17,6 +17,8 @@
  *  @version 1.0.0  2017-02-28  B.J. Johnson  Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+import java.text.DecimalFormat;
+
 public class Clock {
   /**
    *  Class field definintions go here
@@ -27,12 +29,13 @@ public class Clock {
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834;
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
 
-   private static double elapsedTimeSeconds = 0;
-   private static double timeSlice = 0;
-
+   public static double elapsedTimeSeconds = 0;
+   public static double angleValue = 0;
+   public static double timeSlice = 0;
    public static double hourAngle = 0;
    public static double minuteAngle = 0;
    public static double handAngle = 0;
+
 
   /**
    *  Constructor goes here
@@ -47,7 +50,7 @@ public class Clock {
    *  @return double-precision value of the current clock tick
    */
 
-   public double tick() {
+   public static double tick() {
       elapsedTimeSeconds += timeSlice;
       getHourHandAngle();
       getMinuteHandAngle();
@@ -62,8 +65,8 @@ public class Clock {
    *  @throws  NumberFormatException
    */
 
-   public double validateAngleArg( String argValue ) throws NumberFormatException {
-      double angleValue = Double.parseDouble ( argValue );
+   public static double validateAngleArg( String argValue ) throws NumberFormatException {
+      angleValue = Double.parseDouble ( argValue );
       if ( (angleValue < 0) || (angleValue > MAXIMUM_DEGREE_VALUE) ) {
         angleValue = INVALID_ARGUMENT_VALUE;
       }
@@ -82,8 +85,8 @@ public class Clock {
    *         to take a VERY LONG TIME to complete!
    */
 
-   public double validateTimeSliceArg( String argValue ) {
-      double timeSlice = Double.parseDouble( argValue );
+   public static double validateTimeSliceArg( String argValue ) {
+      timeSlice = Double.parseDouble( argValue );
       if ( timeSlice < 0.0 || timeSlice > 1800.0 ) {
         timeSlice = INVALID_ARGUMENT_VALUE;
       }
@@ -95,7 +98,7 @@ public class Clock {
    *  @return double-precision value of the hour hand location
    */
 
-   public double getHourHandAngle() {
+   public static double getHourHandAngle() {
       hourAngle = elapsedTimeSeconds * HOUR_HAND_DEGREES_PER_SECOND;
       return hourAngle;
    }
@@ -105,7 +108,7 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
 
-   public double getMinuteHandAngle() {
+   public static double getMinuteHandAngle() {
       minuteAngle = (elapsedTimeSeconds * MINUTE_HAND_DEGREES_PER_SECOND) % 360.0;
       return minuteAngle;
    }
@@ -115,7 +118,7 @@ public class Clock {
    *  @return double-precision value of the angle between the two hands
    */
 
-   public double getHandAngle() {
+   public static double getHandAngle() {
       handAngle = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
       return handAngle;
    }
@@ -136,10 +139,21 @@ public class Clock {
    */
 
    public String toString() {
-      double hourTime = (elapsedTimeSeconds / 3600.0);
-      double minuteTime = (elapsedTimeSeconds - hourTime) / 60.0;
-      double secondTime = (elapsedTimeSeconds - hourTime - minuteTime);
-      String timeString =  hourTime + ":" + minuteTime + ":" + secondTime;
+      DecimalFormat hourFormat = new DecimalFormat("00");
+      DecimalFormat minuteFormat = new DecimalFormat("00");
+      DecimalFormat secondFormat = new DecimalFormat("00.00");
+
+      double hoursLeft = (elapsedTimeSeconds / 3600);
+      double hourTime = Math.floor(hoursLeft);
+      double minutesLeft = ((hoursLeft - hourTime) * 3600) / 60;
+      double minuteTime = Math.floor(minutesLeft);
+      double secondTime = (minutesLeft - minuteTime) * 60;
+
+      String hour = String.valueOf(hourFormat.format(hourTime));
+      String minute = String.valueOf(minuteFormat.format(minuteTime));
+      String seconds = String.valueOf(secondFormat.format(secondTime));
+      String timeString =  hour + ":" + minute + ":" + seconds;
+
       return timeString;
    }
 
@@ -158,25 +172,25 @@ public class Clock {
       System.out.println( "  Creating a new clock: " );
       Clock clock = new Clock();
       System.out.println( "    New clock created: " + clock.toString() );
-      System.out.println( "    Testing validateAngleArg()....");
+      System.out.println( "    Testing validateAngleArg() and validateTimeSliceArg()....");
       System.out.println( "      sending '  0 degrees', expecting double value   0.0" );
       try {
 
-        System.out.println( "ValidateAngleArg Tests");
-        System.out.println( (0.0 == clock.validateAngleArg( "0.0" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (30.0 == clock.validateAngleArg("30.0")) ? "Good job, chump" : "Sadness" );
-        System.out.println( (45.1 == clock.validateAngleArg("45.1")) ? "Good job, chump" : "Sadness" );
-        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateAngleArg( "-1.0" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateAngleArg( "361.0" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateAngleArg( "40000.000" )) ? "Good job, chump" : "Sadness" );
+        System.out.println( "\nvalidateAngleArg() Tests");
+        System.out.println( (0.0 == clock.validateAngleArg( "0.0" )) ? "Good job - got 0.0" : "Sadness" );
+        System.out.println( (30.0 == clock.validateAngleArg("30.0")) ? "Good job - got 30.0" : "Sadness" );
+        System.out.println( (45.1 == clock.validateAngleArg("45.1")) ? "Good job - got 45.1" : "Sadness" );
+        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateAngleArg( "-1.0" )) ? "Good job - got invalid argument" : "Sadness" );
+        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateAngleArg( "361.0" )) ? "Good job - got invalid argument" : "Sadness" );
+        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateAngleArg( "40000.000" )) ? "Good job - got invalid argument" : "Sadness" );
 
-        System.out.println( "ValidateTimeSliceArg Tests");
-        System.out.println( (0.0 == clock.validateTimeSliceArg( "0.0" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (100.1 == clock.validateTimeSliceArg( "100.1" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (1800.0 == clock.validateTimeSliceArg( "1800.0" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg( "-1.0" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg( "1801.0" )) ? "Good job, chump" : "Sadness" );
-        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg( "4000.0" )) ? "Good job, chump" : "Sadness" );
+        System.out.println( "\nvalidateTimeSliceArg() Tests");
+        System.out.println( (0.0 == clock.validateTimeSliceArg( "0.0" )) ? "Good job - got 0.0" : "Sadness" );
+        System.out.println( (100.1 == clock.validateTimeSliceArg( "100.1" )) ? "Good job - got 100.1" : "Sadness" );
+        System.out.println( (1800.0 == clock.validateTimeSliceArg( "1800.0" )) ? "Good job - got 1800.0" : "Sadness" );
+        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg( "-1.0" )) ? "Good job - got invalid argument" : "Sadness" );
+        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg( "1801.0" )) ? "Good job - got invalid argument" : "Sadness" );
+        System.out.println( (INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg( "4000.0" )) ? "Good job - got invalid argument" : "Sadness" );
 
     }
       catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
