@@ -95,8 +95,8 @@ public class ClockSolver {
       System.out.println("\n     Simulation with angle [" + clock.angleValue + "], time slice [" + clock.timeSlice + "], and epsilon value [" + cs.epsilon + "].\n");
 
       while( clock.getTotalSeconds() <= 43200 ) {
-         if (Math.abs(clock.angleValue - clock.handAngle) <= cs.epsilon) {
-           System.out.println("       Found angle: " + clock.angleValue + " at the time: " + clock.toString());
+         if ( (Math.abs(clock.angleValue - clock.handAngle) <= cs.epsilon) || (Math.abs((360 - clock.handAngle)  - clock.angleValue) <= cs.epsilon) ) {
+           System.out.println("       Found angle of " + clock.angleValue + " at the time: " + clock.toString());
          }
          clock.tick();
       }

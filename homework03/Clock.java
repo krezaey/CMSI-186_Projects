@@ -24,7 +24,7 @@ public class Clock {
   /**
    *  Class field definintions go here
    */
-   
+
    private static final double DEFAULT_TIME_SLICE_IN_SECONDS = 60.0;
    private static final double INVALID_ARGUMENT_VALUE = -1.0;
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
@@ -181,7 +181,7 @@ public class Clock {
       System.out.println( "    Testing validateAngleArg() and validateTimeSliceArg()....");
       System.out.println( "      sending '  0 degrees', expecting double value   0.0" );
       try {
-
+        //invalid argument values will yield nfe in clock solver class, tests will only be used to make sure they detect invalid arguments
         System.out.println( "\nvalidateAngleArg() Tests");
         System.out.println( (0.0 == clock.validateAngleArg( "0.0" )) ? "Good job - got 0.0" : "Sadness" );
         System.out.println( (30.0 == clock.validateAngleArg("30.0")) ? "Good job - got 30.0" : "Sadness" );
