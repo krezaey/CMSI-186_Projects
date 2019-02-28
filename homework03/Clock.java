@@ -20,9 +20,11 @@
 import java.text.DecimalFormat;
 
 public class Clock {
+
   /**
    *  Class field definintions go here
    */
+   
    private static final double DEFAULT_TIME_SLICE_IN_SECONDS = 60.0;
    private static final double INVALID_ARGUMENT_VALUE = -1.0;
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
