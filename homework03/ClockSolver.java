@@ -57,7 +57,7 @@ public class ClockSolver {
         Clock.validateTimeSliceArg( "60.0" );
         epsilon = 0.1;
         if ( Clock.validateAngleArg( args[0] ) == -1.0 ) {
-          throw new NumberFormatException();
+          throw new NumberFormatException("Please enter valid arguments.");
         }
       }
       if ( args.length == 2 ) {
@@ -65,7 +65,7 @@ public class ClockSolver {
         Clock.validateTimeSliceArg( args[1] );
         epsilon = 0.1;
         if ( (Clock.validateAngleArg( args[0] ) == -1.0) || (Clock.validateTimeSliceArg( args[1] ) == -1.0) ) {
-          throw new NumberFormatException();
+          throw new NumberFormatException("Please enter valid arguments.");
         }
       }
       if ( args.length == 3 ) {
@@ -73,7 +73,7 @@ public class ClockSolver {
         Clock.validateAngleArg( args[1] );
         epsilon = Double.parseDouble( args[2] );
         if ( (Clock.validateAngleArg( args[0] ) == -1.0) || (Clock.validateTimeSliceArg( args[1] ) == -1.0) ) {
-          throw new NumberFormatException();
+          throw new NumberFormatException("Please enter valid arguments.");
         }
       }
    }
