@@ -1,10 +1,51 @@
--need ball class to keep track of ball state
--need clock class to keep track of tick ( can use clock class from homework03 ) 
--need to detect collisions
--arguments consist of x, y, x movement, y movement
--ball radius is 4.45 inches, if distance between two centers is <= 8.9 inches, use pythagorean theorem, it is collision
--if ball goes out of bounds, it is no longer a part of the simulation
--simulation stops when collision detected, report the earliest time when the balls collide
--use (mod 4) - 1 to validate arguments, balls must defined by groups of 4, last argument is an optional argument
--multiply by 0,99 per tick to account for friction
--need to have stationary object
+Prereqs of the program:
+	-need to have stationary object
+	-arguments consist of x, y, x movement, y movement
+
+Goals of the program:
+	-need to detect collisions
+	-if ball goes out of bounds, it is no longer a part of the         	simulation
+	-simulation stops when collision detected, report the earliest 	time when the balls collide
+
+Tips for designing: 
+	-ball radius is 4.45 inches, if distance between two centers is 	<= 8.9 inches, use pythagorean theorem, it is collision
+	-use (mod 4) - 1 to validate arguments, balls must defined by 		groups of 4, last argument is an optional argument
+	-multiply by 0.99 per tick to account for friction
+
+Ball Class
+	-x coordinate
+	-y coordinate
+	-x velocity
+	-y velocity
+	-methods
+		-constructor
+		-move()
+		-updateVelocity()
+		-isInMotion() -- boolean; moving if >= 1 inch per second
+		-getLocation()
+		-getSpeed()
+		-locationToString()
+		-isInBounds()
+		-main method for testing
+
+Timer Class
+	-time slice
+	-total seconds
+	-methods
+		-constructor
+		-tick()
+		-toString()
+		-main method for testing
+
+SoccerSim Class
+	-x size for field (random size >= 100 and < 1500)
+	-y size for field (random size >= 100 and < 1500)
+	-random location for pole
+	-number of balls
+	-time slice (passing in arguments here)
+	-array of ball objects[]
+	-methods
+		-constructor
+		-main method
+		-validateArguments()
+
