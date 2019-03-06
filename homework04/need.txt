@@ -7,9 +7,10 @@ Goals of the program:
 	-if ball goes out of bounds, it is no longer a part of the         	simulation
 	-simulation stops when collision detected, report the earliest 	time when the balls collide
 
-Tips for designing: 
+Tips for designing:
 	-ball radius is 4.45 inches, if distance between two centers is 	<= 8.9 inches, use pythagorean theorem, it is collision
-	-use (mod 4) - 1 to validate arguments, balls must defined by 		groups of 4, last argument is an optional argument
+	-if odd number of time slices, probable number fo time slices
+	-use (args.length % 4) - 1 to validate arguments, balls must 		defined by groups of 4, last argument is an optional argument
 	-multiply by 0.99 per tick to account for friction
 
 Ball Class
@@ -48,4 +49,3 @@ SoccerSim Class
 		-constructor
 		-main method
 		-validateArguments()
-
