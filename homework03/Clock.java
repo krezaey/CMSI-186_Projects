@@ -89,7 +89,7 @@ public class Clock {
 
    public static double validateTimeSliceArg( String argValue ) {
       timeSlice = Double.parseDouble( argValue );
-      if ( (timeSlice < 0.0) || (timeSlice > 1800.0) ) {
+      if ( (timeSlice <= 0.0) || (timeSlice > 1800.0) ) {
         timeSlice = INVALID_ARGUMENT_VALUE;
       }
       return timeSlice;
