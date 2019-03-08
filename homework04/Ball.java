@@ -28,10 +28,6 @@
      System.out.println("Placeholder");
    }
 
-   public double updateVelocity() {
-     return 0;
-   }
-
    public double[] getLocation() {
      double[] location = new double[2];
      location[0] = this.locx;
@@ -39,8 +35,12 @@
      return location;
    }
 
+   public double updateVelocity() {
+    return 0;
+   }
+
    public double getSpeed() {
-     return 0;
+    return 0;
    }
 
    public String toString() {

@@ -39,7 +39,6 @@
 
      // Getters
      public int getBallCount() {
-
          return this.ballCount;
      }
 

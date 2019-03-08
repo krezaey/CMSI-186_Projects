@@ -62,3 +62,12 @@ SoccerSim Class
 		-constructor
 		-main method
 		-validateArguments()
+
+TO DO
+-finish timer Class
+-finsih ball Class
+	-add validate args 
+-write tests for ball Class
+-validate args in SoccerSim
+
+
