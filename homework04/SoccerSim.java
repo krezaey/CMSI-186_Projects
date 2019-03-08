@@ -1,5 +1,3 @@
-import com.sun.jndi.url.dns.dnsURLContext;
-
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  File name     :  SoccerSim.java
  *  Purpose       :  Main program to run SoccerSimulation
@@ -13,8 +11,8 @@ import com.sun.jndi.url.dns.dnsURLContext;
 
      final double FIELD_SIZE = 500;
 
-     double timeSlice = 1.0; 
-     double ballCount = 0;
+     private double timeSlice = 1.0; 
+     private int ballCount = 0;
 
      public SoccerSim() {}
 
@@ -34,20 +32,28 @@ import com.sun.jndi.url.dns.dnsURLContext;
          System.out.println("I am doing stuff right now");
      }
 
-    //  public void setBallCount(int num) {
-    //      this.ballCount = num;
-    //  }
+     // Setters
+     public void setBallCount(int num) {
+         this.ballCount = num;
+     }
+
+     // Getters
+     public int getBallCount() {
+
+         return this.ballCount;
+     }
 
      public static void main ( String args[] ) {
 
         SoccerSim sim = new SoccerSim();
 
-         sim.ballCount = (int) (args.length / 4);
+        sim.setBallCount(args.length / 4);
+
          int j = 0; 
-         ball[] b = new Ball[sim.ballCount];
+         Ball [] balls = new Ball[sim.getBallCount()];
 
 		 for ( int i = 0; i < args.length; i += 4 ) {
-			b[j] = new Ball ( args[i], args[i+1], args[i+2], args[i+3] );
+			balls[j] = new Ball ( args[i], args[i+1], args[i+2], args[i+3] );
 			j++;
 		 }
      }

@@ -17,11 +17,11 @@
    double velx = 0.0;
    double vely = 0.0;
 
-   public Ball( double xloc, double yloc, double xvel, double yvel ) {
-     this.locx = xloc;
-     this.locy = yloc;
-     this.xvel = velx;
-     this.yvel = yvel;
+   public Ball( double locx, double locy, double velx, double vely ) {
+     this.locx = locx;
+     this.locy = locy;
+     this.velx = velx;
+     this.vely = vely;
    }
 
    public void move() {
