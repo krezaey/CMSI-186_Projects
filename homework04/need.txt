@@ -8,9 +8,9 @@ Goals of the program:
 	-simulation stops when collision detected, report the earliest 	time when the balls collide
 
 Tips for designing:
-	-ball radius is 4.45 inches, if distance between two centers is 	<= 8.9 inches, use pythagorean theorem, it is collision
+	-ball radius is 4.45 inches, if distance between two centers is <= 8.9 inches, use pythagorean theorem, it is collision
 	-if odd number of time slices, probable number fo time slices
-	-use (args.length % 4) - 1 to validate arguments, balls must 		defined by groups of 4, last argument is an optional argument
+	-use (args.length % 4) - 1 to validate arguments, balls must defined by groups of 4, last argument is an optional argument
 	-multiply by 0.99 per tick to account for friction
 
 Ball Class
@@ -18,6 +18,19 @@ Ball Class
 	-y coordinate
 	-x velocity
 	-y velocity
+	-arguments should be double types
+		-args.length / 4 = number of balls (Math.floor or take integer) for when odd number of args
+		-have array of ball objects
+
+		int numBall = (int) args.length / 4
+		ball[] b = new Ball[numBall] (setting array with set number of balls calculated)
+		int j = 0; 
+		for (int i = 0; i < args.length; i+=4) {
+			b[j] = new Ball (args[i], args[i+1], args[i+2], args[i+3]);
+			j++;
+		}
+
+		-use 2 different loops and 
 	-methods
 		-constructor
 		-move()

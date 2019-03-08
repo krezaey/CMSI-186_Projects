@@ -2,6 +2,7 @@
  *  File name     :  Timer.java
  *  Purpose       :  Timer class to track the state of the timer
  *  Author        :  Keziah Rezaey
- *  Date          :  2018-03-05
+ *  Date Created  :  2018-03-05
+ *  Due Date      :  2019-03-19
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
