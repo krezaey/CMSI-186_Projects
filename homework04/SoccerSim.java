@@ -13,7 +13,7 @@ import com.sun.jndi.url.dns.dnsURLContext;
 
      final double FIELD_SIZE = 500;
 
-     double ballCount = 0;
+     static double ballCount = 0;
      double timeSlice = 1.0; 
 
      public SoccerSim() {}
@@ -24,7 +24,14 @@ import com.sun.jndi.url.dns.dnsURLContext;
      }
 
      public static void main ( String args[] ) {
-         System.out.println("Yolo");
+         ballCount = (int) (args.length / 4);
+
+         ball[] b = new Ball[ballCount];
+		 int j = 0; 
+		 for ( int i = 0; i < args.length; i += 4 ) {
+			b[j] = new Ball (args[i], args[i+1], args[i+2], args[i+3]);
+			j++;
+		 }
      }
 
  }
