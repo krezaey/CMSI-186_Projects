@@ -55,14 +55,51 @@
      return true;
    }
 
+   public static double validateBallVelocity( String argValue ) {
+     double ballVelocity = Double.parseDouble ( argValue );
+     return ballVelocity;
+  }
+
+  public static double validateTimeSliceArg( String argValue ) {
+    double timeSlice = Double.parseDouble( argValue );
+    if ( (timeSlice <= 0.0) || (timeSlice > 1800.0) ) {
+      timeSlice = -1.0;
+    }
+    return timeSlice;
+ }
+
+ public static double validateBallPosition( String argValue ) {
+  double ballPosition = Double.parseDouble( argValue );
+  if ( Math.abs(ballPosition) >= 500 ) {
+    ballPosition = -1.0;
+  }
+  return ballPosition;
+}
+
    public static void main ( String args[] ) {
-     //type ball tests right here
-     //use conditional statements
+     //tests return -1.0 if invalid; will throw nfe in SoccerSim class
+
      try {
-       System.out.println("yolo");
+       System.out.println("\n  Validation of Ball Position tests.");
+       System.out.println( (200 == Ball.validateBallPosition("200")) ? "    Good job - got 200" : "Eh, try again.");
+       System.out.println( (40.2 == Ball.validateBallPosition("40.2")) ? "    Good job - got 40.2" : "Eh, try again.");
+       System.out.println( (0 == Ball.validateBallPosition("0.0")) ? "    Good job - got 0.0" : "Eh, try again.");
+       System.out.println( (-1.0 == Ball.validateBallPosition("900")) ? "    Good job - got invalid argument" : "Eh, try again.");
+       System.out.println( (-1.0 == Ball.validateBallPosition("650")) ? "    Good job - got invalid argument" : "Eh, try again.");
+
+       System.out.println("\n  Validation of Ball Velocity tests.");
+       System.out.println( (-1.32 == Ball.validateBallVelocity("-1.32")) ? "    Good job - got -1.32" : "Eh, try again.");
+       System.out.println( (60.5 == Ball.validateBallVelocity("60.5")) ? "    Good job - got 60.5" : "Eh, try again.");
+
+       System.out.println("\n  Validation of Time Slice tests.");
+       System.out.println( (2 == Ball.validateTimeSliceArg("2")) ? "    Good job - got 2" : "Eh, try again.");
+       System.out.println( (36.4 == Ball.validateTimeSliceArg("36.4")) ? "    Good job - got 36.4" : "Eh, try again.");
+       System.out.println( (-1.0 == Ball.validateTimeSliceArg("0")) ? "    Good job - got invalid argument" : "Eh, try again.");
+       System.out.println( (-1.0 == Ball.validateTimeSliceArg("1801")) ? "    Good job - got invalid argument" : "Eh, try again.");
+       System.out.println( (-1.0 == Ball.validateTimeSliceArg("-2.3")) ? "    Good job - got invalid argument" : "Eh, try again.");
      }
      catch ( Exception e ) {
-       System.out.println("yolo");
+       System.out.println("Invalid argument.");
      }
    }
 
