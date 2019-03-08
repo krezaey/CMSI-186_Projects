@@ -13,23 +13,41 @@ import com.sun.jndi.url.dns.dnsURLContext;
 
      final double FIELD_SIZE = 500;
 
-     static double ballCount = 0;
      double timeSlice = 1.0; 
+     double ballCount = 0;
 
      public SoccerSim() {}
 
      public void handleInitialArgs( String args[] ) {
-         System.out.println("I want spring break now");
+
+        System.out.println( "\n Welcome to the Soccer Simulator program! \n" ) ;
+        if( 0 == args.length ) {
+           System.out.println( "   Sorry, you must enter at least one argument and an appropriate number of arguments.\n" +
+                               "   Usage: java SoccerSim <xlocation> <ylocation> <xvelocity> <yvelocity> (repeat this for as many balls as you want) [timeSlice]\n" +
+                               "   Please try again..........." );
+           System.exit( 1 );
+        }
 
      }
 
-     public static void main ( String args[] ) {
-         ballCount = (int) (args.length / 4);
+     public void validateArgs ( String args[] ) {
+         System.out.println("I am doing stuff right now");
+     }
 
-         ball[] b = new Ball[ballCount];
-		 int j = 0; 
+    //  public void setBallCount(int num) {
+    //      this.ballCount = num;
+    //  }
+
+     public static void main ( String args[] ) {
+
+        SoccerSim sim = new SoccerSim();
+
+         sim.ballCount = (int) (args.length / 4);
+         int j = 0; 
+         ball[] b = new Ball[sim.ballCount];
+
 		 for ( int i = 0; i < args.length; i += 4 ) {
-			b[j] = new Ball (args[i], args[i+1], args[i+2], args[i+3]);
+			b[j] = new Ball ( args[i], args[i+1], args[i+2], args[i+3] );
 			j++;
 		 }
      }
