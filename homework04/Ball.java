@@ -7,7 +7,7 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
- public class Ball() {
+ public class Ball {
 
    final double BALL_RADIUS = 4.45;
    final double BALL_DISTANCE = 8.9;
@@ -17,38 +17,41 @@
    double velx = 0.0;
    double vely = 0.0;
 
-   public Ball( xloc, yloc, xvel, yvel ) {
+   public Ball( double xloc, double yloc, double xvel, double yvel ) {
      this.locx = xloc;
      this.locy = yloc;
      this.xvel = velx;
      this.yvel = yvel;
    }
 
-   public static void move() {
+   public void move() {
+     System.out.println("Placeholder");
+   }
+
+   public double updateVelocity() {
      return 0;
    }
 
-   public static double updateVelocity() {
+   public double[] getLocation() {
+     double[] location = new double[2];
+     location[0] = this.locx;
+     location[1] = this.locy;
+     return location;
+   }
+
+   public double getSpeed() {
      return 0;
    }
 
-   public static double getLocation() {
-     return 0;
+   public String toString() {
+    return "Placeholder";
    }
 
-   public static double getSpeed() {
-     return 0;
-   }
-
-   public static String toString() {
-     return "here's your string";
-   }
-
-   public static boolean isInMotion() {
+   public boolean isInMotion() {
      return true;
    }
 
-   public static boolean isInBounds() {
+   public boolean isInBounds() {
      return true;
    }
 
