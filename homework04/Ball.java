@@ -64,7 +64,10 @@
     */
 
    public double[] getVelocity() {
-    return 0;
+    double[] velocity = new double[2];
+    velocity[0] = this.velx; 
+    velocity[1] = this.vely;
+    return velocity;
    }
 
    /** 
@@ -158,6 +161,11 @@
        System.out.println( (-1.0 == Ball.validateTimeSliceArg("0")) ? "    Good job - got invalid argument" : "Eh, try again.");
        System.out.println( (-1.0 == Ball.validateTimeSliceArg("1801")) ? "    Good job - got invalid argument" : "Eh, try again.");
        System.out.println( (-1.0 == Ball.validateTimeSliceArg("-2.3")) ? "    Good job - got invalid argument" : "Eh, try again.");
+
+       System.out.println("\n  Get Location and Get Velocity tests.")
+       Ball a = new Ball(100, 100, 20, -30);
+       //check to see if same array in REFERENCE
+       System.out.println( ( == Ball.validateTimeSliceArg("2")) ? "    Good job - got 2" : "Eh, try again.");
      }
      catch ( Exception e ) {
        System.out.println("Invalid argument.");
