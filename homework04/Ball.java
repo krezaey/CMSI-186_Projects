@@ -7,6 +7,8 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
+import java.util.Arrays; 
+
  public class Ball {
 
    final double BALL_RADIUS = 4.45;
@@ -164,8 +166,10 @@
 
        System.out.println("\n  Get Location and Get Velocity tests.");
        Ball a = new Ball(100, 100, 20, -30);
-       //check to see if same array in REFERENCE
-       System.out.println( ( Ball.validateTimeSliceArg("2")) ? "    Good job - got 2" : "Eh, try again.");
+       double[] testArray = {100, 100};
+       System.out.println( Arrays.equals(testArray, a.getLocation()) ? "    Good job - got location [100,100]" : "Eh, try again.");
+      //  double[] testArray = {20, -30};
+      //  System.out.println( Arrays.equals(testArray, a.getLocation()) ? "    Good job - got [100,100]" : "Eh, try again.");
      }
      catch ( Exception e ) {
        System.out.println("Invalid argument.");
