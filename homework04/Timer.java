@@ -14,7 +14,9 @@ public class Timer {
    private double elapsedTimeSeconds = 0;
    private double timeSlice = 0;
    
-   public Timer() {}
+   public Timer( double timeSlice ) {
+      this.timeSlice = timeSlice;
+   }
 
    public double tick() {
       elapsedTimeSeconds += timeSlice;
