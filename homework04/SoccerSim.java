@@ -21,12 +21,34 @@
 
      public SoccerSim() {}
 
+   /** 
+    * Setter method to set the ball count for the current iteration of the program via user input
+    * @param  integer value of the indicated ball count
+    * @return void method
+    */
+
      public void setBallCount(int num) {
         this.ballCount = num;
     }
 
+   /** 
+    * Getter method to return the set ball count for current iteration of the program
+    * @param  none
+    * @return integer value of the set ball count
+    */
+
     public int getBallCount() {
         return this.ballCount;
+    }
+
+   /** 
+    * Method to remove a instance of the ball class in the ball array if out of bounds
+    * @param  ball array that is created in soccersim; integer for element index
+    * @return void method
+    */
+
+    public void removeBall() {
+        System.out.println("Placeholder");
     }
 
     //change to void later, just using return value of Ball[] for testing
@@ -83,7 +105,7 @@
 
          System.out.println("\n   This is merely a test to see if validation of arguments via terminal is working correctly.");
          System.out.println("\n   Creating new ball with coordinates of (" + sim.xposition + " , " + sim.yposition + ") and velocities of (" + sim.xvelocity + " , " + sim.yvelocity + ").");
-        
+    
      }
 
  }

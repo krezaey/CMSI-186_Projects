@@ -55,7 +55,7 @@ import java.util.Arrays;
     * @return void method 
     */
 
-   public void updateVelocity() {
+   public void updateVelocity( double timeSlice ) {
     System.out.println("Placeholder");
    }
 
@@ -89,23 +89,31 @@ import java.util.Arrays;
     */
 
    public boolean isInMotion() {
-     return true;
+     boolean motionResult = true; 
+     if ( (velocity[0] <= 1) && (velocity[1] <= 1) ) {
+       motionResult = false;
+     }
+     return motionResult;
    }
 
    /** 
-    * Method to check whether given ball is still in bounds for the field; if so, the ball will be no longer
+    * Method to check whether given ball is still in bounds for the field; If so, the ball will be no longer
     * be considered for the simulation
     * @return boolean value indicating status of location
     */
 
    public boolean isInBounds() {
-     return true;
+     boolean boundResult = true;
+     if ( (location[0] >= 500) && (location[1] >= 500) ) {
+       boundResult = false;
+     }
+     return boundResult;
    }
 
    /** 
     * Method to parse the arguments for velocity
     * @param  string value from terminal arguments
-    * @return double precision value representation of the entered argument
+    * @return double precision value representation of the entered velocity argument
     */
 
    public static double validateBallVelocity( String argValue ) {
@@ -116,7 +124,7 @@ import java.util.Arrays;
    /** 
     * Method to parse the arguments and validate the optional time slice argument
     * @param  string value from terminal arguments
-    * @return double precision value representation of the entered argument or -1.0 if invalid
+    * @return double precision value representation of the entered optional time slice argument or -1.0 if invalid
     */
 
   public static double validateTimeSliceArg( String argValue ) {
@@ -131,7 +139,7 @@ import java.util.Arrays;
     * Method to parse the arguments and validate the indicated ball location. 
     * It will not allow balls to be set out of bounds.
     * @param  string value from terminal arguments
-    * @return double precision value representation of the entered argument or -1.0 if invalid
+    * @return double precision value representation of the entered location argument or -1.0 if invalid
     */
 
  public static double validateBallPosition( String argValue ) {
@@ -143,9 +151,9 @@ import java.util.Arrays;
 }
 
    public static void main ( String args[] ) {
-     //tests return -1.0 if invalid; will throw nfe in SoccerSim class
-
      try {
+       // validation tests return -1.0 if invalid; will throw nfe in SoccerSim class
+
        System.out.println("\n  Validation of Ball Position tests.");
        System.out.println( (200 == Ball.validateBallPosition("200")) ? "    Good job - got 200" : "Eh, try again.");
        System.out.println( (40.2 == Ball.validateBallPosition("40.2")) ? "    Good job - got 40.2" : "Eh, try again.");
@@ -166,10 +174,12 @@ import java.util.Arrays;
 
        System.out.println("\n  Get Location and Get Velocity tests.");
        Ball a = new Ball(100, 100, 20, -30);
-       double[] testArray = {100, 100};
-       System.out.println( Arrays.equals(testArray, a.getLocation()) ? "    Good job - got location [100,100]" : "Eh, try again.");
-      //  double[] testArray = {20, -30};
-      //  System.out.println( Arrays.equals(testArray, a.getLocation()) ? "    Good job - got [100,100]" : "Eh, try again.");
+       System.out.println("Initializing ball with location (100, 100) and velocities (20, -30).");
+       double[] locationArray = {100, 100};
+       System.out.println( Arrays.equals(locationArray, a.getLocation()) ? "    Good job - got location {100,100}" : "Eh, try again.");
+       double[] velocityArray = {20, -30};
+       System.out.println( Arrays.equals(testArray, a.getLocation()) ? "    Good job - got velocity {20,-30}" : "Eh, try again.");
+
      }
      catch ( Exception e ) {
        System.out.println("Invalid argument.");
