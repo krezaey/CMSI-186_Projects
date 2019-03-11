@@ -19,7 +19,7 @@ public class Timer {
    }
 
    public double tick() {
-      elapsedTimeSeconds += timeSlice;
+      elapsedTimeSeconds += this.timeSlice;
       return elapsedTimeSeconds;
    }
 

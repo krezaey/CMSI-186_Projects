@@ -19,6 +19,9 @@ import java.util.Arrays;
    double velx = 0.0;
    double vely = 0.0;
 
+   double[] velocity = new double[2];
+   double[] location = new double[2];
+
    public Ball( double locx, double locy, double velx, double vely ) {
      this.locx = locx;
      this.locy = locy;
@@ -43,7 +46,6 @@ import java.util.Arrays;
     */
 
    public double[] getLocation() {
-     double[] location = new double[2];
      location[0] = this.locx;
      location[1] = this.locy;
      return location;
@@ -66,7 +68,6 @@ import java.util.Arrays;
     */
 
    public double[] getVelocity() {
-    double[] velocity = new double[2];
     velocity[0] = this.velx; 
     velocity[1] = this.vely;
     return velocity;
@@ -90,7 +91,7 @@ import java.util.Arrays;
 
    public boolean isInMotion() {
      boolean motionResult = true; 
-     if ( (velocity[0] <= 1) && (velocity[1] <= 1) ) {
+     if ( (Math.abs( velocity[0] ) <= 1) && (Math.abs( velocity[1] ) <= 1) ) {
        motionResult = false;
      }
      return motionResult;
@@ -104,7 +105,7 @@ import java.util.Arrays;
 
    public boolean isInBounds() {
      boolean boundResult = true;
-     if ( (location[0] >= 500) && (location[1] >= 500) ) {
+     if ( (Math.abs( location[0] ) >= 500) && (Math.abs( location[1] ) >= 500) ) {
        boundResult = false;
      }
      return boundResult;
@@ -172,13 +173,24 @@ import java.util.Arrays;
        System.out.println( (-1.0 == Ball.validateTimeSliceArg("1801")) ? "    Good job - got invalid argument" : "Eh, try again.");
        System.out.println( (-1.0 == Ball.validateTimeSliceArg("-2.3")) ? "    Good job - got invalid argument" : "Eh, try again.");
 
-       System.out.println("\n  Get Location and Get Velocity tests.");
+       System.out.println("\n  Get Location, Get Velocity, In Motion, and In Bounds tests.");
        Ball a = new Ball(100, 100, 20, -30);
-       System.out.println("Initializing ball with location (100, 100) and velocities (20, -30).");
-       double[] locationArray = {100, 100};
-       System.out.println( Arrays.equals(locationArray, a.getLocation()) ? "    Good job - got location {100,100}" : "Eh, try again.");
-       double[] velocityArray = {20, -30};
-       System.out.println( Arrays.equals(testArray, a.getLocation()) ? "    Good job - got velocity {20,-30}" : "Eh, try again.");
+       System.out.println("    Initializing ball with location (100, 100) and velocities (20, -30).");
+       double[] aLocationArray = {100, 100};
+       System.out.println( Arrays.equals(aLocationArray, a.getLocation()) ? "      Good job - got location {100,100}" : "Eh, try again.");
+       double[] aVelocityArray = {20, -30};
+       System.out.println( Arrays.equals(aVelocityArray, a.getVelocity()) ? "      Good job - got velocity {20,-30}" : "Eh, try again.");
+       System.out.println( (true == a.isInBounds()) ? "      Good job - got that the ball is in bounds." : "Eh, try again.");
+       System.out.println( (true == a.isInMotion()) ? "      Good job - got that the ball is in motion." : "Eh, try again.");
+  
+       Ball b = new Ball(501, 501, 1, -1);
+       System.out.println("    Initializing ball with location (501, 501) and velocities (1, -1).");
+       double[] bLocationArray = {501, 501};
+       System.out.println( Arrays.equals(bLocationArray, b.getLocation()) ? "      Good job - got location {501,501}" : "Eh, try again.");
+       double[] bVelocityArray = {1, -1};
+       System.out.println( Arrays.equals(bVelocityArray, b.getVelocity()) ? "      Good job - got velocity {20,-30}" : "Eh, try again.");
+       System.out.println( (false == b.isInBounds()) ? "      Good job - got that the ball is not in bounds." : "Eh, try again.");
+       System.out.println( (false == b.isInMotion()) ? "      Good job - got that the ball is not in motion." : "Eh, try again.");
 
      }
      catch ( Exception e ) {
