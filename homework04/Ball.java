@@ -105,7 +105,7 @@ import java.util.Arrays;
 
    public boolean isInBounds() {
      boolean boundResult = true;
-     if ( (Math.abs( location[0] ) >= 500) && (Math.abs( location[1] ) >= 500) ) {
+     if ( (Math.abs( location[0] ) >= 500) || (Math.abs( location[1] ) >= 500) ) {
        boundResult = false;
      }
      return boundResult;

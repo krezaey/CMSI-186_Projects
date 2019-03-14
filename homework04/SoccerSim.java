@@ -51,7 +51,6 @@
         System.out.println("Placeholder");
     }
 
-    //change to void later, just using return value of Ball[] for testing
     public Ball[] handleInitialArgs( String args[] ) {
 
         System.out.println( "\n Welcome to the Soccer Simulator program! \n" ) ;
@@ -74,6 +73,7 @@
               Ball.validateTimeSliceArg("1.0");
             }
             else {
+              //not working, won't allow optional time slice
               Ball.validateTimeSliceArg(String.valueOf(args.length - 1));
               if ( Ball.validateTimeSliceArg(String.valueOf(args.length - 1)) == -1.0 ) {
                   throw new NumberFormatException("Please enter a valid time slice or don't enter one to use the default time slice of 1.0 seconds.");
@@ -104,7 +104,8 @@
          sim.handleInitialArgs( args );
 
          System.out.println("\n   This is merely a test to see if validation of arguments via terminal is working correctly.");
-         System.out.println("\n   Creating new ball with coordinates of (" + sim.xposition + " , " + sim.yposition + ") and velocities of (" + sim.xvelocity + " , " + sim.yvelocity + ").");
+         //System.out.println("\n   Creating new ball with coordinates of (" + sim.xposition + " , " + sim.yposition + ") and velocities of (" + sim.xvelocity + " , " + sim.yvelocity + ").");
+         System.out.println("\n   You currently have " + sim.getBallCount() + " balls.");
     
      }
 
