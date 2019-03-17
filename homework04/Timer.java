@@ -51,7 +51,7 @@ public class Timer {
    }
 
    public static void main ( String args[] ) {
-       System.out.println("This is a temporary test! I'm only checking that the timer class exists.");
+       System.out.println("I'm only checking that the timer class exists.");
    }
 
 }

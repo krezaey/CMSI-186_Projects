@@ -11,8 +11,8 @@
 
      final double FIELD_SIZE = 500;
 
-     private double timeSlice = 0; 
      private int ballCount = 0;
+     private double timeSlice = 0; 
      private double xposition = 0;
      private double yposition = 0;
      private double xvelocity = 0;
