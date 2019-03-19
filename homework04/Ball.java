@@ -9,8 +9,6 @@
 
 public class Ball {
 
- final double BALL_RADIUS = 4.45;
-
  double locx = 0.0;
  double locy = 0.0;
  double velx = 0.0;
