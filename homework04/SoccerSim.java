@@ -68,19 +68,40 @@ public class SoccerSim {
   return response;
  }
 
-//  public boolean detectCollision() {
-//      boolean response = false;
-//      for ( int i = 0; i < balls.size(); i++ ) {
-//          double xDist = Math.abs(balls.get(i).locx - balls.get(i+1).locx);
-//          double yDist = Math.abs(balls.get(i).locy - balls.get(i+1).locy);
-//          double distance = Math.sqrt( (xDist * xDist) + (yDist * yDist) );
+ public boolean detectCollision() {
+     boolean response = false;
+     double xDist = 0;
+     double yDist = 0;
+     double distance = 0;
+     if ( balls.size() > 1 ) {
+        for ( int i = 0; i < balls.size(); i++ ) {
+            xDist = Math.abs(balls.get(i).locx - balls.get(i+1).locx);
+            yDist = Math.abs(balls.get(i).locy - balls.get(i+1).locy);
+            distance = Math.sqrt( (xDist * xDist) + (yDist * yDist) );
 
-//          if (distance <= 8.9) {
-//              response = true;
-//          }
-//      }
-//      return response;
-//  }
+            if ( (balls.get(i).locx == balls.get(i+1).locx) && (balls.get(i).locy == balls.get(i+1).locy)) {
+                response = true;
+            }
+   
+            if (distance <= 8.9) {
+                response = true;
+            }
+        }
+     }
+     //checking for collision with pole located at (-10, 20)
+     if ( balls.size() >= 1 ) {
+         for ( int i = 0; i < balls.size(); i++ ) {
+            xDist = Math.abs(balls.get(i).locx - (-10));
+            yDist = Math.abs(balls.get(i).locy - 20);
+            distance = Math.sqrt ( (xDist * xDist) + (yDist * yDist) );
+
+            if (distance <= 8.9) {
+                response = true;
+            }
+         }
+     }   
+     return response;
+ }
 
  public void runSimulation(double timeSlice) {
   moveAll(timeSlice);
@@ -92,7 +113,7 @@ public class SoccerSim {
 
   System.out.println("\n  | Welcome to the Soccer Simulation program!");
   System.out.println("  | We are playing in a field that is 1000 feet wide and 1000 feet long.");
-  System.out.println("  | There is a flagpole in the center of the field at (0,0).");
+  System.out.println("  | There is a flagpole in the field at (-10,20).");
 
   if ((0 == args.length) || (args.length < 4)) {
    System.out.println("   Sorry, you must enter at least four arguments and an appropriate number of arguments.\n" +
@@ -134,7 +155,7 @@ public class SoccerSim {
 
   sim.handleInitialArgs(args);
 
-  System.out.println("\n  Running simulation with " + sim.balls.size() + " ball(s) and a time slice of " + sim.timeSlice + ".");
+  System.out.println("\n    Running simulation with " + sim.balls.size() + " ball(s) and a time slice of " + sim.timeSlice + ".");
 
   while (sim.simulationStopped == false) {
    System.out.println("\n   " + time.toString());
@@ -143,18 +164,16 @@ public class SoccerSim {
    sim.runSimulation(sim.timeSlice);
    time.tick(sim.timeSlice);
 
-   if (sim.allBallsStopped()) {
+   if (sim.detectCollision()) {
+    System.out.println("   Collision detected at time " + time.toString() + ".\n");
+    sim.simulationStopped = true;
+    //System.exit(0);
+   }
+   else if (sim.allBallsStopped()) {
     System.out.println("\n   All ball(s) stopped or out of bounds. No collision detected.\n");
     sim.simulationStopped = true;
     //System.exit(0);
    }
-
-//    if (sim.detectCollision()) {
-//     System.out.println("Collision detected at time " + time.toString() + " .");
-//     sim.simulationStopped = true;
-//     //System.exit(0);
-//    }
-
   }
  }
 }
