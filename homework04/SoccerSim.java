@@ -46,7 +46,7 @@ import java.util.ArrayList;
     public void removeBalls() {
         for ( int i = 0; i < balls.size(); i++ ) {
             if ( balls.get(i).isInBounds() == false ) {
-                balls.remove(i);
+                // balls.remove(i);
                 ballsRemoved++;
             }
         }
@@ -55,8 +55,6 @@ import java.util.ArrayList;
     public void stopBalls() {
         for ( int i = 0; i < balls.size(); i++ ) {
             if ( balls.get(i).isInMotion() == false ) {
-                // balls.get(i).velx = 0;
-                // balls.get(i).vely = 0;
                 ballsStopped++;
             }
         }
@@ -97,7 +95,7 @@ import java.util.ArrayList;
            
             if ( (args.length % 4) == 0 ) {
                 //change LATER!!!
-              timeSlice = Ball.validateTimeSliceArg("100");
+              timeSlice = Ball.validateTimeSliceArg("50");
             }
             else {
               //not working, won't allow optional time slice
@@ -137,7 +135,7 @@ import java.util.ArrayList;
                 time.tick(sim.timeSlice);
 
                 if (sim.allBallsStopped()) {
-                    System.out.println("\n   All balls stopped. No collision detected.\n");
+                    System.out.println("\n   All ball(s) stopped. No collision detected.\n");
                     System.exit(0);
                 }
 
