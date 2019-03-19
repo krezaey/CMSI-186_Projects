@@ -7,8 +7,6 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-import java.util.Arrays;
-
 public class Ball {
 
  final double BALL_RADIUS = 4.45;
@@ -42,9 +40,9 @@ public class Ball {
   * @return void methods
   */
 
- public void updateLocation() {
-  this.locx += this.velx;
-  this.locy += this.vely;
+ public void updateLocation( double timeSlice ) {
+  this.locx += this.velx * timeSlice;
+  this.locy += this.vely * timeSlice;
  }
 
  /** 
@@ -62,8 +60,8 @@ public class Ball {
  }
 
  /** 
-  * Method to check whether given ball is still in bounds for the field; If so, the ball will be no longer
-  * be considered for the simulation
+  * Method to check whether given ball is still in bounds for the field
+  * @param none
   * @return boolean value indicating status of location
   */
 
@@ -117,15 +115,13 @@ public class Ball {
 
  /** 
   * Setter method to move the ball with given velocities
-  * @param  double xvelocity, double yvelocity
+  * @param  none 
   * @return void method 
   */
 
- public void move(double timeSlice) {
-  while (isInMotion() == true) {
-    updateVelocity();
-    updateLocation();
-  }
+ public void move( double timeSlice ) {
+   updateLocation(timeSlice);
+   updateVelocity();
  }
 
  /** 
@@ -135,14 +131,12 @@ public class Ball {
   */
 
  public String toString() {
-  return "\n Location: (" + this.locx + " , " + this.locy + ")" +
-         "\n Velocity: (" + this.velx + " , " + this.vely + ")";
+  return "\n   Location: (" + this.locx + " , " + this.locy + ")" +
+         "\n   Velocity: (" + this.velx + " , " + this.vely + ")";
  }
- 
+
  public static void main(String args[]) {
-  try {
-   // validation tests return -1.0 if invalid; will throw nfe in SoccerSim class
- 
+  try { 
    System.out.println("\n  Validation of Ball Position tests.");
    System.out.println((200 == Ball.validateBallPosition("200")) ? "    Good job - got 200" : "Eh, try again.");
    System.out.println((40.2 == Ball.validateBallPosition("40.2")) ? "    Good job - got 40.2" : "Eh, try again.");
@@ -174,7 +168,7 @@ public class Ball {
    System.out.println("    Move and ToString tests.");
    a.move(1);
    System.out.println("      " + a.toString());
-   b.move(1);
+   b.move(2);
    System.out.println("      " + b.toString());
   }
   catch ( Exception e ) {

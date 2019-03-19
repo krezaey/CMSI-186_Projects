@@ -12,11 +12,10 @@ import java.text.DecimalFormat;
 public class Timer {
 
    private double elapsedTimeSeconds = 0;
-   private double timeSlice = 0;
-   
+
    public Timer() {}
 
-   public double tick() {
+   public double tick( double timeSlice ) {
       elapsedTimeSeconds += timeSlice;
       return elapsedTimeSeconds;
    }
@@ -43,7 +42,7 @@ public class Timer {
       String hour = String.valueOf( hourFormat.format( hourTime ) );
       String minute = String.valueOf( minuteFormat.format( minuteTime ) );
       String seconds = String.valueOf( secondFormat.format( secondTime ) );
-      String timeString =  hour + ":" + minute + ":" + seconds;
+      String timeString =  "------------" + hour + ":" + minute + ":" + seconds + "------------";
 
       return timeString;
    }
