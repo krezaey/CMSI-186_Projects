@@ -14,12 +14,10 @@ public class Timer {
    private double elapsedTimeSeconds = 0;
    private double timeSlice = 0;
    
-   public Timer( double timeSlice ) {
-      this.timeSlice = timeSlice;
-   }
+   public Timer() {}
 
    public double tick() {
-      elapsedTimeSeconds += this.timeSlice;
+      elapsedTimeSeconds += timeSlice;
       return elapsedTimeSeconds;
    }
 

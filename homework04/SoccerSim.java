@@ -51,9 +51,8 @@
         System.out.println("Placeholder");
     }
 
-    public Ball[] handleInitialArgs( String args[] ) {
-
-        System.out.println( "\n Welcome to the Soccer Simulator program! \n" ) ;
+    public void handleInitialArgs( String args[] ) {
+        System.out.println("Welcome to the Soccer Simulation program!");
 
         if( (0 == args.length) || (args.length < 4) ) {
            System.out.println( "   Sorry, you must enter at least four arguments and an appropriate number of arguments.\n" +
@@ -95,7 +94,6 @@
             j++;
 
          }
-         return balls;
      }
 
      public static void main ( String args[] ) {
