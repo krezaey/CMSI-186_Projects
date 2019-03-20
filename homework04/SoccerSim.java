@@ -66,6 +66,7 @@ public class SoccerSim {
   for (int i = 0; i < balls.size(); i++) {
    if ( (balls.get(i).isInMotion() == false) || (balls.get(i).isInBounds() == false) ) {
     balls.get(i).changeVelocity();
+    balls.remove(i);
     ballsStopped++;
    }
   }
