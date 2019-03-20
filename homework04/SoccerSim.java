@@ -23,9 +23,6 @@ public class SoccerSim {
  double xvelocity = 0;
  double yvelocity = 0;
 
- //String removeReport = "";
-
- //ArrayList < Integer > ballRemovedIndex = new ArrayList  <Integer> ();
  ArrayList < Ball > balls = new ArrayList < Ball > ();
 
  public SoccerSim() {}
@@ -36,12 +33,7 @@ public class SoccerSim {
   for (int i = 0; i < balls.size(); i++) {
    ballReport += "\n   Ball " + (i + 1);
    ballReport += balls.get(i).toString() + "\n";
-
-//    for (int index : ballRemovedIndex ) {
-//     removeReport += "\n    Ball " + (index) + " removed from consideration for the simulation because it either stopped or went out of bounds. Refer to ball state report to see location and / or velocity.";  
-//    }
   }
-  
   return ballReport;
  }
 
@@ -68,38 +60,53 @@ public class SoccerSim {
   return response;
  }
 
+ public boolean ballCollide() {
+    boolean response = false;
+    double xDist = 0;
+    double yDist = 0;
+    double distance = 0;
+    if ( balls.size() > 1 ) {
+       for ( int i = 0; i < balls.size() - 1; i++ ) {
+           xDist = Math.abs(balls.get(i).locx - balls.get(i+1).locx);
+           yDist = Math.abs(balls.get(i).locy - balls.get(i+1).locy);
+           distance = Math.sqrt( (xDist * xDist) + (yDist * yDist) );
+
+           if ( (xDist == 0) && (yDist == 0)) {
+               response = true;
+           }
+  
+           else if (distance <= 8.9) {
+               response = true;
+           }
+       }
+    }
+    return response;
+ }
+
+ public boolean poleCollide() {
+    boolean response = false;
+    double xDist = 0;
+    double yDist = 0;
+    double distance = 0;
+    if ( balls.size() >= 1 ) {
+        for ( int i = 0; i < balls.size(); i++ ) {
+           xDist = Math.abs(balls.get(i).locx - (-10));
+           yDist = Math.abs(balls.get(i).locy - 20);
+           distance = Math.sqrt ( (xDist * xDist) + (yDist * yDist) );
+
+           if (distance <= BALL_DISTANCE) {
+               response = true;
+           }
+        }
+    }   
+    return response;
+ }
+
  public boolean detectCollision() {
      boolean response = false;
-     double xDist = 0;
-     double yDist = 0;
-     double distance = 0;
-     if ( balls.size() > 1 ) {
-        for ( int i = 0; i < balls.size() - 1; i++ ) {
-            xDist = Math.abs(balls.get(i).locx - balls.get(i+1).locx);
-            yDist = Math.abs(balls.get(i).locy - balls.get(i+1).locy);
-            distance = Math.sqrt( (xDist * xDist) + (yDist * yDist) );
-
-            if ( (balls.get(i).locx == balls.get(i+1).locx) && (balls.get(i).locy == balls.get(i+1).locy)) {
-                response = true;
-            }
-   
-            else if (distance <= 8.9) {
-                response = true;
-            }
-        }
+     if ( ballCollide() == true || poleCollide() == true ) {
+         response = true;
      }
-     //checking for collision with pole located at (-10, 20)
-     if ( balls.size() >= 1 ) {
-         for ( int i = 0; i < balls.size(); i++ ) {
-            xDist = Math.abs(balls.get(i).locx - (-10));
-            yDist = Math.abs(balls.get(i).locy - 20);
-            distance = Math.sqrt ( (xDist * xDist) + (yDist * yDist) );
-
-            if (distance <= BALL_DISTANCE) {
-                response = true;
-            }
-         }
-     }   
      return response;
  }
 
