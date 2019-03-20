@@ -65,6 +65,9 @@ public class Timer {
   return timeString;
  }
 
+ /*
+  * Main program runs here! Simply tests the existence of the timer class.
+  */
  public static void main( String args[] ) {
   System.out.println( "I'm only checking that the timer class exists." );
  }

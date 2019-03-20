@@ -15,19 +15,25 @@ public class SoccerSim {
 
  int ballsStopped = 0;
 
- boolean simulationStopped = false;
-
- String collisionReport = "";
-
  double timeSlice = 0;
  double xposition = 0;
  double yposition = 0;
  double xvelocity = 0;
  double yvelocity = 0;
 
+ boolean simulationStopped = false;
+
+ String collisionReport = "";
+
  ArrayList < Ball > balls = new ArrayList < Ball > ();
 
  public SoccerSim() {}
+
+ /** 
+  * Method that returns string representations of all balls created, along with location and velocity
+  * @param none
+  * @return string representation of balls array
+  */
 
  public String ballsToString() {
   String ballReport = "   ";
@@ -39,11 +45,23 @@ public class SoccerSim {
   return ballReport;
  }
 
+ /** 
+  * Method that moves all the balls in the balls array
+  * @param double timeSlice
+  * @return void method
+  */
+
  public void moveAll(double timeSlice) {
   for (int i = 0; i < balls.size(); i++) {
    balls.get(i).move(timeSlice);
   }
  }
+
+ /** 
+  * Method that tracks the number of balls stopped; this happens when balls are no longer in motion or in bounds
+  * @param none
+  * @return void method
+  */
 
  public void stopBalls() {
   for (int i = 0; i < balls.size(); i++) {
@@ -54,6 +72,12 @@ public class SoccerSim {
   }
  }
 
+ /** 
+  * Method that checks if all the balls in the balls array are stopped
+  * @param none
+  * @return boolean value indicating whether all balls are stopped or not
+  */
+
  public boolean allBallsStopped() {
   boolean response = false;
   if (ballsStopped == balls.size()) {
@@ -61,6 +85,13 @@ public class SoccerSim {
   }
   return response;
  }
+
+ /** 
+  * Method that detects if any 2 balls in the balls array collide with each other; only if the balls array has more than 1 ball
+  * Note: also provides a collision report that shows which balls collided and where
+  * @param none
+  * @return boolean value indicating whether a collision between balls occurred
+  */
 
  public boolean ballCollide() {
     boolean response = false;
@@ -87,6 +118,13 @@ public class SoccerSim {
     return response;
  }
 
+ /** 
+  * Method that detects if any ball in the balls array collides with the stationary pole; located at (-10, 20)
+  * Note: also provides a collision report that shows which ball collided with the pole
+  * @param none
+  * @return boolean value indicating whether a collision between any ball and the pole occurred
+  */
+
  public boolean poleCollide() {
     boolean response = false;
     double xDist = 0;
@@ -107,6 +145,12 @@ public class SoccerSim {
     return response;
  }
 
+ /** 
+  * Method that checks if any collision occurred - a collsion with the pole or any ball
+  * @param none
+  * @return boolean value indicating whether any collision occurred
+  */
+
  public boolean detectCollision() {
      boolean response = false;
      if ( ballCollide() == true || poleCollide() == true ) {
@@ -115,17 +159,29 @@ public class SoccerSim {
      return response;
  }
 
+ /** 
+  * Method that uses the previous methods to run the simulation
+  * @param double timeslice
+  * @return void method
+  */
+
  public void runSimulation(double timeSlice) {
   moveAll(timeSlice);
   stopBalls();
   System.out.println(ballsToString());
  }
 
+ /** 
+  * Method that handles the initial arguments and validates them; provides simulation's opening message
+  * @param String args[] from the terminal
+  * @return void method
+  */
+
  public void handleInitialArgs(String args[]) {
 
   System.out.println("\n\n\n\n  **************************************************************************************");
   System.out.println("  ** Welcome to the Soccer Simulation program!");
-  System.out.println("  ** Please keep in mind these initial conditions.");
+  System.out.println("  ** Please keep in mind these initial conditions:");
   System.out.println("  ** We are playing in a field that is 1000 feet wide and 1000 feet long.");
   System.out.println("  ** There is a flagpole in the field at (-10,20) with (0,0) being the center of the field.");
   System.out.println("  ** The flagpole has the same radius as the soccer balls.");
@@ -164,7 +220,10 @@ public class SoccerSim {
   }
  }
 
- public static void main(String args[]) {
+ /*
+  * Main program runs here! Uses methods from Timer class, Ball class, and SoccerSim class
+  */
+  public static void main(String args[]) {
   SoccerSim sim = new SoccerSim();
   Timer time = new Timer();
 
