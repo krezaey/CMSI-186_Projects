@@ -21,7 +21,7 @@ public class Timer {
   * @return void method
   */
 
- public double tick(double timeSlice) {
+ public double tick( double timeSlice ) {
   elapsedTimeSeconds += timeSlice;
   return elapsedTimeSeconds;
  }
@@ -43,30 +43,30 @@ public class Timer {
   */
 
  public String toString() {
-  DecimalFormat hourFormat = new DecimalFormat("00");
-  DecimalFormat minuteFormat = new DecimalFormat("00");
-  DecimalFormat secondFormat = new DecimalFormat("00.00");
+  DecimalFormat hourFormat = new DecimalFormat( "00" );
+  DecimalFormat minuteFormat = new DecimalFormat( "00" );
+  DecimalFormat secondFormat = new DecimalFormat( "00.00" );
 
-  double hoursLeft = (elapsedTimeSeconds / 3600);
-  double hourTime = Math.floor(hoursLeft);
-  double minutesLeft = ((hoursLeft - hourTime) * 3600) / 60;
-  double minuteTime = Math.floor(minutesLeft);
-  double secondTime = (minutesLeft - minuteTime) * 60;
+  double hoursLeft = ( elapsedTimeSeconds / 3600 );
+  double hourTime = Math.floor( hoursLeft );
+  double minutesLeft = ( (hoursLeft - hourTime) * 3600 ) / 60;
+  double minuteTime = Math.floor( minutesLeft );
+  double secondTime = ( minutesLeft - minuteTime ) * 60;
 
-  if (hourTime == 0) {
+  if ( hourTime == 0 ) {
    hourTime = 12;
   }
 
-  String hour = String.valueOf(hourFormat.format(hourTime));
-  String minute = String.valueOf(minuteFormat.format(minuteTime));
-  String seconds = String.valueOf(secondFormat.format(secondTime));
+  String hour = String.valueOf( hourFormat.format(hourTime) );
+  String minute = String.valueOf( minuteFormat.format(minuteTime) );
+  String seconds = String.valueOf( secondFormat.format(secondTime) );
   String timeString = "------------" + hour + ":" + minute + ":" + seconds + "------------";
 
   return timeString;
  }
 
- public static void main(String args[]) {
-  System.out.println("I'm only checking that the timer class exists.");
+ public static void main( String args[] ) {
+  System.out.println( "I'm only checking that the timer class exists." );
  }
 
 }
