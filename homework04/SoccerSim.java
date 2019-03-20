@@ -7,12 +7,13 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
+//need to get collision to work with 2 balls
+//single ball working
 import java.util.ArrayList;
 
 public class SoccerSim {
 
- final double FIELD_SIZE = 500;
- final double BALL_RADIUS = 4.45;
+ final double BALL_DISTANCE = 8.9;
 
  int ballsRemoved = 0;
  int ballsStopped = 0;
@@ -25,16 +26,25 @@ public class SoccerSim {
  double xvelocity = 0;
  double yvelocity = 0;
 
+ //String removeReport = "";
+
+ //ArrayList < Integer > ballRemovedIndex = new ArrayList  <Integer> ();
  ArrayList < Ball > balls = new ArrayList < Ball > ();
 
  public SoccerSim() {}
 
  public String ballsToString() {
   String ballReport = "   ";
+  String removeReport = "   ";
   for (int i = 0; i < balls.size(); i++) {
    ballReport += "\n   Ball " + (i + 1);
    ballReport += balls.get(i).toString() + "\n";
+
+//    for (int index : ballRemovedIndex ) {
+//     removeReport += "\n    Ball " + (index) + " removed from consideration for the simulation because it either stopped or went out of bounds. Refer to ball state report to see location and / or velocity.";  
+//    }
   }
+  
   return ballReport;
  }
 
@@ -55,6 +65,11 @@ public class SoccerSim {
  public void stopBalls() {
   for (int i = 0; i < balls.size(); i++) {
    if (balls.get(i).isInMotion() == false) {
+    // balls.get(i).velx.set(i, 0.0);
+    // balls.get(i).vely.set(i, 0.0);
+    // balls.set(i, 0.0);
+    // balls.set(i, 0.0);
+
     ballsStopped++;
    }
   }
@@ -74,7 +89,7 @@ public class SoccerSim {
      double yDist = 0;
      double distance = 0;
      if ( balls.size() > 1 ) {
-        for ( int i = 0; i < balls.size(); i++ ) {
+        for ( int i = 0; i < balls.size() - 1; i++ ) {
             xDist = Math.abs(balls.get(i).locx - balls.get(i+1).locx);
             yDist = Math.abs(balls.get(i).locy - balls.get(i+1).locy);
             distance = Math.sqrt( (xDist * xDist) + (yDist * yDist) );
@@ -83,7 +98,7 @@ public class SoccerSim {
                 response = true;
             }
    
-            if (distance <= 8.9) {
+            else if (distance <= 8.9) {
                 response = true;
             }
         }
@@ -95,7 +110,7 @@ public class SoccerSim {
             yDist = Math.abs(balls.get(i).locy - 20);
             distance = Math.sqrt ( (xDist * xDist) + (yDist * yDist) );
 
-            if (distance <= 8.9) {
+            if (distance <= BALL_DISTANCE) {
                 response = true;
             }
          }
@@ -107,13 +122,14 @@ public class SoccerSim {
   moveAll(timeSlice);
   stopBalls();
   removeBalls();
+  System.out.println(ballsToString());
  }
 
  public void handleInitialArgs(String args[]) {
 
   System.out.println("\n  | Welcome to the Soccer Simulation program!");
   System.out.println("  | We are playing in a field that is 1000 feet wide and 1000 feet long.");
-  System.out.println("  | There is a flagpole in the field at (-10,20).");
+  System.out.println("  | There is a flagpole in the field at (-10,20) with (0,0) being the center of the field.");
 
   if ((0 == args.length) || (args.length < 4)) {
    System.out.println("   Sorry, you must enter at least four arguments and an appropriate number of arguments.\n" +
@@ -126,7 +142,7 @@ public class SoccerSim {
 
    if ((args.length % 4) == 0) {
     //change LATER!!!
-    timeSlice = Ball.validateTimeSliceArg("3");
+    timeSlice = Ball.validateTimeSliceArg("1");
    } else {
     //not working, won't allow optional time slice
     if (Ball.validateTimeSliceArg(args[args.length - 1]) == -1.0) {
@@ -158,21 +174,19 @@ public class SoccerSim {
   System.out.println("\n    Running simulation with " + sim.balls.size() + " ball(s) and a time slice of " + sim.timeSlice + ".");
 
   while (sim.simulationStopped == false) {
-   System.out.println("\n   " + time.toString());
-   System.out.println(sim.ballsToString());
 
+   System.out.println("\n   " + time.toString());
    sim.runSimulation(sim.timeSlice);
    time.tick(sim.timeSlice);
 
    if (sim.detectCollision()) {
+    System.out.println("   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     System.out.println("   Collision detected at time " + time.toString() + ".\n");
     sim.simulationStopped = true;
-    //System.exit(0);
    }
-   else if (sim.allBallsStopped()) {
+   if (sim.allBallsStopped()) {
     System.out.println("\n   All ball(s) stopped or out of bounds. No collision detected.\n");
     sim.simulationStopped = true;
-    //System.exit(0);
    }
   }
  }

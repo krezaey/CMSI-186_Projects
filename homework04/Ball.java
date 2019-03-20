@@ -9,6 +9,9 @@
 
 public class Ball {
 
+ final double FIELD_SIZE = 500;
+ final double SMALLEST_VELOCITY = 0.08333333333;
+
  double locx = 0.0;
  double locy = 0.0;
  double velx = 0.0;
@@ -51,7 +54,7 @@ public class Ball {
 
  public boolean isInMotion() {
   boolean motionResult = true;
-  if ((Math.abs(this.velx) <= 1) && (Math.abs(this.vely) <= 1)) {
+  if ((Math.abs(this.velx) <= SMALLEST_VELOCITY) && (Math.abs(this.vely) <= SMALLEST_VELOCITY)) {
    motionResult = false;
   }
   return motionResult;
@@ -65,7 +68,7 @@ public class Ball {
 
  public boolean isInBounds() {
   boolean boundResult = true;
-  if ((Math.abs(this.locx) >= 500) || (Math.abs(this.locy) >= 500)) {
+  if ((Math.abs(this.locx) >= FIELD_SIZE) || (Math.abs(this.locy) >= FIELD_SIZE)) {
    boundResult = false;
   }
   return boundResult;
