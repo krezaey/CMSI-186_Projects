@@ -37,7 +37,6 @@ public class SoccerSim {
 
  public String ballsToString() {
   String ballReport = "   ";
-  String removeReport = "   ";
   for (int i = 0; i < balls.size(); i++) {
    ballReport += "\n   Ball " + (i + 1);
    ballReport += balls.get(i).toString() + "\n";
@@ -80,7 +79,7 @@ public class SoccerSim {
 
  public boolean allBallsStopped() {
   boolean response = false;
-  if (ballsStopped == balls.size()) {
+  if (ballsStopped >= balls.size()) {
    response = true;
   }
   return response;
@@ -106,12 +105,12 @@ public class SoccerSim {
 
            if ( (xDist == 0) && (yDist == 0)) {
                response = true;
-               collisionReport = "Ball " + (i+1) + "collided with " + " ball " + (i+2) + " at ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ).";
+               collisionReport = "Ball " + (i+1) + " collided with " + " ball " + (i+2) + " at ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ).";
            }
   
            else if (distance <= 8.9) {
                response = true;
-               collisionReport = "Ball " + (i+1) + "collided with " + " ball " + (i+2) + " between ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ) and " + "( " + balls.get(i+1).locx + " , " + balls.get(i+1).locy + " ).";
+               collisionReport = "Ball " + (i+1) + " collided with " + " ball " + (i+2) + " between ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ) and " + "( " + balls.get(i+1).locx + " , " + balls.get(i+1).locy + " ).";
            }
        }
     }
