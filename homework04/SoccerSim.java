@@ -7,15 +7,12 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-//need to get collision to work with 2 balls
-//single ball working
 import java.util.ArrayList;
 
 public class SoccerSim {
 
  final double BALL_DISTANCE = 8.9;
 
- int ballsRemoved = 0;
  int ballsStopped = 0;
 
  boolean simulationStopped = false;
@@ -54,22 +51,10 @@ public class SoccerSim {
   }
  }
 
- public void removeBalls() {
-  for (int i = 0; i < balls.size(); i++) {
-   if (balls.get(i).isInBounds() == false) {
-    ballsRemoved++;
-   }
-  }
- }
-
  public void stopBalls() {
   for (int i = 0; i < balls.size(); i++) {
-   if (balls.get(i).isInMotion() == false) {
-    // balls.get(i).velx.set(i, 0.0);
-    // balls.get(i).vely.set(i, 0.0);
-    // balls.set(i, 0.0);
-    // balls.set(i, 0.0);
-
+   if ( (balls.get(i).isInMotion() == false) || (balls.get(i).isInBounds() == false) ) {
+    balls.get(i).changeVelocity();
     ballsStopped++;
    }
   }
@@ -77,7 +62,7 @@ public class SoccerSim {
 
  public boolean allBallsStopped() {
   boolean response = false;
-  if (ballsStopped + ballsRemoved == balls.size()) {
+  if (ballsStopped == balls.size()) {
    response = true;
   }
   return response;
@@ -121,7 +106,6 @@ public class SoccerSim {
  public void runSimulation(double timeSlice) {
   moveAll(timeSlice);
   stopBalls();
-  removeBalls();
   System.out.println(ballsToString());
  }
 

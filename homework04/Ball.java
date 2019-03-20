@@ -35,6 +35,17 @@ public class Ball {
   this.vely = this.vely * 0.99;
  }
 
+ /** 
+  * Setter method to change the balls' velocity, used in SoccerSim class
+  * @param  none
+  * @return void method 
+  */
+
+ public void changeVelocity() {
+   this.velx = 0.0;
+   this.vely = 0.0;
+ }
+
  /**
   * Setter method to update the ball's location, uses velocity to set it
   * @param none
