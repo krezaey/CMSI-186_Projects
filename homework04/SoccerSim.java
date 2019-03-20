@@ -118,35 +118,38 @@ public class SoccerSim {
 
  public void handleInitialArgs(String args[]) {
 
-  System.out.println("\n  | Welcome to the Soccer Simulation program!");
-  System.out.println("  | We are playing in a field that is 1000 feet wide and 1000 feet long.");
-  System.out.println("  | There is a flagpole in the field at (-10,20) with (0,0) being the center of the field.");
+  System.out.println("\n  **************************************************************************************");
+  System.out.println("  ** Welcome to the Soccer Simulation program!");
+  System.out.println("  ** Please keep in mind these initial conditions.");
+  System.out.println("  ** We are playing in a field that is 1000 feet wide and 1000 feet long.");
+  System.out.println("  ** There is a flagpole in the field at (-10,20) with (0,0) being the center of the field.");
+  System.out.println("  ** The flagpole has the same radius as the soccer balls.");
+  System.out.println("  **************************************************************************************");
 
   if ((0 == args.length) || (args.length < 4)) {
-   System.out.println("   Sorry, you must enter at least four arguments and an appropriate number of arguments.\n" +
+   System.out.println("   \nSorry, you must enter at least four arguments and an appropriate number of arguments.\n" +
     "   Usage: java SoccerSim <xlocation> <ylocation> <xvelocity> <yvelocity> (repeat this for as many balls as you want) [timeSlice]\n" +
     "   Please try again...........");
    System.exit(1);
   }
 
-  for (int i = 0; i < args.length; i += 4) {
-
-   if ((args.length % 4) == 0) {
-    //change LATER!!!
+  if ((args.length % 4) == 0) {
     timeSlice = Ball.validateTimeSliceArg("1");
-   } else {
-    //not working, won't allow optional time slice
+   } 
+   if ( (args.length % 4) == 1 ) {
     if (Ball.validateTimeSliceArg(args[args.length - 1]) == -1.0) {
-     throw new NumberFormatException("Please enter a valid time slice or don't enter one to use the default time slice of 1.0 seconds.");
+     throw new NumberFormatException("\n Please enter a valid time slice or don't enter one to use the default time slice of 1.0 seconds.");
     }
     timeSlice = Ball.validateTimeSliceArg(args[args.length - 1]);
    }
+
+  for (int i = 0; i < args.length - 1; i += 4) {
 
    xposition = Ball.validateBallPosition(args[i]);
    yposition = Ball.validateBallPosition(args[i + 1]);
 
    if ((Ball.validateBallPosition(args[i]) == -1.0) || (Ball.validateBallPosition(args[i + 1]) == -1.0)) {
-    throw new NumberFormatException("Please enter valid ball positions. The ball cannot start out of bounds.");
+    throw new NumberFormatException("\n Please enter valid ball positions. The ball cannot start out of bounds.");
    }
 
    xvelocity = Ball.validateBallVelocity(args[i + 2]);
@@ -174,10 +177,12 @@ public class SoccerSim {
     System.out.println("   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     System.out.println("   Collision detected at time " + time.toString() + ".\n");
     sim.simulationStopped = true;
+    System.exit(0);
    }
    if (sim.allBallsStopped()) {
     System.out.println("\n   All ball(s) stopped or out of bounds. No collision detected.\n");
     sim.simulationStopped = true;
+    System.exit(0);
    }
   }
  }
