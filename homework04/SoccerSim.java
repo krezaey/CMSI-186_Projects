@@ -228,6 +228,8 @@ public class SoccerSim {
   sim.handleInitialArgs( args );
 
   System.out.println( "\n    Running simulation with " + sim.balls.size() + " ball(s) and a time slice of " + sim.timeSlice + "." );
+  System.out.println( "\n    A ball will be removed from the report if it is stopped." );
+  System.out.println( "    Keep in mind that with bigger time slices, there will be less thorough reports.");
 
   while ( sim.simulationStopped == false ) {
 
