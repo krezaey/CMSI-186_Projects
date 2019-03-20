@@ -53,10 +53,6 @@ public class Timer {
   double minuteTime = Math.floor( minutesLeft );
   double secondTime = ( minutesLeft - minuteTime ) * 60;
 
-  if ( hourTime == 0 ) {
-   hourTime = 12;
-  }
-
   String hour = String.valueOf( hourFormat.format(hourTime) );
   String minute = String.valueOf( minuteFormat.format(minuteTime) );
   String seconds = String.valueOf( secondFormat.format(secondTime) );
