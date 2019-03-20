@@ -195,9 +195,10 @@ public class SoccerSim {
   if ( (args.length % 4) == 0 ) {
    timeSlice = Ball.validateTimeSliceArg("1");
   }
+
   if ( (args.length % 4) == 1 ) {
    if ( Ball.validateTimeSliceArg(args[args.length - 1]) == -1.0 ) {
-    throw new NumberFormatException("\n Please enter a valid time slice or don't enter one to use the default time slice of 1.0 seconds.");
+    throw new NumberFormatException("\n\n Please enter a valid time slice or don't enter one to use the default time slice of 1.0 seconds.");
    }
    timeSlice = Ball.validateTimeSliceArg( args[args.length - 1] );
   }
@@ -208,7 +209,7 @@ public class SoccerSim {
    yposition = Ball.validateBallPosition( args[i + 1] );
 
    if ( (Ball.validateBallPosition(args[i]) == -1.0) || (Ball.validateBallPosition(args[i + 1]) == -1.0) ) {
-    throw new NumberFormatException( "\n Please enter valid ball positions. The ball cannot start out of bounds." );
+    throw new NumberFormatException( "\n\n Please enter valid ball positions. The ball cannot start out of bounds." );
    }
 
    xvelocity = Ball.validateBallVelocity( args[i + 2] );
@@ -222,6 +223,7 @@ public class SoccerSim {
   * Main program runs here! Uses methods from Timer class, Ball class, and SoccerSim class
   */
  public static void main( String args[] ) {
+
   SoccerSim sim = new SoccerSim();
   Timer time = new Timer();
 
@@ -229,7 +231,7 @@ public class SoccerSim {
 
   System.out.println( "\n    Running simulation with " + sim.balls.size() + " ball(s) and a time slice of " + sim.timeSlice + "." );
   System.out.println( "\n    A ball will be removed from the report if it is stopped." );
-  System.out.println( "    Keep in mind that with bigger time slices, there will be less thorough reports.");
+  System.out.println( "    Keep in mind: With bigger time slices, there will be less thorough reports.");
 
   while ( sim.simulationStopped == false ) {
 
@@ -242,11 +244,14 @@ public class SoccerSim {
     System.out.println( "  !! Collision detected at time " + time.toString() + "." );
     System.out.println( "  !! " + sim.collisionReport );
     System.out.println( "  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + "\n" );
+
     sim.simulationStopped = true;
     System.exit(0);
    }
+   
    if (sim.allBallsStopped()) {
     System.out.println( "\n   All ball(s) stopped or out of bounds. No collision detected.\n" );
+
     sim.simulationStopped = true;
     System.exit(0);
    }
