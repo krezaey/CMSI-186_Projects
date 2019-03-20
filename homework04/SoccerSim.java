@@ -250,7 +250,7 @@ public class SoccerSim {
    }
    
    if (sim.allBallsStopped()) {
-    System.out.println( "\n   All ball(s) stopped or out of bounds. No collision detected.\n" );
+    System.out.println( "\n   All ball(s) stopped or out of bounds by " + time.toString() + ". No collision detected.\n" );
 
     sim.simulationStopped = true;
     System.exit(0);
