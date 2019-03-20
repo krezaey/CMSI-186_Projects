@@ -123,7 +123,7 @@ public class SoccerSim {
 
  public void handleInitialArgs(String args[]) {
 
-  System.out.println("\n  **************************************************************************************");
+  System.out.println("\n\n\n\n  **************************************************************************************");
   System.out.println("  ** Welcome to the Soccer Simulation program!");
   System.out.println("  ** Please keep in mind these initial conditions.");
   System.out.println("  ** We are playing in a field that is 1000 feet wide and 1000 feet long.");
@@ -179,7 +179,7 @@ public class SoccerSim {
    time.tick(sim.timeSlice);
 
    if (sim.detectCollision()) {
-    System.out.println("  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    System.out.println("\n  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     System.out.println("  !! Collision detected at time " + time.toString() + ".");
     System.out.println("  !! " + sim.collisionReport);
     System.out.println("  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + "\n");
