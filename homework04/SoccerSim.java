@@ -17,6 +17,8 @@ public class SoccerSim {
 
  boolean simulationStopped = false;
 
+ String collisionReport = "";
+
  double timeSlice = 0;
  double xposition = 0;
  double yposition = 0;
@@ -73,10 +75,12 @@ public class SoccerSim {
 
            if ( (xDist == 0) && (yDist == 0)) {
                response = true;
+               collisionReport = "Ball " + (i+1) + "collided with " + " ball " + (i+2) + " at ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ).";
            }
   
            else if (distance <= 8.9) {
                response = true;
+               collisionReport = "Ball " + (i+1) + "collided with " + " ball " + (i+2) + " between ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ) and " + "( " + balls.get(i+1).locx + " , " + balls.get(i+1).locy + " ).";
            }
        }
     }
@@ -96,6 +100,7 @@ public class SoccerSim {
 
            if (distance <= BALL_DISTANCE) {
                response = true;
+               collisionReport = "Ball " + (i + 1) + " collided with the pole at (-10, 20).";
            }
         }
     }   
@@ -174,8 +179,10 @@ public class SoccerSim {
    time.tick(sim.timeSlice);
 
    if (sim.detectCollision()) {
-    System.out.println("   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    System.out.println("   Collision detected at time " + time.toString() + ".\n");
+    System.out.println("  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    System.out.println("  !! Collision detected at time " + time.toString() + ".");
+    System.out.println("  !! " + sim.collisionReport);
+    System.out.println("  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + "\n");
     sim.simulationStopped = true;
     System.exit(0);
    }
