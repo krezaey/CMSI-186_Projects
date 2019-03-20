@@ -150,6 +150,7 @@ public class Ball {
  /*
   * Main program runs here! Runs tests that checks most of the methods above.
   */
+  
  public static void main(String args[]) {
   try {
    System.out.println( "\n  Validation of Ball Position tests." );

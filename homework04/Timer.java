@@ -27,16 +27,6 @@ public class Timer {
  }
 
  /**
-  * Getter method to return the seconds that have elapsed in the duration of the clock
-  * @param none
-  * @return double precision value of the total elapsed seconds
-  */
-
- public double getTotalSeconds() {
-  return elapsedTimeSeconds;
- }
-
- /**
   * Method to return string representation of the current clock
   * @param none
   * @return string value of clock with hours, minutes, seconds, and miliseconds
