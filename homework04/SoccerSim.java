@@ -80,7 +80,7 @@ public class SoccerSim {
 
  public boolean allBallsStopped() {
   boolean response = false;
-  if ( ballsStopped >= balls.size() + 1 ) {
+  if ( ballsStopped >= balls.size() + 1) {
    response = true;
   }
   return response;
