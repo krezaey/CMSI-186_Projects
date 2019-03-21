@@ -31,8 +31,8 @@ public class Ball {
   */
 
  public void updateVelocity() {
-  this.velx = this.velx * 0.99;
-  this.vely = this.vely * 0.99;
+  this.velx *= 0.99;
+  this.vely *= 0.99;
  }
 
  /** 
@@ -150,7 +150,7 @@ public class Ball {
  /*
   * Main program runs here! Runs tests that checks most of the methods above.
   */
-  
+
  public static void main(String args[]) {
   try {
    System.out.println( "\n  Validation of Ball Position tests." );

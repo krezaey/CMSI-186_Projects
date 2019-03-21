@@ -7,11 +7,6 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
- /* doesn't detect all collisions 
-  * doesn't work for more than 4 args
-  * add remove message
-  */
-
 import java.util.ArrayList;
 
 public class SoccerSim {
@@ -71,7 +66,7 @@ public class SoccerSim {
   for ( int i = 0; i < balls.size(); i++ ) {
    if ( (balls.get(i).isInMotion() == false) || (balls.get(i).isInBounds() == false) ) {
     balls.get(i).changeVelocity();
-    //balls.remove(i);
+    balls.remove(i);
     ballsStopped++;
    }
   }
@@ -85,11 +80,9 @@ public class SoccerSim {
 
  public boolean allBallsStopped() {
   boolean response = false;
-  for ( int i = 0; i < balls.size(); i++ ) {
-    if ( ballsStopped >= balls.size() + i ) {
-        response = true;
-       }
-  }  
+  if ( ballsStopped >= balls.size() + 1 ) {
+   response = true;
+  }
   return response;
  }
 
@@ -107,23 +100,21 @@ public class SoccerSim {
   double distance = 0;
   if ( balls.size() > 1 ) {
    for ( int i = 0; i < balls.size() - 1; i++ ) {
-       for ( int j = i+1; j < balls.size() - 1; j++) {
-        xDist = Math.abs( balls.get(i).locx - balls.get(i + j).locx );
-        yDist = Math.abs( balls.get(i).locy - balls.get(i + j).locy );
-        distance = Math.sqrt( (xDist * xDist) + (yDist * yDist) );
-    
-        if ( (xDist == 0) && (yDist == 0) ) {
-         response = true;
-         collisionReport = "Ball " + (i + 1) + " collided with " + " ball " + (i + j + 1) + " at ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ).";
-        } else if ( distance <= 8.9 ) {
-         response = true;
-         collisionReport = "Ball " + (i + 1) + " collided with " + " ball " + (i + j + 1) + " between ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ) and " + "( " + balls.get(i + j).locx + " , " + balls.get(i + j).locy + " ).";
-        }
-       }
+    xDist = Math.abs( balls.get(i).locx - balls.get(i + 1).locx );
+    yDist = Math.abs( balls.get(i).locy - balls.get(i + 1).locy );
+    distance = Math.sqrt( (xDist * xDist) + (yDist * yDist) );
+
+    if ( (xDist == 0) && (yDist == 0) ) {
+     response = true;
+     collisionReport = "Ball " + (i + 1) + " collided with " + " ball " + (i + 2) + " at ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ).";
+    } else if ( distance <= 8.9 ) {
+     response = true;
+     collisionReport = "Ball " + (i + 1) + " collided with " + " ball " + (i + 2) + " between ( " + balls.get(i).locx + " , " + balls.get(i).locy + " ) and " + "( " + balls.get(i + 1).locx + " , " + balls.get(i + 1).locy + " ).";
+    }
    }
+  }
+  return response;
  }
- return response;
-}
 
  /** 
   * Method that detects if any ball in the balls array collides with the stationary pole; located at (-10, 20)
@@ -139,14 +130,14 @@ public class SoccerSim {
   double distance = 0;
   if ( balls.size() >= 1 ) {
    for (int i = 0; i < balls.size(); i++) {
-        xDist = Math.abs(balls.get(i).locx - (-10));
-        yDist = Math.abs(balls.get(i).locy - 20);
-        distance = Math.sqrt((xDist * xDist) + (yDist * yDist));
-    
-        if ( distance <= BALL_DISTANCE ) {
-         response = true;
-         collisionReport = "Ball " + (i) + " collided with the pole at (-10, 20).";
-        }
+    xDist = Math.abs(balls.get(i).locx - (-10));
+    yDist = Math.abs(balls.get(i).locy - 20);
+    distance = Math.sqrt((xDist * xDist) + (yDist * yDist));
+
+    if ( distance <= BALL_DISTANCE ) {
+     response = true;
+     collisionReport = "Ball " + (i + 1) + " collided with the pole at (-10, 20).";
+    }
    }
   }
   return response;
@@ -258,7 +249,7 @@ public class SoccerSim {
     System.exit(0);
    }
    
-   if ( sim.allBallsStopped() ) {
+   if (sim.allBallsStopped()) {
     System.out.println( "\n   All ball(s) stopped or out of bounds by " + time.toString() + ". No collision detected.\n" );
 
     sim.simulationStopped = true;
