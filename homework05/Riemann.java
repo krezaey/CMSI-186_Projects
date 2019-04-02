@@ -16,6 +16,9 @@ import java.util.List;
     double lowerBound;
     double upperBound;
 
+    boolean functionValid = true;
+    boolean optionalArgPresent = false;
+
     String functionArgument;
 
     List <String> functions = Arrays.asList("poly", "sin", "cos", "log", "exp", "runtests");
@@ -26,7 +29,7 @@ import java.util.List;
     public void validateFunction( String[] args ) {
         for ( int i = 0; i < functions.size(); i++ ) {
             if ( functions.contains(args[0].toLowerCase()) == false ) {
-                throw new NumberFormatException("Please enter a valid method.");
+                functionValid = false;
             }
             else {
                 functionArgument = args[0].toLowerCase();
@@ -39,6 +42,7 @@ import java.util.List;
         if ( args[args.length - 1].contains("%") ) {
             percent = args[args.length - 1].replace("%", " ").trim();
             percentArgument = Double.parseDouble(percent);
+            optionalArgPresent = true;
         }
         else {
             percentArgument = 1.0;
@@ -49,15 +53,21 @@ import java.util.List;
 
     }
 
-    public void validateBounds (String[] args) {
+    public void validateBounds ( String[] args ) {
 
     }
 
     public void handleInitialArguments( String [] args ) {
+        String usageMessage = "\n  java Riemann function coefficents lowerBound upperBound <accuracy>%";
+    
         validateFunction(args);
         validatePercentArg(args);
         validateCoefficents(args);
         validateBounds(args);
+
+        if ( functionValid == false ) {
+            throw new NumberFormatException("\n  Please enter a valid function." + usageMessage);
+        }
 
         System.out.println( "\n\n  Welcome to the Riemann Integral calculator!" );
         System.out.println( "  We are integrating the function " + functionArgument + " from " + lowerBound + " to " + upperBound + " with an accuracy of " + percentArgument + "%."  );
@@ -78,6 +88,8 @@ import java.util.List;
         }
         return 1;
     }
+
+    
 
     public void runMyTests() {
         System.out.println("Hello");
