@@ -13,18 +13,25 @@ import java.util.List;
  public class Riemann {
 
     double percentArgument;
+    double lowerBound;
+    double upperBound;
+
     String functionArgument;
 
-    List <String> functions = Arrays.asList("poly", "sin", "cos", "runtests");
+    List <String> functions = Arrays.asList("poly", "sin", "cos", "log", "exp", "runtests");
+    ArrayList <Double> coefficents = new ArrayList <Double>();
 
     public Riemann () {}
 
-    public boolean validatePoly( String[] args ) {
-        return false;
-    }
-
-    public boolean validateTrig( String[] args ) {
-        return false;
+    public void validateFunction( String[] args ) {
+        for ( int i = 0; i < functions.size(); i++ ) {
+            if ( functions.contains(args[0].toLowerCase()) == false ) {
+                throw new NumberFormatException("Please enter a valid method.");
+            }
+            else {
+                functionArgument = args[0].toLowerCase();
+            }
+        }
     }
 
     public void validatePercentArg( String[] args ) {
@@ -38,40 +45,48 @@ import java.util.List;
         }
     }
 
-    public void validateFunction( String[] args ) {
-        for ( int i = 0; i < functions.size(); i++ ) {
-            if ( functions.contains(args[0].toLowerCase()) == false ) {
-                throw new NumberFormatException("Please enter a valid method.");
-            }
-            else {
-                functionArgument = args[0].toLowerCase();
-            }
-        }
+    public void validateCoefficents( String[] args ) {
+
     }
 
-    public void handleInitialArguments() {
-        System.out.println("Hello");
+    public void validateBounds (String[] args) {
+
     }
 
-    public void runMyTests() {
-        System.out.println("Hello");
+    public void handleInitialArguments( String [] args ) {
+        validateFunction(args);
+        validatePercentArg(args);
+        validateCoefficents(args);
+        validateBounds(args);
+
+        System.out.println( "\n\n  Welcome to the Riemann Integral calculator!" );
+        System.out.println( "  We are integrating the function " + functionArgument + " from " + lowerBound + " to " + upperBound + " with an accuracy of " + percentArgument + "%."  );
+        System.out.println( "  **************************************************************************************\n\n" );
     }
 
     public double getPolyValue() {
         return 1;
     }
 
-
     public double integrate() {
+        switch (functionArgument) {
+            case "poly": break;
+            case "sin": break;
+            case "cos": break;
+            case "log": break;
+            case "exp": break;
+        }
         return 1;
+    }
+
+    public void runMyTests() {
+        System.out.println("Hello");
     }
 
     public static void main ( String args[] ) {
         Riemann r = new Riemann();
-   
-        r.validatePercentArg(args);
-        r.validateFunction(args);
-        System.out.println(r.percentArgument);
+
+        r.handleInitialArguments(args);
         
     }
  }
