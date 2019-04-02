@@ -6,6 +6,7 @@
  *  Due Date      :  2019-04-02
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +16,15 @@ import java.util.List;
     double percentArgument;
     double lowerBound;
     double upperBound;
+    double dx;
 
     boolean functionValid = true;
     boolean optionalArgPresent = false;
 
     String functionArgument;
 
-    List <String> functions = Arrays.asList("poly", "sin", "cos", "log", "exp", "runtests");
-    ArrayList <Double> coefficents = new ArrayList <Double>();
+    List <String> functions = Arrays.asList("poly", "sin", "cos", "tan", "log", "exp", "runtests");
+    ArrayList <Double> coefficients = new ArrayList <Double> ();
 
     public Riemann () {}
 
@@ -50,15 +52,31 @@ import java.util.List;
     }
 
     public void validateCoefficents( String[] args ) {
-
+        if ( optionalArgPresent == true ) {
+            for ( int i = 1; i < args.length - 3; i++ ) {
+                coefficients.add( Double.parseDouble(args[i]) );
+            }
+        }
+        else {
+            for ( int i = 1; i < args.length - 2; i++ ) {
+                coefficients.add( Double.parseDouble(args[i]) );
+            }
+        }
     }
 
     public void validateBounds ( String[] args ) {
-
+        if ( optionalArgPresent == true ) {
+            lowerBound = Double.parseDouble( args[args.length - 3] );
+            upperBound = Double.parseDouble( args[args.length - 2] );
+        } 
+        else {
+            lowerBound = Double.parseDouble( args[args.length - 2] );
+            upperBound = Double.parseDouble( args[args.length - 1] );
+        }
     }
 
     public void handleInitialArguments( String [] args ) {
-        String usageMessage = "\n  java Riemann function coefficents lowerBound upperBound <accuracy>%";
+        String usageMessage = "\n  Usage: java Riemann function coefficents lowerBound upperBound <accuracy>%";
     
         validateFunction(args);
         validatePercentArg(args);
@@ -99,7 +117,9 @@ import java.util.List;
         Riemann r = new Riemann();
 
         r.handleInitialArguments(args);
-        
+        for ( int i = 0; i < r.coefficients.size(); i++ ) {
+            System.out.println(r.coefficients.get(i));
+        }
     }
  }
 
