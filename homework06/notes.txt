@@ -1,0 +1,14 @@
+~~~~~BigInt.java~~~~~
+
+BigInt java class exists; cannot use it; program will replicate it. 
+
+Used to add an arbitrarily long integer and use it to do operations
+however, arbitrarily long number can only be used in program if 
+represented by string. 
+
+i.e "12343210957409123097412341203947123049712" + 11
+
+Need to convert 11 to string, but adding will result in string concatenation. 
+
+Method to replicate carrying in addition. Can convert chunks of long number 
+as string to integer and use indexes to perform operations.
