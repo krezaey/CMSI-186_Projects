@@ -30,12 +30,11 @@ import java.util.List;
     public void validatePercentArg( String[] args ) {
         String percent;
         if ( args[args.length - 1].contains("%") ) {
-            percent = args[args.length - 1];
-            percent = percent.substring(0, percent.length() - 2 );
+            percent = args[args.length - 1].replace("%", " ").trim();
             percentArgument = Double.parseDouble(percent);
         }
         else {
-            throw new NumberFormatException("Please enter a percent number value as the last argument followed by a %");
+            percentArgument = 1.0;
         }
     }
 
@@ -50,17 +49,21 @@ import java.util.List;
         }
     }
 
-//parse 
     public void handleInitialArguments() {
-        System.out.println("Hello");
-    }
-
-    public void detectString() {
         System.out.println("Hello");
     }
 
     public void runMyTests() {
         System.out.println("Hello");
+    }
+
+    public double getPolyValue() {
+        return 1;
+    }
+
+
+    public double integrate() {
+        return 1;
     }
 
     public static void main ( String args[] ) {
@@ -69,6 +72,7 @@ import java.util.List;
         r.validatePercentArg(args);
         r.validateFunction(args);
         System.out.println(r.percentArgument);
+        
     }
  }
 
