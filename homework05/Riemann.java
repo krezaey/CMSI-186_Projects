@@ -109,12 +109,12 @@ import java.util.List;
 
     /** 
      * Method that handles any special cases; this includes domain for trig functions
-     * @param none
+     * @param String args[] from the terminal
      * @return void method
      * @throws nfe when needed for special cases
      */
 
-    public void handleSpecialCases() {
+    public void handleSpecialCases(String[] args) {
         switch (functionArgument) {
             case "poly":
                 if ( coefficients.size() < 1 ) {
@@ -124,6 +124,16 @@ import java.util.List;
                     System.out.println("  The integral value is: 0.0000.\n\n");  
                     System.exit(0);          
                 }
+                if ( optionalArgPresent == true ) {
+                    if ( (Double.parseDouble(args[args.length-3]) <= 0) ) {
+                        throw new NumberFormatException(exceptionMessage);
+                    }
+                }
+                else {
+                    if ( (Double.parseDouble(args[args.length-2]) <= 0) ) {
+                        throw new NumberFormatException(exceptionMessage);
+                    }
+                }   
                 break;
             case "sqrt":
                 for (int i = 0; i < coefficients.size(); i++) {
@@ -296,7 +306,7 @@ import java.util.List;
         System.out.println( "  We are integrating the function " + r.functionArgument + " from " + r.lowerBound + " to " + r.upperBound + " with an accuracy of " + r.percentArgument + "%."  );
         System.out.println( "  **************************************************************************************\n\n" );
 
-        r.handleSpecialCases(); 
+        r.handleSpecialCases(args); 
 
         double previous = r.integrate(args, 1.0);
         double q = 2.0;
