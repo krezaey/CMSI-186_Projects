@@ -68,17 +68,19 @@ import java.util.List;
     }
 
     public void validateBounds ( String[] args ) {
-        if ( optionalArgPresent == true ) {
-            lowerBound = Double.parseDouble( args[args.length - 3] );
-            upperBound = Double.parseDouble( args[args.length - 2] );
-        } 
-        else {
-            lowerBound = Double.parseDouble( args[args.length - 2] );
-            upperBound = Double.parseDouble( args[args.length - 1] );
-        }
-        if ( lowerBound > upperBound ) {
-            boundsValid = false;
-        }
+        if ( args.length > 1 ) {
+            if ( optionalArgPresent == true ) {
+                lowerBound = Double.parseDouble( args[args.length - 3] );
+                upperBound = Double.parseDouble( args[args.length - 2] );
+            } 
+            else {
+                lowerBound = Double.parseDouble( args[args.length - 2] );
+                upperBound = Double.parseDouble( args[args.length - 1] );
+            }
+            if ( lowerBound > upperBound ) {
+                boundsValid = false;
+            }
+        }  
     }
 
     public void handleSpecialCases() {
@@ -97,15 +99,9 @@ import java.util.List;
             validateBounds(args);
         }
 
-        if ( functionValid == false || boundsValid == false ) {
+        if ( (functionValid == false || boundsValid == false) || (args.length <= 1) ) {
             throw new NumberFormatException(exceptionMessage);
-        } 
-
-        System.out.println( "\n\n  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!" );
-        System.out.println( "  We are integrating the function " + functionArgument + " from " + lowerBound + " to " + upperBound + " with an accuracy of " + percentArgument + "%."  );
-        System.out.println( "  **************************************************************************************\n\n" );
-
-        handleSpecialCases();   
+        }   
     }
 
     public double getPolyValue(double x) {
@@ -177,6 +173,7 @@ import java.util.List;
     public void validateArgsTest() {
         String [] myArgs = {"poly", "1", "2", "3", "4", "4%"};
         handleInitialArguments(myArgs);
+
         // if ( functionValid ) {
         //     if ( optionalArgPresent ) {
         //         if ( coefficients.contains(1.0) ) {
@@ -208,6 +205,12 @@ import java.util.List;
         Riemann r = new Riemann();
 
         r.handleInitialArguments(args);
+
+        System.out.println( "\n\n  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!" );
+        System.out.println( "  We are integrating the function " + r.functionArgument + " from " + r.lowerBound + " to " + r.upperBound + " with an accuracy of " + r.percentArgument + "%."  );
+        System.out.println( "  **************************************************************************************\n\n" );
+
+        r.handleSpecialCases(); 
 
         double previous = r.integrate(args, 1.0);
         double q = 2.0;
