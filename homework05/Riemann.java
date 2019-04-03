@@ -26,7 +26,7 @@ import java.util.List;
     String usageMessage = ("\n  Usage: java Riemann function coefficents lowerBound upperBound <accuracy>%");
     String exceptionMessage = ("\n  Please enter a valid function and/or proper number or arguments and/or bounds in numerical order. \n" + usageMessage + "\n");
 
-    List <String> functions = Arrays.asList("poly", "sin", "cos", "tan", "log", "exp", "runtests");
+    List <String> functions = Arrays.asList("poly", "sin", "cos", "tan", "sqrt", "log", "exp", "runtests");
     ArrayList <Double> coefficients = new ArrayList <Double> ();
 
     public Riemann () {}
@@ -101,7 +101,7 @@ import java.util.List;
             throw new NumberFormatException(exceptionMessage);
         } 
 
-        System.out.println( "\n\n  Welcome to the Riemann Integral calculator!" );
+        System.out.println( "\n\n  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!" );
         System.out.println( "  We are integrating the function " + functionArgument + " from " + lowerBound + " to " + upperBound + " with an accuracy of " + percentArgument + "%."  );
         System.out.println( "  **************************************************************************************\n\n" );
 
@@ -136,9 +136,31 @@ import java.util.List;
                     area += ( Math.sin(j) * dx );
                 }
                 break;
-            case "cos": break;
-            case "log": break;
-            case "exp": break;
+            case "cos": 
+                for ( double j = lowerBound; j < upperBound; j += dx ) {
+                    area += ( Math.cos(j) * dx );
+                }
+                break;
+            case "tan": 
+                for ( double j = lowerBound; j < upperBound; j += dx ) {
+                    area += ( Math.tan(j) * dx );
+                }
+                break;
+            case "sqrt": 
+                for ( double j = lowerBound; j < upperBound; j += dx ) {
+                    area += ( Math.sqrt(j) * dx );
+                }
+                break;
+            case "log": 
+                for ( double j = lowerBound; j < upperBound; j += dx ) {
+                    area += ( Math.log(j) * dx );
+                }
+                break;
+            case "exp": 
+                for ( double j = lowerBound; j < upperBound; j += dx ) {
+                    area += ( Math.exp(j) * dx );
+                }
+                break;
             case "runtests": 
                 if (args.length > 1) {
                     throw new NumberFormatException("\n  To run tests, you must only have one argument.");

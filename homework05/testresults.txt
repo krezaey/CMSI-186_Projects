@@ -1,0 +1,230 @@
+.
+=====================================================
+Testing the Riemann Integration Project Homework 05
+=====================================================
+.
+.
+... Running built-in tests in the Riemann class
+... should either throw exceptions which will not appear in the output file
+... but which should be caught to keep the test program running
+... or preferably output error messages which SHOULD appear there then quit
+.
+.
+============================================================================
+Testing bogus function name 'bogus'
+...should either throw an exception which will not appear in the output file
+... or preferably ouput error messages which SHOULD appear there, then quit
+============================================================================
+.
+.
+============================================================================
+Testing bogus function name 'poly' with no arguments
+...should either throw an exception which will not appear in the output file
+... or preferably ouput error messages which SHOULD appear there, then quit
+============================================================================
+.
+.
+============================================================================
+Testing valid function name 'poly' with only one arg
+...should either throw an exception which will not appear in the output file
+... or preferably ouput error messages which SHOULD appear there, then quit
+============================================================================
+.
+.
+============================================================================
+Testing valid function name 'poly' with only two args
+...should either throw an exception which will not appear in the output file
+... or preferably ouput error messages which SHOULD appear there, then quit
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function poly from 1.0 to 2.0 with an accuracy of 1.0%.
+  **************************************************************************************
+
+
+.
+.
+============================================================================
+Testing valid function name 'poly' with four args with negative final arg
+...should either throw an exception which will not appear in the output file
+... or preferably ouput error messages which SHOULD appear there, then quit
+============================================================================
+.
+.
+============================================================================
+Testing valid function name 'poly' with four args with zero final arg
+...should either throw an exception which will not appear in the output file
+... or preferably ouput error messages which SHOULD appear there, then quit
+============================================================================
+.
+.
+============================================================================
+Testing valid function name 'poly' with three args and default percentage
+...should produce a result close to '0.0000'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function poly from 1.0 to 2.0 with an accuracy of 1.0%.
+  **************************************************************************************
+
+
+  The integral value is: 0.0000.
+
+
+.
+.
+============================================================================
+Testing valid function name 'poly' with three args with final arg 1e-6%
+...should produce a result close to '2.0000'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function poly from 1.0 to 2.0 with an accuracy of 1.0E-6%.
+  **************************************************************************************
+
+
+  The integral value is: 2.0.
+
+
+.
+.
+============================================================================
+Testing valid function name 'poly' with test case parabola args and 1e-6%
+...should produce a result close to '18.0000'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function poly from 1.0 to 4.0 with an accuracy of 1.0E-6%.
+  **************************************************************************************
+
+
+  The integral value is: 18.001272804389636.
+
+
+.
+.
+============================================================================
+Testing valid function name 'poly' with test case parabola args and default
+...should produce a result close to '18.1800'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function poly from 1.0 to 4.0 with an accuracy of 1.0%.
+  **************************************************************************************
+
+
+  The integral value is: 19.439999999999998.
+
+
+.
+.
+============================================================================
+Testing valid function name 'poly' with web page args and default
+...should produce a result close to '1268.75'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function poly from -10.0 to 5.0 with an accuracy of 1.0%.
+  **************************************************************************************
+
+
+  The integral value is: 1437.4999999999995.
+
+
+.
+.
+============================================================================
+Testing valid function name 'poly' for x^5 - 2X^3 - X^2 - 7X - 3
+from 0 to 2 with 1e-6%
+...should produce a result close to '-20.00'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function poly from 0.0 to 2.0 with an accuracy of 1.0E-6%.
+  **************************************************************************************
+
+
+  The integral value is: -19.99936796005004.
+
+
+.
+.
+============================================================================
+Testing valid function name 'sin' with web page args and default
+...should produce a result close to '1.9137'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function sin from -0.27 to 3.55 with an accuracy of 1.0%.
+  **************************************************************************************
+
+
+  The integral value is: 1.859052355175332.
+
+
+.
+.
+============================================================================
+Testing valid function name 'sin' with args -3.45 6.789 and 1.5e-4%
+...should produce a result close to '-1.8278'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function sin from -3.45 to 6.789 with an accuracy of 1.5E-4%.
+  **************************************************************************************
+
+
+  The integral value is: -1.841015928347211.
+
+
+.
+.
+============================================================================
+Testing valid function name 'sin' with args 0.0 1.0 -3.45 6.789 and 1.5e-4%
+...should produce a result close to '-1.8278'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function sin from -3.45 to 6.789 with an accuracy of 1.5E-4%.
+  **************************************************************************************
+
+
+  The integral value is: -1.841015928347211.
+
+
+.
+.
+============================================================================
+Testing valid function name 'sin' with args -17.0 3.0 -11.0 11.0 and 1e-7%
+...should produce a result close to '0.6409'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function sin from -11.0 to 11.0 with an accuracy of 1.0E-7%.
+  **************************************************************************************
+
+
+.
+.
+============================================================================
+Testing valid function name 'sin' with args -17.0 1.0 -23.0 23.0 and 1e-4%
+...should produce a result close to '-1.6276'
+============================================================================
+
+
+  Welcome to the Riemann Integral calculator! We calculate left-hand sums for you!
+  We are integrating the function sin from -23.0 to 23.0 with an accuracy of 1.0E-4%.
+  **************************************************************************************
+
+
