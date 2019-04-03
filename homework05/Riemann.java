@@ -31,6 +31,12 @@ import java.util.List;
 
     public Riemann () {}
 
+    /** 
+     * Method that validates the function argument aka args[0]
+     * @param String args[] from the terminal
+     * @return void method
+     */
+
     public void validateFunction( String[] args ) {
         for ( int i = 0; i < functions.size(); i++ ) {
             if ( functions.contains(args[0].toLowerCase()) == false ) {
@@ -41,6 +47,12 @@ import java.util.List;
             }
         }
     }
+
+    /** 
+     * Method that validates the optional percent argument; must be followed by %
+     * @param String args[] from the terminal
+     * @return void method
+     */
 
     public void validatePercentArg( String[] args ) {
         String percent;
@@ -54,6 +66,12 @@ import java.util.List;
         }
     }
 
+    /** 
+     * Method that validates the coefficients of the function entered; used for polynomial solving
+     * @param String args[] from the terminal
+     * @return void method
+     */
+
     public void validateCoefficents( String[] args ) {
         if ( optionalArgPresent == true ) {
             for ( int i = 1; i < args.length - 3; i++ ) {
@@ -66,6 +84,12 @@ import java.util.List;
             }
         }
     }
+
+    /** 
+     * Method that validates the lower and upper bounds
+     * @param String args[] from the terminal
+     * @return void method
+     */
 
     public void validateBounds ( String[] args ) {
         if ( args.length > 1 ) {
@@ -82,6 +106,13 @@ import java.util.List;
             }
         }  
     }
+
+    /** 
+     * Method that handles any special cases; this includes domain for trig functions
+     * @param none
+     * @return void method
+     * @throws nfe when needed for special cases
+     */
 
     public void handleSpecialCases() {
         switch (functionArgument) {
@@ -105,6 +136,13 @@ import java.util.List;
         
     }
 
+    /** 
+     * Method that handles and validates the initial arguments
+     * @param String args[] from the terminal
+     * @return void method
+     * @throws nfe when bounds or functions aren't valid or when args are not sufficient
+     */
+
     public void handleInitialArguments( String [] args ) {
         validateFunction(args);
     
@@ -114,10 +152,21 @@ import java.util.List;
             validateBounds(args);
         }
 
-        if ( (functionValid == false || boundsValid == false) || (args.length <= 1) ) {
+        if ( functionValid == false || boundsValid == false ) {
+            switch (functionArgument) {
+                case "poly": if ( args.length < 4 ) {throw new NumberFormatException(exceptionMessage);} break;
+                default: if ( args.length < 3 ) {throw new NumberFormatException(exceptionMessage);} break;
+            }
+        } else if (args.length < 1) {
             throw new NumberFormatException(exceptionMessage);
-        }   
+        }
     }
+
+    /** 
+     * Method that calculates the y values for the polynomial functions based on the coefficients
+     * @param double x "degree"
+     * @return double y value
+     */
 
     public double getPolyValue(double x) {
         double yValue = 0;
@@ -126,6 +175,12 @@ import java.util.List;
         }
         return yValue;
     }
+
+    /** 
+     * Method that integrates the functions based on solved y values
+     * @param String args[] from terminal, double q value
+     * @return double value calculated from integrated area
+     */
 
     public double integrate( String[] args, double q ) {
         double area = 0;
@@ -159,8 +214,7 @@ import java.util.List;
                     }
                     else {
                         throw new NumberFormatException(exceptionMessage);
-                    }
-                    
+                    }   
                 }  
                 break;
             case "log": 
@@ -186,37 +240,53 @@ import java.util.List;
         return area;
     }
 
+    /** 
+     * Testing method for validation
+     * @param none
+     * @return void method
+     */
+
     public void validateArgsTest() {
         String [] myArgs = {"poly", "1", "2", "3", "4", "4%"};
-        handleInitialArguments(myArgs);
-
-        // if ( functionValid ) {
-        //     if ( optionalArgPresent ) {
-        //         if ( coefficients.contains(1.0) ) {
-        //             if  ( coefficients.contains(2.0) ) {
-        //                 if (lowerBound == 4) {
-        //                     if (upperBound == 4) {
-        //                         System.out.println("Yes! Got a poly function 2x + 1 from x = 3 to x = 4 with an error bound of 4%.");
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-            
-        // }
-        // else {
-        //     System.out.println("Failure! :(");
-        // }
-        
-        // myArgs = new String[] {"poly", "1", "2", "3"};
-        // result = validatArgs(myArgs);
-        // System.out.println("Expected true, got " + result);
+        handleInitialArguments(myArgs);  
+        System.out.println("Hello.");
     }
+
+    /** 
+     * Testing method for polynomial integration
+     * @param none
+     * @return void method
+     */
+
+    public void integratePolyTest() {
+
+    }
+
+    /** 
+     * Testing method for functions other than polynomials; aka anything in the math package
+     * @param none
+     * @return void method
+     */
+
+    public void integrateOtherTest() {
+
+    }
+
+    /** 
+     * Testing method for all the tests; initiated when "runtests" is arg[0]
+     * @param none
+     * @return void method
+     */
 
     public void runMyTests() {
         validateArgsTest();
+        integratePolyTest();
+        integrateOtherTest();
     }
 
+    /*
+     * Main program runs here! Uses methods from Riemann class.
+     */
     public static void main ( String args[] ) {
         Riemann r = new Riemann();
 
@@ -255,7 +325,9 @@ import java.util.List;
 //  }
 
 //  public boolean integratePoly() {
-//     
+//      // myArgs = new String[] {"poly", "1", "2", "3"};
+        // result = validatArgs(myArgs);
+        // System.out.println("Expected true, got " + result);
 //  }
 // 
 // check to see if asking for sqrt of negative number
