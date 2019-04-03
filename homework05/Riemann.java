@@ -84,10 +84,25 @@ import java.util.List;
     }
 
     public void handleSpecialCases() {
-        if ( (coefficients.size() == 1) && (coefficients.contains(0.0)) ) {
-            System.out.println("  The integral value is: 0.0000.\n\n");  
-            System.exit(0);          
+        switch (functionArgument) {
+            case "poly":
+                if ( coefficients.size() < 1 ) {
+                    throw new NumberFormatException(exceptionMessage);
+                }
+                if ( (coefficients.size() == 1) && (coefficients.contains(0.0)) ) {
+                    System.out.println("  The integral value is: 0.0000.\n\n");  
+                    System.exit(0);          
+                }
+                break;
+            case "sqrt":
+                for (int i = 0; i < coefficients.size(); i++) {
+                    if (lowerBound < 0) {
+                        throw new NumberFormatException(exceptionMessage);
+                    }
+                }
+                break;
         }
+        
     }
 
     public void handleInitialArguments( String [] args ) {
@@ -118,14 +133,9 @@ import java.util.List;
 
         switch (functionArgument) {
             case "poly": 
-                if ( coefficients.size() < 1 ) {
-                    throw new NumberFormatException(exceptionMessage);
-                }
-                else {
-                    for ( double j = lowerBound; j < upperBound; j += dx ) {
-                        area += ( getPolyValue(j) * dx );
-                    }   
-                }
+                for ( double j = lowerBound; j < upperBound; j += dx ) {
+                    area += ( getPolyValue(j) * dx );
+                }   
                 break;
             case "sin": 
                 for ( double j = lowerBound; j < upperBound; j += dx ) {
@@ -144,8 +154,14 @@ import java.util.List;
                 break;
             case "sqrt": 
                 for ( double j = lowerBound; j < upperBound; j += dx ) {
-                    area += ( Math.sqrt(j) * dx );
-                }
+                    if (j > 0) {
+                        area += ( Math.sqrt(j) * dx );
+                    }
+                    else {
+                        throw new NumberFormatException(exceptionMessage);
+                    }
+                    
+                }  
                 break;
             case "log": 
                 for ( double j = lowerBound; j < upperBound; j += dx ) {
@@ -221,7 +237,6 @@ import java.util.List;
             
             if ( ( Math.abs(1 - (previous/current))  <= ( r.percentArgument / 100.0 ) ) ) {
                 System.out.println("  The integral value is: " + previous + ".\n\n");
-                //System.out.println("  The q value is: " + q + ".\n\n");
                 System.exit(0);
                 break;     
             }
@@ -229,7 +244,6 @@ import java.util.List;
             previous = current;
             q++;
         }
-
     }
  }
 
