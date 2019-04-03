@@ -7,6 +7,20 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
+ /**
+  * Need to fix: percent arguments with e not working
+  * java Riemann poly 2 1 2 -1 need to throw nfe
+  * java Riemann poly 0 1 2 0 need to throw nfe
+  * java Riemann poly 1.0 -2.1 3.2 -10.0 5.0 throwing nfe, shouldn't
+  * java Riemann poly -3.0 -7.0 -1.0 -2.0 0.0 1.0 0.0 2.0 1e-6% throwing nfe, shouldn't
+  * java Riemann sin -17.0 3.0 -11.0 11.0 1e-7% taking a long time to integrate
+  * java Riemann sin -17.0 1.0 -23.0 23.0 1e-4% throwing nfe, shouldn't
+  * java Riemann sqrt 23.0 -3.0 7.0 1.0 7.0 1e-6% very off!
+  * java Riemann sqrt 100.0 0.0 1.0 1e-8% throwing nfe, shouldn't
+  * java Riemann sqrt 2.0 0.0 1.0 1e-3%, throwing nfe, shouldn't
+  *
+  */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,7 +122,7 @@ import java.util.List;
     }
 
     /** 
-     * Method that handles any special cases; this includes domain for trig functions
+     * Method that handles any special cases
      * @param String args[] from the terminal
      * @return void method
      * @throws nfe when needed for special cases
