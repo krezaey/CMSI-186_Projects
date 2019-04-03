@@ -122,17 +122,20 @@ import java.util.List;
 
         switch (functionArgument) {
             case "poly": 
-                if ( args.length > 3 ) {
-                    for ( double j = lowerBound; j < upperBound; j += dx ) {
-                        area += ( getPolyValue(j) * dx );
-                    }    
-                }
-                else {
-                    System.exit(0); 
+                if ( coefficients.size() < 1 ) {
                     throw new NumberFormatException(exceptionMessage);
                 }
+                else {
+                    for ( double j = lowerBound; j < upperBound; j += dx ) {
+                        area += ( getPolyValue(j) * dx );
+                    }   
+                }
                 break;
-            case "sin": break;
+            case "sin": 
+                for ( double j = lowerBound; j < upperBound; j += dx ) {
+                    area += ( Math.sin(j) * dx );
+                }
+                break;
             case "cos": break;
             case "log": break;
             case "exp": break;
@@ -187,23 +190,13 @@ import java.util.List;
         double previous = r.integrate(args, 1.0);
         double q = 2.0;
 
-        // System.out.println("hey yall its the main");
-
         while (true) {
 
             double current = r.integrate(args, q);
             
-            // if ( Math.abs(1 - (previous/current))  <= ( r.percentArgument / 100.0 ) ) { //changed to previous/current
-            //     System.out.println("  The integral value is: " + current + ".\n\n"); //changed to current 
-            //     System.out.println("  The q value is: " + q + ".\n\n");
-            //     break;
-            // }
-
-            if ( ( Math.abs(1 - (previous/current))  <= ( r.percentArgument / 100.0 ) ) ) { //changed to previous/current
+            if ( ( Math.abs(1 - (previous/current))  <= ( r.percentArgument / 100.0 ) ) ) {
                 System.out.println("  The integral value is: " + previous + ".\n\n");
-                System.out.println("  The q value is: " + q + ".\n\n");
-                // System.out.println(1 - (previous/current));
-                // System.out.println((r.percentArgument)/100);
+                //System.out.println("  The q value is: " + q + ".\n\n");
                 System.exit(0);
                 break;     
             }
