@@ -3,7 +3,7 @@
  *  Purpose       :  Main program to run BrobInt class
  *  Author        :  Keziah Rezaey
  *  Date Created  :  2019-04-03
- *  Due Date      :  2019-04-24
+ *  Due Date      :  2019-04-25
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
@@ -13,8 +13,9 @@
     public static final BrobInt ONE = 1;
     public static final BrobInt TEN = 10;
 
-    //constructor
-    public BrobInt ( String value) {}
+    public BrobInt ( String value ) {
+    
+    }
 
     public BrobInt add ( BrobInt value ) {
 
