@@ -264,7 +264,7 @@
                       throw new NumberFormatException("\n  To run tests, you must only have one argument.");
                   }
                   else {
-                      runMyTests();
+                      runMyTests(q);
                       System.exit(0);
                   }
                   break;
@@ -299,35 +299,13 @@
       }
   
       /** 
-       * Testing method for polynomial integration
-       * @param none
-       * @return void method
-       */
-  
-      public void integratePolyTest() {
-  
-      }
-  
-      /** 
-       * Testing method for functions other than polynomials; aka anything in the math package
-       * @param none
-       * @return void method
-       */
-  
-      public void integrateOtherTest() {
-  
-      }
-  
-      /** 
        * Testing method for all the tests; initiated when "runtests" is arg[0]
        * @param none
        * @return void method
        */
   
-      public void runMyTests() {
+      public void runMyTests(double q) {
           validateArgsTest();
-          integratePolyTest();
-          integrateOtherTest();
           System.out.println("\n");
       }
   
@@ -370,16 +348,3 @@
           }
       }
    }
-  
-   
-  //  public void runMyTests() {
-  //      testValidateArgs();
-  //      testIntegratePoly();
-  //      testIntegrateSin();
-  //  }
-  
-  //  public boolean integratePoly() {
-  //      // myArgs = new String[] {"poly", "1", "2", "3"};
-          // result = validatArgs(myArgs);
-          // System.out.println("Expected true, got " + result);
-  //  }
