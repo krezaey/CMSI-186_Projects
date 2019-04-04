@@ -9,13 +9,9 @@
 
  /**
   * Need to fix: percent arguments with e not working
-  * java Riemann poly 1.0 -2.1 3.2 -10.0 5.0 throwing nfe, shouldn't
-  * java Riemann poly -3.0 -7.0 -1.0 -2.0 0.0 1.0 0.0 2.0 1e-6% throwing nfe, shouldn't
   * java Riemann sin -17.0 3.0 -11.0 11.0 1e-7% taking a long time to integrate
   * java Riemann sin -17.0 1.0 -23.0 23.0 1e-4% taking a long time to integrate
   * java Riemann sqrt 23.0 -3.0 7.0 1.0 7.0 1e-6% very off!
-  * java Riemann sqrt 100.0 0.0 1.0 1e-8% throwing nfe, shouldn't
-  * java Riemann sqrt 2.0 0.0 1.0 1e-3%, throwing nfe, shouldn't
   */
 
 import java.text.DecimalFormat;
@@ -127,7 +123,7 @@ import java.util.List;
      * Method that handles any special cases
      * @param String args[] from the terminal
      * @return void method
-     * @throws nfe when needed for special cases
+     * @throws nfe when needed for special cases (depends on the function)
      */
 
     public void handleSpecialCases(String[] args) {
@@ -140,16 +136,19 @@ import java.util.List;
                     System.out.println("  The integral value is: 0.0000.\n\n");  
                     System.exit(0);          
                 }
-                if ( optionalArgPresent == true ) {
-                    if ( (Double.parseDouble(args[args.length-3]) <= 0) ) {
-                        throw new NumberFormatException(argumentMessage);
-                    }
+                // if ( optionalArgPresent == true ) {
+                //     if ( (Double.parseDouble(args[args.length-3]) <= 0) ) {
+                //         throw new NumberFormatException(boundsMessage);
+                //     }
+                // }
+                // else {
+                //     if ( (Double.parseDouble(args[args.length-2]) <= 0) ) {
+                //         throw new NumberFormatException(boundsMessage);
+                //     }
+                // }   
+                if ( (lowerBound > upperBound) ) {
+                    throw new NumberFormatException(boundsMessage);
                 }
-                else {
-                    if ( (Double.parseDouble(args[args.length-2]) <= 0) ) {
-                        throw new NumberFormatException(argumentMessage);
-                    }
-                }   
                 break;
             case "sqrt":
                 for (int i = 0; i < coefficients.size(); i++) {
@@ -166,7 +165,7 @@ import java.util.List;
      * Method that handles and validates the initial arguments
      * @param String args[] from the terminal
      * @return void method
-     * @throws nfe when bounds or functions aren't valid or when args are not sufficient
+     * @throws nfe when arguments inputed are insufficient in any way
      */
 
     public void handleInitialArguments( String [] args ) {
