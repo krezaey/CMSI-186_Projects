@@ -37,7 +37,10 @@ import java.util.List;
     
     String functionArgument;
     String usageMessage = ("\n  Usage: java Riemann function coefficents lowerBound upperBound <accuracy>%");
-    String exceptionMessage = ("\n  Please enter a valid function and/or proper number or arguments and/or bounds in numerical order. \n" + usageMessage + "\n");
+    String functionMessage = ("\n  Please enter a valid function. \n" + usageMessage + "\n");
+    String argumentMessage = ("\n  Please enter a proper number or arguments. \n" + usageMessage + "\n");
+    String boundsMessage = ("\n  Please enter a bounds in numerical order. \n" + usageMessage + "\n");
+    String domainMessage = ("\n  Please enter a valid coefficients for the domain of the function. \n" + usageMessage + "\n");
 
     List <String> functions = Arrays.asList("poly", "sin", "cos", "tan", "sqrt", "log", "exp", "runtests");
     ArrayList <Double> coefficients = new ArrayList <Double> ();
@@ -130,8 +133,8 @@ import java.util.List;
     public void handleSpecialCases(String[] args) {
         switch (functionArgument) {
             case "poly":
-                if ( coefficients.size() < 1 ) {
-                    throw new NumberFormatException(exceptionMessage);
+                if ( coefficients.size() == 0 ) {
+                    throw new NumberFormatException(argumentMessage);
                 }
                 if ( (coefficients.size() == 1) && (coefficients.contains(0.0)) ) {
                     System.out.println("  The integral value is: 0.0000.\n\n");  
@@ -139,19 +142,19 @@ import java.util.List;
                 }
                 if ( optionalArgPresent == true ) {
                     if ( (Double.parseDouble(args[args.length-3]) <= 0) ) {
-                        throw new NumberFormatException(exceptionMessage);
+                        throw new NumberFormatException(argumentMessage);
                     }
                 }
                 else {
                     if ( (Double.parseDouble(args[args.length-2]) <= 0) ) {
-                        throw new NumberFormatException(exceptionMessage);
+                        throw new NumberFormatException(argumentMessage);
                     }
                 }   
                 break;
             case "sqrt":
                 for (int i = 0; i < coefficients.size(); i++) {
                     if (lowerBound < 0) {
-                        throw new NumberFormatException(exceptionMessage);
+                        throw new NumberFormatException(domainMessage);
                     }
                 }
                 break;
@@ -178,11 +181,11 @@ import java.util.List;
         if ( functionValid == false || boundsValid == false ) {
             switch (functionArgument) {
                 case "poly": if ( ((args.length <= 4) && (args[args.length - 1].contains("%") == false)) 
-                                || ( ((Double.parseDouble(args[args.length - 1])) <= 0) && (args[args.length - 1].contains("%") == false)) ) {throw new NumberFormatException(exceptionMessage);} break;
-                default: if ( args.length < 3 ) {throw new NumberFormatException(exceptionMessage);} break;
+                                || ( ((Double.parseDouble(args[args.length - 1])) <= 0) && (args[args.length - 1].contains("%") == false)) ) {throw new NumberFormatException(argumentMessage);} break;
+                default: if ( args.length < 3 ) {throw new NumberFormatException(argumentMessage);} break;
             }
         } else if (args.length < 1) {
-            throw new NumberFormatException(exceptionMessage);
+            throw new NumberFormatException(argumentMessage);
         }
     }
 
@@ -238,7 +241,7 @@ import java.util.List;
                         area += ( Math.sqrt(j) * dx );
                     }
                     else {
-                        throw new NumberFormatException(exceptionMessage);
+                        throw new NumberFormatException(argumentMessage);
                     }   
                 }  
                 break;
