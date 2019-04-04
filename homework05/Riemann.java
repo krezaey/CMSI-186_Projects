@@ -31,14 +31,11 @@
       boolean boundsValid = true;
       boolean optionalArgPresent = false;
       boolean validation = true;
-      
+    
       String functionArgument;
       String usageMessage = ("\n  Usage: java Riemann function coefficents lowerBound upperBound <accuracy>%");
-      String functionMessage = ("\n  Please enter a valid function. \n" + usageMessage + "\n");
-      String argumentMessage = ("\n  Please enter a proper number or arguments. \n" + usageMessage + "\n");
-      String boundsMessage = ("\n  Please enter a bounds in numerical order. \n" + usageMessage + "\n");
-      String domainMessage = ("\n  Please enter a valid coefficients for the domain of the function. \n" + usageMessage + "\n");
-  
+      String errorMessage = ("\n  Please enter a valid function with the proper number of arguments, bounds in numerical order, and valid coefficients for the domain of the function. \n" + usageMessage + "\n");
+      
       List <String> functions = Arrays.asList("poly", "sin", "cos", "tan", "sqrt", "log", "exp", "runtests");
       ArrayList <Double> coefficients = new ArrayList <Double> ();
   
@@ -138,26 +135,26 @@
                       System.out.println("  The integral value is: 0.0000.\n\n");  
                       System.exit(0);          
                   }
-                  // if ( optionalArgPresent == true ) {
-                  //     if ( (Double.parseDouble(args[args.length-3]) <= 0) ) {
-                  //         throw new NumberFormatException(boundsMessage);
-                  //     }
-                  // }
-                  // else {
-                  //     if ( (Double.parseDouble(args[args.length-2]) <= 0) ) {
-                  //         throw new NumberFormatException(boundsMessage);
-                  //     }
-                  // }   
                   if ( (lowerBound > upperBound) ) {
-                      validation = false;
-                      throw new NumberFormatException(boundsMessage);
+                    validation = false;
+                    //throw new NumberFormatException(boundsMessage);
+                 }
+                  if ( optionalArgPresent == true ) {
+                      if ( (Double.parseDouble(args[args.length-3]) <= 0) ) {
+                          validation = false;
+                      }
                   }
+                  else {
+                      if ( (Double.parseDouble(args[args.length-2]) <= 0) ) {
+                          validation = false;
+                      }
+                  }   
                   break;
               case "sqrt":
                   for (int i = 0; i < coefficients.size(); i++) {
                       if (lowerBound < 0) {
                           validation = false;
-                          throw new NumberFormatException(domainMessage);
+                          //throw new NumberFormatException(domainMessage);
                       }
                   }
                   break;
@@ -172,14 +169,14 @@
        * @throws nfe when arguments inputed are insufficient in any way
        */
   
-      public boolean handleInitialArguments( String [] args ) {
+      public void handleInitialArguments( String [] args ) {
           validateFunction(args);
       
-          if ( functionArgument != "runtests" ) {
-              validatePercentArg(args);
-              validateCoefficents(args);
-              validateBounds(args);
-          }
+          //if ( functionArgument != "runtests" ) {
+          validatePercentArg(args);
+          validateCoefficents(args);
+          validateBounds(args);
+          //}
   
           if ( functionValid == false || boundsValid == false ) {
               switch (functionArgument) {
@@ -187,11 +184,14 @@
                                   || ( ((Double.parseDouble(args[args.length - 1])) <= 0) && (args[args.length - 1].contains("%") == false)) ) {validation = false;} break;
                   default: if ( args.length < 3 ) {validation = false;} break;
               }
-          } else if (args.length < 1) {
+          if (args.length < 1) {
               validation = false;
           }
-          return validation;
-      }
+          if ( functionValid == true && boundsValid == true ) {
+              validation = true;
+          }
+         }
+        }
   
       /** 
        * Method that calculates the y values for the polynomial functions based on the coefficients
@@ -279,11 +279,23 @@
        */
   
       public void validateArgsTest() {
-        //   System.out.println("\n  ==== Validation Tests ====");
-        //   String [] args1 = {"poly", "1", "2", "3", "4", "4%"};
-        //   System.out.println("  Validation Test 1: Expected true, got  " + handleInitialArguments(args1));  
-        //   String [] args2 = {"poly", "0", "1", "8", "4", "3%"};
-        //   System.out.println("  Validation Test 2: Expected false, got  " + handleInitialArguments(args2));  
+          try {
+            System.out.println("\n  ==== Validation Tests ====");
+            String [] args1 = {"poly", "1", "2", "3", "4", "4%"};
+            String [] args2 = {"cos", "5", "18", "20"};
+            String [] args4 = {"sin", "1", "2", "5", "4", "4%"};
+            String [] args3 = {"fakefunction"};
+
+            handleInitialArguments(args1);
+            System.out.println("  Test 1: Expected true, got  " + validation );
+            handleInitialArguments(args2);
+            System.out.println("  Test 2: Expected true, got  " + validation );
+            handleInitialArguments(args3);
+            System.out.println("  Test 3: Expected false, got  " + validation ); 
+            handleInitialArguments(args4);
+            System.out.println("  Test 4: Expected false, got  " + validation ); 
+          }
+          catch (NumberFormatException nfe) {}
       }
   
       /** 
@@ -316,6 +328,7 @@
           validateArgsTest();
           integratePolyTest();
           integrateOtherTest();
+          System.out.println("\n");
       }
   
       /*
@@ -329,8 +342,8 @@
   
           r.handleInitialArguments(args);
 
-          if ( r.handleInitialArguments(args) == false ) {
-            throw new NumberFormatException(r.argumentMessage);
+          if ( r.validation == false ) {
+            throw new NumberFormatException(r.errorMessage);
           }
   
           System.out.println( "\n\n  Welcome to the Riemann Integral calculator!" );
