@@ -171,20 +171,20 @@
   
       public void handleInitialArguments( String [] args ) {
           validateFunction(args);
-      
-          //if ( functionArgument != "runtests" ) {
           validatePercentArg(args);
           validateCoefficents(args);
           validateBounds(args);
-          //}
-  
-          if ( functionValid == false || boundsValid == false ) {
+
+          if ( functionValid == false ) {
+              validation = false;
+          }
+          if ( boundsValid == false  ) {
               switch (functionArgument) {
                   case "poly": if ( ((args.length <= 4) && (args[args.length - 1].contains("%") == false)) 
                                   || ( ((Double.parseDouble(args[args.length - 1])) <= 0) && (args[args.length - 1].contains("%") == false)) ) {validation = false;} break;
                   default: if ( args.length < 3 ) {validation = false;} break;
               }
-          if (args.length < 1) {
+          if (args.length <= 1) {
               validation = false;
           }
           if ( functionValid == true && boundsValid == true ) {
@@ -264,7 +264,7 @@
                       throw new NumberFormatException("\n  To run tests, you must only have one argument.");
                   }
                   else {
-                      runMyTests(q);
+                      runMyTests();
                       System.exit(0);
                   }
                   break;
@@ -304,7 +304,7 @@
        * @return void method
        */
   
-      public void runMyTests(double q) {
+      public void runMyTests() {
           validateArgsTest();
           System.out.println("\n");
       }
