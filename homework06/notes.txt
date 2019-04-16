@@ -88,3 +88,14 @@ public String toString() {
     return response;
 }
 
+*** OPTIONAL ***
+
+private static final boolean DEBUG_ON = true;
+
+whereever you need it, whatever method (like, for example, every step of subratction):
+
+you can put  if (DEBUG_ON) {
+    toArray(RA);
+}
+
+when done debugging, can change DEBUG_ON = false;
