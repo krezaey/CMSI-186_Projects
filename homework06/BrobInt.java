@@ -67,22 +67,24 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String s ) {
-      internalValue = s;
+      internalValue = new String(s);
       int chunks = (internalValue.length() / CHUNK_SIZE);
       if ( s.length() % CHUNK_SIZE != 0 ) { chunks++; }
-
+      if ( s.charAt(0) == '-' ) { sign = 1; }
+      
       int[] stringChunks = new int[chunks];
-      int start = s.length() - 1;
-      int stop = start - 8;
+      int stop = internalValue.length();
+      int start = stop - 9;
+
+      if ( chunks == 1 ) { start = 0; }
 
       for ( int i = 0; i < chunks; i++ ) {
-         stringChunks[i] = Integer.parseInt( s.substring(start,stop) );
+         stringChunks[i] = Integer.parseInt( internalValue.substring(start,stop) );
          stop -= 9;
 
-         if ( i == chunks - 1 ) { start = 0; }
+         if ( i == stringChunks.length - 2 ) { start = 0; }
          else { start -= 9; }
 
-         if ( s.charAt(0) == '-' ) { sign = 1; }
       }
    }
 
@@ -236,7 +238,7 @@ public class BrobInt {
    *  @return String  which is the String representation of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-      return internalValue;
+     return internalValue;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
