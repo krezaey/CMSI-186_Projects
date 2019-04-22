@@ -233,7 +233,9 @@ public class BrobIntTester {
          System.out.println( "\n    Test " + df.format( testNumber++ ) + ": Making an eleventh and twelfth new BrobInt, calling add method: "  );
          g11 = new BrobInt( g11String );
       }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+      catch( Exception e ) { System.out.println(String.valueOf(e));
+         //System.out.println( "        Exception thrown:  " ); 
+      }
 
       try {
          System.out.println( "      expecting: 10\n" +

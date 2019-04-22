@@ -55,6 +55,12 @@ public class BrobInt {
   /// You can use this or not, as you see fit.  The explanation was provided in class
    private String reversed      = "";        // the backwards version of the internal String representation
    public final int CHUNK_SIZE = 9;
+   
+  ///constructor fields
+   int[] stringChunks;
+   int chunks;
+   int stop;
+   int start;
 
    private static BufferedReader input = new BufferedReader( new InputStreamReader( System.in ) );
    private static final boolean DEBUG_ON = false;
@@ -68,22 +74,22 @@ public class BrobInt {
    */
    public BrobInt( String s ) {
       internalValue = new String(s);
-      int chunks = (internalValue.length() / CHUNK_SIZE);
+      this.chunks = (internalValue.length() / CHUNK_SIZE);
       if ( s.length() % CHUNK_SIZE != 0 ) { chunks++; }
       if ( s.charAt(0) == '-' ) { sign = 1; }
       
-      int[] stringChunks = new int[chunks];
-      int stop = internalValue.length();
-      int start = stop - 9;
+      this.stringChunks = new int[chunks];
+      this.stop = internalValue.length();
+      this.start = stop - 9;
 
       if ( chunks == 1 ) { start = 0; }
 
       for ( int i = 0; i < chunks; i++ ) {
-         stringChunks[i] = Integer.parseInt( internalValue.substring(start,stop) );
-         stop -= 9;
+         stringChunks[i] = Integer.parseInt( internalValue.substring(this.start,this.stop) );
+         this.stop -= 9;
 
-         if ( i == stringChunks.length - 2 ) { start = 0; }
-         else { start -= 9; }
+         if ( i == stringChunks.length - 2 ) { this.start = 0; }
+         else { this.start -= 9; }
 
       }
    }
@@ -127,7 +133,8 @@ public class BrobInt {
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt add( BrobInt bint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      throw new UnsupportedOperationException(" bleerg" + this.stringChunks.length);
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
