@@ -24,6 +24,7 @@
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -78,9 +79,9 @@ public class BrobInt {
       if ( s.length() % CHUNK_SIZE != 0 ) { chunks++; }
       if ( s.charAt(0) == '-' ) { sign = 1; }
       
-      this.stringChunks = new int[chunks];
+      this.stringChunks = new int[this.chunks];
       this.stop = internalValue.length();
-      this.start = stop - 9;
+      this.start = this.stop - 9;
 
       if ( chunks == 1 ) { start = 0; }
 
@@ -133,8 +134,27 @@ public class BrobInt {
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt add( BrobInt bint ) {
+      int carry = 0;
+      BrobInt added = new BrobInt("0");
+      String add = "";
+      for ( int i = 0; i < Math.min(this.stringChunks.length, bint.stringChunks.length); i++) {
+         added.stringChunks[i] = this.stringChunks[i] + bint.stringChunks[i] + carry;
+
+         if ( added.stringChunks[i] > 999 ) {
+            added.stringChunks[i] -= 1000;
+            carry = 1;
+         }
+         else {
+            carry = 0;
+         }
+
+         // for ( int i = 0; i < this.stringChunks.length; i++ ) {
+         //    add += added[i];
+         // }
+
+      }
+      return added; 
       //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-      throw new UnsupportedOperationException(" bleerg" + this.stringChunks.length);
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
