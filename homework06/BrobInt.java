@@ -58,7 +58,7 @@ public class BrobInt {
    public final int CHUNK_SIZE = 9;
    
   ///constructor fields
-   int[] stringChunks;
+   int[] intChunks;
    int chunks;
    int stop;
    int start;
@@ -79,17 +79,17 @@ public class BrobInt {
       if ( s.length() % CHUNK_SIZE != 0 ) { chunks++; }
       if ( s.charAt(0) == '-' ) { sign = 1; }
       
-      this.stringChunks = new int[this.chunks];
+      this.intChunks = new int[this.chunks];
       this.stop = internalValue.length();
       this.start = this.stop - 9;
 
       if ( chunks == 1 ) { start = 0; }
 
       for ( int i = 0; i < chunks; i++ ) {
-         stringChunks[i] = Integer.parseInt( internalValue.substring(this.start,this.stop) );
+         this.intChunks[i] = Integer.parseInt( internalValue.substring(this.start,this.stop) );
          this.stop -= 9;
 
-         if ( i == stringChunks.length - 2 ) { this.start = 0; }
+         if ( i == this.intChunks.length - 2 ) { this.start = 0; }
          else { this.start -= 9; }
 
       }
@@ -103,7 +103,25 @@ public class BrobInt {
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean validateDigits() throws IllegalArgumentException {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      boolean valid = false;
+      for ( int i = 0; i < this.intChunks.length; i++) {
+         for ( int j = 0; j < CHUNK_SIZE; j++ ) {
+            if ( i != this.intChunks.length - 1 ) {
+               //checks that chunks that are not the first chunk (or last since the chunks are reversed) are not negative or too big
+               if ( this.intChunks[i] < 0 || this.intChunks[i] > 999999999 ) { 
+                  throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
+               }
+               else if ( j != 0 && ( this.internalValue.charAt(j) == '-' || this.internalValue.charAt(j) == '+' ) ) {
+                  //no digits other than the first digit can contain a negative or positive sign
+                  throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
+               }
+               else { 
+                  valid = true;
+               }
+            } 
+         }
+      }
+      return valid;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,26 +153,25 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt add( BrobInt bint ) {
       int carry = 0;
-      BrobInt added = new BrobInt("0");
       String add = "";
-      for ( int i = 0; i < Math.min(this.stringChunks.length, bint.stringChunks.length); i++) {
-         added.stringChunks[i] = this.stringChunks[i] + bint.stringChunks[i] + carry;
+      BrobInt added = new BrobInt(add);
+      for ( int i = 0; i < Math.min(this.intChunks.length, bint.intChunks.length); i++) {
+         added.intChunks[i] = this.intChunks[i] + bint.intChunks[i] + carry;
 
-         if ( added.stringChunks[i] > 999 ) {
-            added.stringChunks[i] -= 1000;
+         if ( added.intChunks[i] > 999 ) {
+            added.intChunks[i] -= 1000;
             carry = 1;
          }
          else {
             carry = 0;
          }
 
-         // for ( int i = 0; i < this.stringChunks.length; i++ ) {
+         // for ( int i = 0; i < this.intChunks.length; i++ ) {
          //    add += added[i];
          // }
 
       }
       return added; 
-      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

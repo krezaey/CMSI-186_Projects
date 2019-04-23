@@ -67,9 +67,7 @@ public class BrobIntTester {
    private static int testNumber = 1;
    private static DecimalFormat df = new DecimalFormat( "000" );
 
-
-   public BrobIntTester() {
-   }
+   public BrobIntTester() {}
 
    public static void main( String[] args ) {
       BrobIntTester git = new BrobIntTester();
@@ -176,7 +174,7 @@ public class BrobIntTester {
                              "        and got: " + g7.toString() );
       }
       catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
-
+      
       System.out.println( "\n\n    TESTING VALUEOF( LONG ) METHOD:\n" +
                           "    ===============================" );
       System.out.println( "\n    Test " + df.format( testNumber++ ) + ": Creating several long type values to check the 'valueOf()' method: " );
