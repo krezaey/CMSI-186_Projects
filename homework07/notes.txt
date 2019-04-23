@@ -1,0 +1,25 @@
+~~~~~DynamicChangeMaker.java~~~~~
+
+Our program will return the optimal way of making change. 
+
+java DynamicChangeMaker 2,3,5,7,14,23 173
+    -string class method to parse these commas
+
+The first arguments are our coin denominations in our arbitary currency separated by comma.
+We need to know: how to make 173 cents out of these denominations, if possible, using the
+smallest amount of coins if possible? This is the last argument separated by space. 
+
+NOT BEST WAY:
+    - first take the biggest denomination and fill in the gaps
+    - however, denomination arguments may not be in increasing order
+    - should create method to sort them
+
+BETTER: use dynamic programming!
+    - create a table that has a potential solution in each cell
+    - use a tuple (use integer miniture tuples, which are like mini lists)
+        - tuples have specific names based on how many elements they have
+
+    USING THE TUPLE CLASS
+        - have different constructors
+            - one will take in an integer and create a tuple of size integer; all elements will be 0
+            - one will take in an integer array and use values to create tuple
