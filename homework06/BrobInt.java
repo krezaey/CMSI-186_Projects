@@ -210,7 +210,7 @@ public class BrobInt {
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to compare a BrobInt passed as argument to this BrobInt
    *  @param  bint  BrobInt to compare to this
    *  @return int   that is one of neg/0/pos if this BrobInt precedes/equals/follows the argument
@@ -218,165 +218,167 @@ public class BrobInt {
    *        It takes into account the length of the two numbers, and if that isn't enough it does a
    *        character by character comparison to determine
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public int compareTo( BrobInt bint ) {
+  public int compareTo( BrobInt bint ) {
 
-     // handle the signs here
-      if( 1 == sign && 0 == bint.sign ) {
-         return -1;
-      } else if( 0 == sign && 1 == bint.sign ) {
-         return 1;
-      }
+   // remove any leading zeros because we will compare lengths
+    String me  = removeLeadingZeros( this ).toString();
+    String arg = removeLeadingZeros( bint ).toString();
 
-     // the signs are the same at this point
-     // remove any leading zeros because we will compare lengths
-     // Note: uncomment the next line when you rename "BrobIntTemplate" back to "BrobInt"
-      String me  = removeLeadingZeros( this ).toString();
-      String arg = removeLeadingZeros( bint ).toString();
+   // handle the signs here
+    if( 1 == sign && 0 == bint.sign ) {
+       return -1;
+    } else if( 0 == sign && 1 == bint.sign ) {
+       return 1;
+    } else if( 0 == sign && 0 == bint.sign ) {
+      // the signs are the same at this point ~ both positive
+      // check the length and return the appropriate value
+      //   1 means this is longer than bint, hence larger positive
+      //  -1 means bint is longer than this, hence larger positive
+       if( me.length() != arg.length() ) {
+          return (me.length() > arg.length()) ? 1 : -1;
+       }
+    } else {
+      // the signs are the same at this point ~ both negative
+       if( me.length() != arg.length() ) {
+          return (me.length() > arg.length()) ? -1 : 1;
+       }
+    }
 
-     // check the length and return the appropriate value
-     //   1 means this is longer than bint, hence larger
-     //  -1 means bint is longer than this, hence larger
-      if( me.length() > arg.length() ) {
-         return 1;
-      } else if( me.length() < arg.length() ) {
-         return (-1);
+   // otherwise, they are the same length, so compare absolute values
+    for( int i = 0; i < me.length(); i++ ) {
+       Character a = Character.valueOf( me.charAt(i) );
+       Character b = Character.valueOf( arg.charAt(i) );
+       if( Character.valueOf(a).compareTo( Character.valueOf(b) ) > 0 ) {
+          return 1;
+       } else if( Character.valueOf(a).compareTo( Character.valueOf(b) ) < 0 ) {
+          return (-1);
+       }
+    }
+    return 0;
+ }
 
-     // otherwise, they are the same length, so compare absolute values
-      } else {
-         for( int i = 0; i < me.length(); i++ ) {
-            Character a = Character.valueOf( me.charAt(i) );
-            Character b = Character.valueOf( arg.charAt(i) );
-            if( Character.valueOf(a).compareTo( Character.valueOf(b) ) > 0 ) {
-               return 1;
-            } else if( Character.valueOf(a).compareTo( Character.valueOf(b) ) < 0 ) {
-               return (-1);
-            }
-         }
-      }
-      return 0;
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Method to check if a BrobInt passed as argument is equal to this BrobInt
+ *  @param  bint     BrobInt to compare to this
+ *  @return boolean  that is true if they are equal and false otherwise
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public boolean equals( BrobInt bint ) {
+    return ( (sign == bint.sign) && (this.toString().equals( bint.toString() )) );
+ }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to check if a BrobInt passed as argument is equal to this BrobInt
-   *  @param  bint     BrobInt to compare to this
-   *  @return boolean  that is true if they are equal and false otherwise
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public boolean equals( BrobInt bint ) {
-      return (internalValue.equals( bint.toString() ));
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Method to return a BrobInt given a long value passed as argument
+ *  @param  value    long type number to make into a BrobInt
+ *  @return BrobInt  which is the BrobInt representation of the long
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public static BrobInt valueOf( long value ) throws NumberFormatException {
+    BrobInt bi = null;
+    try { bi = new BrobInt( Long.valueOf( value ).toString() ); }
+    catch( NumberFormatException nfe ) { throw new NumberFormatException( "\n  Sorry, the value must be numeric of type long." ); }
+    return bi;
+ }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to return a BrobInt given a long value passed as argument
-   *  @param  value    long type number to make into a BrobInt
-   *  @return BrobInt  which is the BrobInt representation of the long
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public static BrobInt valueOf( long value ) throws NumberFormatException {
-      BrobInt bi = null;
-      try { bi = new BrobInt( Long.valueOf( value ).toString() ); }
-      catch( NumberFormatException nfe ) { throw new NumberFormatException( "\n  Sorry, the value must be numeric of type long." ); }
-      return bi;
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Method to return a String representation of this BrobInt
+ *  @return String  which is the String representation of this BrobInt
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public String toString() {
+    return internalValue;
+ }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to return a String representation of this BrobInt
-   *  @return String  which is the String representation of this BrobInt
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public String toString() {
-     return internalValue;
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Method to remove leading zeros from a BrobInt passed as argument
+ *  @param  bint     BrobInt to remove zeros from
+ *  @return BrobInt that is the argument BrobInt with leading zeros removed
+ *  Note that the sign is preserved if it exists
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public BrobInt removeLeadingZeros( BrobInt bint ) {
+    Character sign = null;
+    String returnString = bint.toString();
+    int index = 0;
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to remove leading zeros from a BrobInt passed as argument
-   *  @param  bint     BrobInt to remove zeros from
-   *  @return BrobInt that is the argument BrobInt with leading zeros removed
-   *  Note that the sign is preserved if it exists
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt removeLeadingZeros( BrobInt bint ) {
-      Character sign = null;
-      String returnString = bint.toString();
-      int index = 0;
+    if( allZeroDetect( bint ) ) {
+       return bint;
+    }
+    if( ('-' == returnString.charAt( index )) || ('+' == returnString.charAt( index )) ) {
+       sign = returnString.charAt( index );
+       index++;
+    }
+    if( returnString.charAt( index ) != '0' ) {
+       return bint;
+    }
 
-      if( allZeroDetect( bint ) ) {
-         return bint;
-      }
-      if( ('-' == returnString.charAt( index )) || ('+' == returnString.charAt( index )) ) {
-         sign = returnString.charAt( index );
-         index++;
-      }
-      if( returnString.charAt( index ) != '0' ) {
-         return bint;
-      }
+    while( returnString.charAt( index ) == '0' ) {
+       index++;
+    }
+    returnString = bint.toString().substring( index, bint.toString().length() );
+    if( sign != null ) {
+       returnString = sign.toString() + returnString;
+    }
+    return new BrobInt( returnString );
 
-      while( returnString.charAt( index ) == '0' ) {
-         index++;
-      }
-      returnString = bint.toString().substring( index, bint.toString().length() );
-      if( sign != null ) {
-         returnString = sign.toString() + returnString;
-      }
-      return new BrobInt( returnString );
+ }
 
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Method to return a boolean if a BrobInt is all zeros
+ *  @param  bint     BrobInt to compare to this
+ *  @return boolean  that is true if the BrobInt passed is all zeros, false otherwise
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public boolean allZeroDetect( BrobInt bint ) {
+    for( int i = 0; i < bint.toString().length(); i++ ) {
+       if( bint.toString().charAt(i) != '0' ) {
+          return false;
+       }
+    }
+    return true;
+ }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to return a boolean if a BrobInt is all zeros
-   *  @param  bint     BrobInt to compare to this
-   *  @return boolean  that is true if the BrobInt passed is all zeros, false otherwise
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public boolean allZeroDetect( BrobInt bint ) {
-      for( int i = 0; i < bint.toString().length(); i++ ) {
-         if( bint.toString().charAt(i) != '0' ) {
-            return false;
-         }
-      }
-      return true;
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Method to display an Array representation of this BrobInt as its bytes
+ *  @param   d  byte array from which to display the contents
+ *  NOTE: may be changed to int[] or some other type based on requirements in code above
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public void toArray( byte[] d ) {
+    System.out.println( "Array contents: " + Arrays.toString( d ) );
+ }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to display an Array representation of this BrobInt as its bytes
-   *  @param   d  byte array from which to display the contents
-   *  NOTE: may be changed to int[] or some other type based on requirements in code above
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public void toArray( byte[] d ) {
-      System.out.println( "Array contents: " + Arrays.toString( d ) );
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Method to display a prompt for the user to press 'ENTER' and wait for her to do so
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public void pressEnter() {
+    String inputLine = null;
+    try {
+       System.out.print( "      [Press 'ENTER' to continue]: >> " );
+       inputLine = input.readLine();
+    }
+    catch( IOException ioe ) {
+       System.out.println( "Caught IOException" );
+    }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to display a prompt for the user to press 'ENTER' and wait for her to do so
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public void pressEnter() {
-      String inputLine = null;
-      try {
-         System.out.print( "      [Press 'ENTER' to continue]: >> " );
-         inputLine = input.readLine();
-      }
-      catch( IOException ioe ) {
-         System.out.println( "Caught IOException" );
-      }
+ }
 
-   }
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  the main method redirects the user to the test class
+ *  @param  args  String array which contains command line arguments
+ *  NOTE:  we don't really care about these, since we test the BrobInt class with the BrobIntTester
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ public static void main( String[] args ) {
+    System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
+    System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  the main method redirects the user to the test class
-   *  @param  args  String array which contains command line arguments
-   *  NOTE:  we don't really care about these, since we test the BrobInt class with the BrobIntTester
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public static void main( String[] args ) {
-      System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
-      BrobInt b1 = null;;
-      try { System.out.println( "   Making a new BrobInt: " ); b1 = new BrobInt( "147258369789456123" ); }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
-      try { System.out.println( "   expecting: 147258369789456123\n     and got: " + b1.toString() ); }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
-      System.out.println( "\n    Multiplying 82832833 by 3: " );
-      try { System.out.println( "      expecting: 248498499\n        and got: " + new BrobInt("82832833").multiply( BrobInt.THREE ) ); }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " + e.toString() ); }
+    BrobInt b1 = null;;
+    try { System.out.println( "   Making a new BrobInt: " ); b1 = new BrobInt( "147258369789456123" ); }
+    catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+    try { System.out.println( "   expecting: 147258369789456123\n     and got: " + b1.toString() ); }
+    catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+    System.out.println( "\n    Multiplying 82832833 by 3: " );
+    try { System.out.println( "      expecting: 248498499\n        and got: " + new BrobInt("82832833").multiply( BrobInt.THREE ) ); }
+    catch( Exception e ) { System.out.println( "        Exception thrown:  " + e.toString() ); }
 
-      System.out.println( "\n    Multiplying 3 by 82832833 and adding 1: " );
-      try { System.out.println( "      expecting: 248498500\n        and got: " + BrobInt.THREE.multiply( new BrobInt( "82832833" ) ).add( BrobInt.ONE ) ); }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " + e.toString() ); }
-      System.exit( 0 );
+    System.out.println( "\n    Multiplying 3 by 82832833 and adding 1: " );
+    try { System.out.println( "      expecting: 248498500\n        and got: " + BrobInt.THREE.multiply( new BrobInt( "82832833" ) ).add( BrobInt.ONE ) ); }
+    catch( Exception e ) { System.out.println( "        Exception thrown:  " + e.toString() ); }
+    System.exit( 0 );
 
-   }
+ }
 }

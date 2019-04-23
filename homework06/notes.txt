@@ -99,3 +99,10 @@ you can put  if (DEBUG_ON) {
 }
 
 when done debugging, can change DEBUG_ON = false;
+
+REMAINDER method
+
+return b1.subtract(b1.divide(b2).multiply(b2));
+
+
+
