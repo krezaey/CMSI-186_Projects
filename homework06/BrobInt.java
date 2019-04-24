@@ -24,6 +24,9 @@
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Arrays;
+
+import javax.naming.spi.ResolveResult;
+
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -76,7 +79,7 @@ public class BrobInt {
    public BrobInt( String s ) {
       internalValue = new String(s);
       this.chunks = (internalValue.length() / CHUNK_SIZE);
-      if ( s.length() % CHUNK_SIZE != 0 ) { chunks++; }
+      if ( s.length() % CHUNK_SIZE != 0 ) { this.chunks++; }
       if ( s.charAt(0) == '-' ) { sign = 1; }
       
       this.intChunks = new int[this.chunks];
@@ -93,6 +96,8 @@ public class BrobInt {
          else { this.start -= 9; }
 
       }
+
+
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,7 +194,88 @@ public class BrobInt {
    *  @return BrobInt that is the product of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt multiply( BrobInt bint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      int newSign = 0;
+      int k = 0;
+      int lengthCarry = 0;
+
+      long carry = 0;
+      
+      String multiplyString = "";
+      String carryString = "";
+      String resultString = "";
+
+      int[] longArray;
+      int[] shortArray;
+      long[] result;
+
+      if ( bint.sign != this.sign ) {
+         newSign = 1;
+      } 
+
+      if ( this.internalValue.length() > bint.internalValue.length() ) {
+         longArray = new int[this.chunks];
+         for ( int i = 0; i < this.chunks; i++ ) {
+            longArray[i] = this.intChunks[i];
+         }
+         shortArray = new int[bint.chunks];
+         for ( int j = 0; j < bint.chunks; j++ ) {
+            shortArray[j] = bint.intChunks[j];
+         }
+      }
+      else {
+         longArray = new int[bint.chunks];
+         for ( int i = 0; i < bint.chunks; i++ ) {
+            longArray[i] = bint.intChunks[i];
+         }
+         shortArray = new int[this.chunks];
+         for ( int j = 0; j < this.chunks; j++ ) {
+            shortArray[j] = this.intChunks[j];
+         }
+      }
+
+      result = new long[longArray.length + shortArray.length + 1];
+      for ( int i = 0; i < result.length; i++ ) {
+         result[i] = 0;
+      }
+
+      for ( int i = 0; i < shortArray.length; i++ ) {
+         k = i;
+         for ( int j = 0; j < longArray.length; j++ ) {
+            if ( result[k] > 9 ) {
+               //carry = 1;
+               carry = (long) result[k] / 10;
+               result[k] = (long) result[k] % 10;
+            } 
+            else {
+               carry = 0;
+            }
+            result[k] += ( (long) longArray[j] * (long) shortArray[i] ) + carry;
+            k++;
+         }
+         
+         multiplyString = String.valueOf( result[i] );
+
+         if ( multiplyString.length() <= 9 ) {
+            carry = 0;
+         } else {
+            lengthCarry = multiplyString.length() - 9;
+            carryString = multiplyString.substring(0, lengthCarry);
+            carry = Long.parseLong(carryString);
+         }
+      }
+
+      for ( int i = result.length - 1; i >= 0; i-- ) {
+         resultString += result[i];
+      }
+
+      if ( newSign == 1 ) {
+         resultString = "-" + resultString;
+      }
+
+      BrobInt multiply = new BrobInt( resultString );
+
+      return multiply.removeLeadingZeros( multiply );
+
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,6 +293,7 @@ public class BrobInt {
    *  @return BrobInt that is the remainder of division of this BrobInt by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt remainder( BrobInt bint ) {
+      //return b1.subtract(b1.divide(b2).multiply(b2));
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
