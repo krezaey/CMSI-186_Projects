@@ -13,71 +13,73 @@ public class Collatz {
 
     BrobInt bint;
 
+    String internalValue;
+
    /**
-   *  Constructor takes a string and assigns it to the internal storage, checks for a sign character
-   *   and handles that accordingly;  it then checks to see if it's all valid digits, and reverses it
-   *   for later use
-   *  @param  value  String value to make into a BrobInt which then makes into a Collatz
+   *  Constructor takes a string and assigns it to the internal storage. Creates a BrobInt instance
+   *  from the inputted string, which then creates a Collatz instance. Validates argument.
+   *  @param  String  array value to make into a BrobInt which then makes into a Collatz
    */
 
-    public Collatz( String s ) {
-        this.bint = new BrobInt(s);
+    public Collatz( String[] args ) {
+        try {
+            validArgs( args );
+            this.bint = new BrobInt( args[0] );
+            this.internalValue = args[0];
+        }
+        catch ( Exception e ) { 
+            System.out.println("\n         Please enter an appopriate argument." +
+                               "\n         Only decimal numbers and no more than one argument.\n"); 
+            System.exit(0);
+        }
     }
 
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to validate that all the characters in the value are valid decimal digits
-   *  @return  boolean  true if all digits are good
-   *  @throws  IllegalArgumentException if something is hinky
-   *  note that there is no return false, because of throwing the exception
-   *  note also that this must check for the '+' and '-' sign digits
+   *  Method to validate digits in argument. 
+   *  @param   String args from the argument line
+   *  @throws  IllegalArgumentException if have more than one argument or non-decimal values
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-    public boolean validArgs( String[] args ) {
+    public void validArgs( String[] args ) {
         boolean valid = true;
-        if ( args.length > 1 ) {
-            valid = false;
+        for ( int i = 0; i < args.length - 1; i++ ) {
+            if ( args.length > 1 || args.length == 0 ) {
+                throw new IllegalArgumentException();
+            } 
+            else {
+                //will try to parse integer for the BrobInt string, if not integer will throw exception
+                Integer.parseInt( args[i] );
+            }
         }
-        return valid;
     }
 
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to validate that all the characters in the value are valid decimal digits
-   *  @return  boolean  true if all digits are good
-   *  @throws  IllegalArgumentException if something is hinky
-   *  note that there is no return false, because of throwing the exception
-   *  note also that this must check for the '+' and '-' sign digits
+   *  Method to perform and print Collatz sequence.
+   *  @param none
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     public void sequence() {
         int steps = 0;
 
         System.out.println("\n         COLLATZ SEQUENCE");
-        System.out.println("\n         ===============================" );
+        System.out.println("\n         For BrobInt: \n         " + this.bint.toString());
+        System.out.println("\n         =======================================================" );
         System.out.println("\n\n");
         //code here
-        System.out.println("\n         It takes " + steps + " for the sequence to go to 1.\n\n");
+        System.out.println("\n         It takes " + steps + " steps for the sequence to converge to 1.\n\n");
     }
 
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  the main method redirects the user to the test class
+   *  The main creates an instance of Collatz class from arguments and performs the sequence.
    *  @param  args  String array which contains command line arguments
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     public static void main ( String[] args ) {
 
-        Collatz collatzBint = new Collatz( args[0] );
+        Collatz collatzBint = new Collatz( args );
 
-        try { 
-            if ( collatzBint.validArgs(args) == false ) {
-                throw new IOException();
-            }
-            collatzBint.sequence();
-        }
-        catch ( IOException e ) {
-            System.out.println("\n         Please enter only one digit to do the collatz sequence with.");
-        }
+        collatzBint.sequence();
         
-
     }
 }
 
