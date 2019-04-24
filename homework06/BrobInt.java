@@ -170,64 +170,7 @@ public class BrobInt {
       
       String addString = "";
 
-      //DecimalFormat df = new DecimalFormat("000000000");
-
       int[] result = new int [ max + 2 ];
-
-      // for ( int i = 0; i < min; i++ ) {
-      //    result[i] = this.intChunks[i] + bint.intChunks[i] + carry;      
-      //    if ( result[i] > MAX_INT_VALUE ) {
-      //       result[i] -= 1000000000;
-      //       carry = 1;
-      //    } 
-      //    else {
-      //       carry = 0;
-      //    }
-      //    k++;
-      // }
-
-      // for ( int i = 0; i < max; i++ ) {
-      //    if ( this.intChunks.length > bint.intChunks.length ) {
-      //       result[i] = this.intChunks[i] + carry;
-      //       if ( result[i] > MAX_INT_VALUE ) {
-      //          result[i] -= 1000000000;
-      //          carry = 1;
-      //       } 
-      //       else {
-      //          carry = 0;
-      //       }
-      //    }
-      //    if ( bint.intChunks.length > this.intChunks.length ) {
-      //       result[i] = bint.intChunks[i] + carry;
-      //       if ( result[i] > MAX_INT_VALUE ) {
-      //          result[i] -= 1000000000;
-      //          carry = 1;
-      //       } 
-      //       else {
-      //          carry = 0;
-      //       }
-      //    }
-      // }
-
-      // if ( this.sign == bint.sign ) { 
-      //    newSign = this.sign; 
-      //    if ( newSign == 0 ) {
-      //       if ( this.internalValue.length() < bint.internalValue.length() ) { originalBigger = false; } 
-      //    }
-      //    else {
-      //       if ( this.internalValue.length() > bint.internalValue.length() ) { originalBigger = false; } 
-      //    } 
-      // }
-      // else {
-      //    if ( this.internalValue.length() > bint.internalValue.length() ) { newSign = this.sign; } 
-      //    else { newSign = bint.sign; }
-      //    if ( newSign == 0 ) {
-      //       if ( this.internalValue.length() < bint.internalValue.length() ) { originalBigger = false; } 
-      //    }
-      //    else {
-      //       if ( this.internalValue.length() > bint.internalValue.length() ) { originalBigger = false; } 
-      //    } 
-      // }
 
       if ( this.sign == bint.sign ) {
          newSign = this.sign;
@@ -245,26 +188,25 @@ public class BrobInt {
 
       int[] biggerArray = ( originalBigger ) ? new int[this.intChunks.length] : new int[bint.intChunks.length];
       int[] smallerArray = ( originalBigger ) ? new int[bint.intChunks.length] : new int[this.intChunks.length];
-      //int[] result = new int[ max + 2 ];
-
+   
       if ( originalBigger ) {
-         for ( int i = 0; i < biggerArray.length; i++ ) {
+         for ( int i = 0; i < max; i++ ) {
             biggerArray[i] = this.intChunks[i];
          }
-         for ( int j = 0; j < smallerArray.length; j++ ) {
+         for ( int j = 0; j < min; j++ ) {
             smallerArray[j] = bint.intChunks[j];
          }
       } 
       else {
-         for ( int i = 0; i < biggerArray.length; i++ ) {
+         for ( int i = 0; i < max; i++ ) {
             biggerArray[i] = bint.intChunks[i];
          }
-         for ( int j = 0; j < smallerArray.length; j++ ) {
+         for ( int j = 0; j < min; j++ ) {
             smallerArray[j] = this.intChunks[j];
          }
       }
 
-      for ( int i = 0; i < smallerArray.length; i++ ) {
+      for ( int i = 0; i < min; i++ ) {
          result[i] = biggerArray[i] + smallerArray[i] + carry;
          if ( result[i] > MAX_INT_VALUE ) {
             result[i] -= 1000000000;
@@ -274,7 +216,7 @@ public class BrobInt {
          k++;
       }
 
-      for ( int i = k; i < biggerArray.length; i++ ) {
+      for ( int i = k; i < max; i++ ) {
          if ( originalBigger ) {
             result[i] += this.intChunks[i] + carry;
             if ( result[i] > MAX_INT_VALUE ) {
@@ -294,20 +236,16 @@ public class BrobInt {
       }
    
       for ( int i = result.length - 1; i >= 0; i-- ) { 
-         // if ( result[i] < 1 && result.length < 3 ) {
-         //    addString += result[ i + 1 ];
-         // }
-         //else { addString += result[i]; }
          addString += result[i];
       }
+
+      //throwing error in case where we have "0 - number", won't perform math before converting to string?
 
       if ( newSign == 1 ) { addString += '-' + addString; }
 
       BrobInt add = new BrobInt ( addString );
 
       return add.removeLeadingZeros( add );
-      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -322,6 +260,11 @@ public class BrobInt {
       boolean bothNegative = ( bothPositive ) ? false : true; 
       boolean differentSigns = ( this.sign != bint.sign ) ? true : false;
 
+      int max = Math.max( this.intChunks.length, bint.intChunks.length );
+      int min = Math.min( this.intChunks.length, bint.intChunks.length );
+
+      int[] result = new int[ max + 2 ];
+
       if ( ( bothPositive ) && ( this.compareTo( bint ) < 0 ) ) {
          resultNegative = true;
       } 
@@ -334,15 +277,16 @@ public class BrobInt {
          resultNegative = true;
          String switchOriginal = this.internalValue.substring( 1, this.internalValue.length() );
          BrobInt newOriginal = new BrobInt( switchOriginal );
-         String result = '-' + bint.add( newOriginal ).toString();
-         return new BrobInt( result );
+         String answer = '-' + bint.add( newOriginal ).toString();
+         return new BrobInt( answer );
       }
       else if ( ( bothNegative ) && ( this.compareTo( bint ) > 0 ) ) {
          resultNegative = true;
       }
       
+      //do subtraction loop
+      
       return new BrobInt("1");
-      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
