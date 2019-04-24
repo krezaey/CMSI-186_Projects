@@ -24,8 +24,8 @@
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Arrays;
-
 import javax.naming.spi.ResolveResult;
+import javax.swing.SwingWorker;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -170,6 +170,8 @@ public class BrobInt {
       
       String addString = "";
 
+      //DecimalFormat df = new DecimalFormat("000000000");
+
       int[] result = new int [ max + 2 ];
 
       // for ( int i = 0; i < min; i++ ) {
@@ -290,8 +292,12 @@ public class BrobInt {
             else { carry = 0; }
          }
       }
-
-      for ( int i = result.length - 1; i >= 0; i-- ) {
+   
+      for ( int i = result.length - 1; i >= 0; i-- ) { 
+         // if ( result[i] < 1 && result.length < 3 ) {
+         //    addString += result[ i + 1 ];
+         // }
+         //else { addString += result[i]; }
          addString += result[i];
       }
 
@@ -310,7 +316,33 @@ public class BrobInt {
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtract( BrobInt bint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+
+      boolean resultNegative = false;
+      boolean bothPositive = ( this.sign == 0 && bint.sign == 0 ) ? true : false; //0 can indicate no sign
+      boolean bothNegative = ( bothPositive ) ? false : true; 
+      boolean differentSigns = ( this.sign != bint.sign ) ? true : false;
+
+      if ( ( bothPositive ) && ( this.compareTo( bint ) < 0 ) ) {
+         resultNegative = true;
+      } 
+      else if ( ( differentSigns ) && ( this.compareTo( bint ) > 0 ) ) {
+         String switchArg = bint.internalValue.substring( 1, bint.internalValue.length() );
+         BrobInt nowPositive = new BrobInt( switchArg );
+         return this.add( nowPositive );
+      }
+      else if ( ( differentSigns ) && ( this.compareTo( bint ) < 0 ) ) {
+         resultNegative = true;
+         String switchOriginal = this.internalValue.substring( 1, this.internalValue.length() );
+         BrobInt newOriginal = new BrobInt( switchOriginal );
+         String result = '-' + bint.add( newOriginal ).toString();
+         return new BrobInt( result );
+      }
+      else if ( ( bothNegative ) && ( this.compareTo( bint ) > 0 ) ) {
+         resultNegative = true;
+      }
+      
+      return new BrobInt("1");
+      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
