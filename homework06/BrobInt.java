@@ -58,7 +58,9 @@ public class BrobInt {
    public  byte   sign          = 0;         // "0" is positive, "1" is negative
   /// You can use this or not, as you see fit.  The explanation was provided in class
    private String reversed      = "";        // the backwards version of the internal String representation
-   public final int CHUNK_SIZE = 9;
+
+   private int CHUNK_SIZE = 9;
+   private int MAX_INT_VALUE = 999999999;
    
   ///constructor fields
    int[] intChunks;
@@ -80,7 +82,9 @@ public class BrobInt {
       internalValue = new String(s);
       this.chunks = (internalValue.length() / CHUNK_SIZE);
       if ( s.length() % CHUNK_SIZE != 0 ) { this.chunks++; }
-      if ( s.charAt(0) == '-' ) { sign = 1; }
+
+      if ( s.charAt(0) == '-' ) { this.sign = 1; }
+      else { this.sign = 0; }
       
       this.intChunks = new int[this.chunks];
       this.stop = internalValue.length();
@@ -94,10 +98,7 @@ public class BrobInt {
 
          if ( i == this.intChunks.length - 2 ) { this.start = 0; }
          else { this.start -= 9; }
-
       }
-
-
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -111,19 +112,21 @@ public class BrobInt {
       boolean valid = false;
       for ( int i = 0; i < this.intChunks.length; i++) {
          for ( int j = 0; j < CHUNK_SIZE; j++ ) {
-            if ( i != this.intChunks.length - 1 ) {
-               //checks that chunks that are not the first chunk (or last since the chunks are reversed) are not negative or too big
-               if ( this.intChunks[i] < 0 || this.intChunks[i] > 999999999 ) { 
+            if ( internalValue.length() == 0 ) {
+               throw new IllegalArgumentException( "\n         Please enter at least one digit." );
+            }
+            else if ( Character.isDigit( internalValue.charAt(i) ) == false ) {
+               throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
+            }
+            else if ( i != this.intChunks.length - 1 ) {
+               //no digits other than the first digit can contain a negative or positive sign
+               if ( j != 0 && ( this.internalValue.charAt(j) == '-' || this.internalValue.charAt(j) == '+' ) ) {
                   throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
-               }
-               else if ( j != 0 && ( this.internalValue.charAt(j) == '-' || this.internalValue.charAt(j) == '+' ) ) {
-                  //no digits other than the first digit can contain a negative or positive sign
-                  throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
-               }
-               else { 
-                  valid = true;
                }
             } 
+            else { 
+               valid = true;
+            }
          }
       }
       return valid;
@@ -157,26 +160,95 @@ public class BrobInt {
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt add( BrobInt bint ) {
+      int k = 0;
+      int newSign = 0;
       int carry = 0;
-      String add = "";
-      BrobInt added = new BrobInt(add);
-      for ( int i = 0; i < Math.min(this.intChunks.length, bint.intChunks.length); i++) {
-         added.intChunks[i] = this.intChunks[i] + bint.intChunks[i] + carry;
+      
+      // boolean originalBigger = true;
+      
+      String addString = "";
 
-         if ( added.intChunks[i] > 999 ) {
-            added.intChunks[i] -= 1000;
-            carry = 1;
-         }
-         else {
-            carry = 0;
-         }
+      // if ( this.sign == bint.sign ) { 
+      //    newSign = this.sign; 
+      //    if ( newSign == 0 ) {
+      //       if ( this.internalValue.length() < bint.internalValue.length() ) { originalBigger = false; } 
+      //    }
+      //    else {
+      //       if ( this.internalValue.length() > bint.internalValue.length() ) { originalBigger = false; } 
+      //    } 
+      // }
+      // else {
+      //    if ( this.internalValue.length() > bint.internalValue.length() ) { newSign = this.sign; } 
+      //    else { newSign = bint.sign; }
+      //    if ( newSign == 0 ) {
+      //       if ( this.internalValue.length() < bint.internalValue.length() ) { originalBigger = false; } 
+      //    }
+      //    else {
+      //       if ( this.internalValue.length() > bint.internalValue.length() ) { originalBigger = false; } 
+      //    } 
+      // }
 
-         // for ( int i = 0; i < this.intChunks.length; i++ ) {
-         //    add += added[i];
-         // }
+      // int[] biggerArray = ( originalBigger ) ? new int[this.intChunks.length] : new int[bint.intChunks.length];
+      // int[] smallerArray = ( originalBigger ) ? new int[bint.intChunks.length] : new int[this.intChunks.length];
+      // int[] result = new int[ Math.max( this.intChunks.length, bint.intChunks.length ) + 2 ];
 
-      }
-      return added; 
+      // if ( originalBigger ) {
+      //    for ( int i = 0; i < biggerArray.length; i++ ) {
+      //       biggerArray[i] = this.intChunks[i];
+      //    }
+      //    for ( int j = 0; j < smallerArray.length; j++ ) {
+      //       smallerArray[j] = bint.intChunks[j];
+      //    }
+      // } 
+      // else {
+      //    for ( int i = 0; i < biggerArray.length; i++ ) {
+      //       biggerArray[i] = bint.intChunks[i];
+      //    }
+      //    for ( int j = 0; j < smallerArray.length; j++ ) {
+      //       smallerArray[j] = this.intChunks[j];
+      //    }
+      // }
+
+      // for ( int i = 0; i < smallerArray.length; i++ ) {
+      //    result[i] = biggerArray[i] + smallerArray[i] + carry;
+      //    if ( result[i] > MAX_INT_VALUE ) {
+      //       result[i] -= 1000000000;
+      //       carry = 1;
+      //    }
+      //    else { carry = 0; }
+      //    k++;
+      // }
+
+      // for ( int i = k; i < biggerArray.length; i++ ) {
+      //    if ( originalBigger ) {
+      //       result[i] += this.intChunks[i] + carry;
+      //       if ( result[i] > MAX_INT_VALUE ) {
+      //          result[i] -= 1000000000;
+      //          carry = 1;
+      //       }
+      //       else { carry = 0; }
+      //    } 
+      //    else {
+      //       result[i] += bint.intChunks[i] + carry;
+      //       if ( result[i] > MAX_INT_VALUE ) {
+      //          result[i] -= 1000000000;
+      //          carry = 1;
+      //       }
+      //       else { carry = 0; }
+      //    }
+      // }
+
+      // for ( int i = result.length - 1; i >= 0; i-- ) {
+      //    addString += result[i];
+      // }
+
+      // if ( newSign == 1 ) { addString += '-' + addString; }
+
+      // BrobInt add = new BrobInt ( addString );
+
+      // return add.removeLeadingZeros( add );
+      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -194,8 +266,8 @@ public class BrobInt {
    *  @return BrobInt that is the product of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt multiply( BrobInt bint ) {
-      int newSign = 0;
       int k = 0;
+      int newSign = 0; 
       int lengthCarry = 0;
 
       long carry = 0;
@@ -242,9 +314,9 @@ public class BrobInt {
          k = i;
          for ( int j = 0; j < longArray.length; j++ ) {
             if ( result[k] > 9 ) {
-               //carry = 1;
-               carry = (long) result[k] / 10;
-               result[k] = (long) result[k] % 10;
+               carry = 1;
+               // carry = (long) result[k] / 10;
+               // result[k] = (long) result[k] % 10;
             } 
             else {
                carry = 0;
@@ -268,9 +340,7 @@ public class BrobInt {
          resultString += result[i];
       }
 
-      if ( newSign == 1 ) {
-         resultString = "-" + resultString;
-      }
+      if ( newSign == 1 ) { resultString = "-" + resultString; }
 
       BrobInt multiply = new BrobInt( resultString );
 
@@ -312,11 +382,11 @@ public class BrobInt {
     String arg = removeLeadingZeros( bint ).toString();
 
    // handle the signs here
-    if( 1 == sign && 0 == bint.sign ) {
+    if( 1 == this.sign && 0 == bint.sign ) {
        return -1;
-    } else if( 0 == sign && 1 == bint.sign ) {
+    } else if( 0 == this.sign && 1 == bint.sign ) {
        return 1;
-    } else if( 0 == sign && 0 == bint.sign ) {
+    } else if( 0 == this.sign && 0 == bint.sign ) {
       // the signs are the same at this point ~ both positive
       // check the length and return the appropriate value
       //   1 means this is longer than bint, hence larger positive
@@ -350,7 +420,7 @@ public class BrobInt {
  *  @return boolean  that is true if they are equal and false otherwise
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
  public boolean equals( BrobInt bint ) {
-    return ( (sign == bint.sign) && (this.toString().equals( bint.toString() )) );
+    return ( (this.sign == bint.sign) && (this.toString().equals( bint.toString() )) );
  }
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -370,7 +440,7 @@ public class BrobInt {
  *  @return String  which is the String representation of this BrobInt
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
  public String toString() {
-    return internalValue;
+    return this.internalValue;
  }
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

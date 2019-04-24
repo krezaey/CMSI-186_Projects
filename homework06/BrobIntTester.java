@@ -310,13 +310,17 @@ public class BrobIntTester {
          System.out.println( "    Test " + df.format( testNumber++ ) + ": Adding g14 and g15 [-234567 + -10] using bytes: " );
          System.out.println( "      expecting: -234577 and got " + g14.add( g15 ) );
       }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); 
+      System.out.println( String.valueOf( e ) ); //delete 
+      }
 
       try {
          System.out.println( "    Test " + df.format( testNumber++ ) + ": Adding g15 and g14 [-10 + -234567] using bytes: " );
          System.out.println( "      expecting: -234577 and got " + g15.add( g14 ) );
       }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); 
+      System.out.println( String.valueOf( e ) ); //delete
+      }
 
       System.out.println( "\n    Test " + df.format( testNumber++ ) + ": Making a sixteenth new BrobInt, calling add methods: "  );
       try {
@@ -330,20 +334,26 @@ public class BrobIntTester {
          System.out.println( "    Test " + df.format( testNumber++ ) + ": Adding g14 and g16 [-234567 + -999999] using bytes: " );
          System.out.println( "      expecting: -1234566 and got " + g14.add( g16 ) );
       }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); 
+      System.out.println( String.valueOf( e ) ); //delete
+      }
 
       try {
          System.out.println( "    Test " + df.format( testNumber++ ) + ": Adding g16 and g14 [-999999 + -234567] using bytes: " );
          System.out.println( "      expecting: -1234566 and got " + g16.add( g14 ) );
       }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); 
+      System.out.println( String.valueOf( e ) ); //delete 
+      }
 
       try {
          System.out.println( "\n    Test " + df.format( testNumber++ ) + ": Adding g1 and g4 using bytes: " );
          System.out.println( "      expecting: 144127909719725076806064402568842359092656528233967026820237074760\n" +
                              "        and got: " + g1.add( g4 ) );
       }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); 
+      System.out.println( String.valueOf( e ) ); //delete
+      }
 
       System.out.println( "\n\n    TESTING COMPARETO() METHOD:\n" +
                           "    ===========================\n" +
