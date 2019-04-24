@@ -163,10 +163,49 @@ public class BrobInt {
       int k = 0;
       int newSign = 0;
       int carry = 0;
+      int max = Math.max( this.intChunks.length, bint.intChunks.length );
+      int min = Math.min( this.intChunks.length, bint.intChunks.length );
       
-      // boolean originalBigger = true;
+      boolean originalBigger = true;
       
       String addString = "";
+
+      int[] result = new int [ max + 2 ];
+
+      // for ( int i = 0; i < min; i++ ) {
+      //    result[i] = this.intChunks[i] + bint.intChunks[i] + carry;      
+      //    if ( result[i] > MAX_INT_VALUE ) {
+      //       result[i] -= 1000000000;
+      //       carry = 1;
+      //    } 
+      //    else {
+      //       carry = 0;
+      //    }
+      //    k++;
+      // }
+
+      // for ( int i = 0; i < max; i++ ) {
+      //    if ( this.intChunks.length > bint.intChunks.length ) {
+      //       result[i] = this.intChunks[i] + carry;
+      //       if ( result[i] > MAX_INT_VALUE ) {
+      //          result[i] -= 1000000000;
+      //          carry = 1;
+      //       } 
+      //       else {
+      //          carry = 0;
+      //       }
+      //    }
+      //    if ( bint.intChunks.length > this.intChunks.length ) {
+      //       result[i] = bint.intChunks[i] + carry;
+      //       if ( result[i] > MAX_INT_VALUE ) {
+      //          result[i] -= 1000000000;
+      //          carry = 1;
+      //       } 
+      //       else {
+      //          carry = 0;
+      //       }
+      //    }
+      // }
 
       // if ( this.sign == bint.sign ) { 
       //    newSign = this.sign; 
@@ -188,66 +227,80 @@ public class BrobInt {
       //    } 
       // }
 
-      // int[] biggerArray = ( originalBigger ) ? new int[this.intChunks.length] : new int[bint.intChunks.length];
-      // int[] smallerArray = ( originalBigger ) ? new int[bint.intChunks.length] : new int[this.intChunks.length];
-      // int[] result = new int[ Math.max( this.intChunks.length, bint.intChunks.length ) + 2 ];
+      if ( this.sign == bint.sign ) {
+         newSign = this.sign;
+         if ( this.compareTo( bint ) > 0 )  { 
+            if ( newSign == 1 ) {
+               originalBigger = false;
+            }    
+         }
+      }
+      else {
+         if ( bint.compareTo( this ) > 0 ) {
+            originalBigger = false;
+         }
+      }
 
-      // if ( originalBigger ) {
-      //    for ( int i = 0; i < biggerArray.length; i++ ) {
-      //       biggerArray[i] = this.intChunks[i];
-      //    }
-      //    for ( int j = 0; j < smallerArray.length; j++ ) {
-      //       smallerArray[j] = bint.intChunks[j];
-      //    }
-      // } 
-      // else {
-      //    for ( int i = 0; i < biggerArray.length; i++ ) {
-      //       biggerArray[i] = bint.intChunks[i];
-      //    }
-      //    for ( int j = 0; j < smallerArray.length; j++ ) {
-      //       smallerArray[j] = this.intChunks[j];
-      //    }
-      // }
+      int[] biggerArray = ( originalBigger ) ? new int[this.intChunks.length] : new int[bint.intChunks.length];
+      int[] smallerArray = ( originalBigger ) ? new int[bint.intChunks.length] : new int[this.intChunks.length];
+      //int[] result = new int[ max + 2 ];
 
-      // for ( int i = 0; i < smallerArray.length; i++ ) {
-      //    result[i] = biggerArray[i] + smallerArray[i] + carry;
-      //    if ( result[i] > MAX_INT_VALUE ) {
-      //       result[i] -= 1000000000;
-      //       carry = 1;
-      //    }
-      //    else { carry = 0; }
-      //    k++;
-      // }
+      if ( originalBigger ) {
+         for ( int i = 0; i < biggerArray.length; i++ ) {
+            biggerArray[i] = this.intChunks[i];
+         }
+         for ( int j = 0; j < smallerArray.length; j++ ) {
+            smallerArray[j] = bint.intChunks[j];
+         }
+      } 
+      else {
+         for ( int i = 0; i < biggerArray.length; i++ ) {
+            biggerArray[i] = bint.intChunks[i];
+         }
+         for ( int j = 0; j < smallerArray.length; j++ ) {
+            smallerArray[j] = this.intChunks[j];
+         }
+      }
 
-      // for ( int i = k; i < biggerArray.length; i++ ) {
-      //    if ( originalBigger ) {
-      //       result[i] += this.intChunks[i] + carry;
-      //       if ( result[i] > MAX_INT_VALUE ) {
-      //          result[i] -= 1000000000;
-      //          carry = 1;
-      //       }
-      //       else { carry = 0; }
-      //    } 
-      //    else {
-      //       result[i] += bint.intChunks[i] + carry;
-      //       if ( result[i] > MAX_INT_VALUE ) {
-      //          result[i] -= 1000000000;
-      //          carry = 1;
-      //       }
-      //       else { carry = 0; }
-      //    }
-      // }
+      for ( int i = 0; i < smallerArray.length; i++ ) {
+         result[i] = biggerArray[i] + smallerArray[i] + carry;
+         if ( result[i] > MAX_INT_VALUE ) {
+            result[i] -= 1000000000;
+            carry = 1;
+         }
+         else { carry = 0; }
+         k++;
+      }
 
-      // for ( int i = result.length - 1; i >= 0; i-- ) {
-      //    addString += result[i];
-      // }
+      for ( int i = k; i < biggerArray.length; i++ ) {
+         if ( originalBigger ) {
+            result[i] += this.intChunks[i] + carry;
+            if ( result[i] > MAX_INT_VALUE ) {
+               result[i] -= 1000000000;
+               carry = 1;
+            }
+            else { carry = 0; }
+         } 
+         else {
+            result[i] += bint.intChunks[i] + carry;
+            if ( result[i] > MAX_INT_VALUE ) {
+               result[i] -= 1000000000;
+               carry = 1;
+            }
+            else { carry = 0; }
+         }
+      }
 
-      // if ( newSign == 1 ) { addString += '-' + addString; }
+      for ( int i = result.length - 1; i >= 0; i-- ) {
+         addString += result[i];
+      }
 
-      // BrobInt add = new BrobInt ( addString );
+      if ( newSign == 1 ) { addString += '-' + addString; }
 
-      // return add.removeLeadingZeros( add );
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      BrobInt add = new BrobInt ( addString );
+
+      return add.removeLeadingZeros( add );
+      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
 
    }
 
