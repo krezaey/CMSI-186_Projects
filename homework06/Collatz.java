@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  File name     :  Collatz.java
  *  Purpose       :  Main program to run collatz sequence
@@ -43,13 +41,9 @@ public class Collatz {
     public void validArgs( String[] args ) {
         boolean valid = true;
         for ( int i = 0; i < args.length - 1; i++ ) {
-            if ( args.length > 1 || args.length == 0 ) {
+            if ( args.length > 1 || args.length == 0 || Character.isDigit( this.bint.internalValue.charAt(i) ) == false ) {
                 throw new IllegalArgumentException();
             } 
-            else {
-                //will try to parse integer for the BrobInt string, if not integer will throw exception
-                Integer.parseInt( args[i] );
-            }
         }
     }
 
@@ -64,7 +58,6 @@ public class Collatz {
         System.out.println("\n         COLLATZ SEQUENCE");
         System.out.println("\n         For BrobInt: \n         " + this.bint.toString());
         System.out.println("\n         =======================================================" );
-        System.out.println("\n\n");
         //code here
         System.out.println("\n         It takes " + steps + " steps for the sequence to converge to 1.\n\n");
     }
