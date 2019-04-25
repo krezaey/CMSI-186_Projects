@@ -25,8 +25,7 @@
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Arrays;
 import javax.naming.spi.ResolveResult;
-import javax.swing.SwingWorker;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -67,6 +66,8 @@ public class BrobInt {
    int chunks;
    int stop;
    int start;
+
+   DecimalFormat df = new DecimalFormat("000000000");
 
    private static BufferedReader input = new BufferedReader( new InputStreamReader( System.in ) );
    private static final boolean DEBUG_ON = false;
@@ -236,12 +237,23 @@ public class BrobInt {
       }
    
       for ( int i = result.length - 1; i >= 0; i-- ) { 
-         addString += result[i];
+         if ( i < result.length - 3 ) {
+            addString += df.format( (double) result[i] );
+         }
+         else {
+            addString += result[i];
+         }
       }
 
-      //throwing error in case where we have "0 - number", won't perform math before converting to string?
+      for ( int i = 0; i < addString.length(); i++ ) {
+         int actualIndex = 0;
+         if ( ( i != 0 ) && ( addString.charAt(i) == '-' ) ) {
+            actualIndex = i;
+            addString = addString.substring( actualIndex, addString.length() );
+         }
+      }
 
-      if ( newSign == 1 ) { addString += '-' + addString; }
+      if ( ( newSign == 1 ) && ( addString.charAt(0) != '-' ) ) { addString += '-' + addString; }
 
       BrobInt add = new BrobInt ( addString );
 
@@ -256,7 +268,7 @@ public class BrobInt {
    public BrobInt subtract( BrobInt bint ) {
 
       boolean resultNegative = false;
-      boolean bothPositive = ( this.sign == 0 && bint.sign == 0 ) ? true : false; //0 can indicate no sign
+      boolean bothPositive = ( this.sign == 0 && bint.sign == 0 ) ? true : false;
       boolean bothNegative = ( bothPositive ) ? false : true; 
       boolean differentSigns = ( this.sign != bint.sign ) ? true : false;
       boolean specialCondition = false;
@@ -329,6 +341,15 @@ public class BrobInt {
          subtractString += result[i];
       }
 
+      for ( int i = 0; i < subtractString.length(); i++ ) {
+         int actualIndex = 0;
+         if ( ( i != 0 ) && ( subtractString.charAt(i) == '-' ) ) {
+            actualIndex = i;
+            if ( resultNegative == false ) { actualIndex++; }
+            subtractString = subtractString.substring( actualIndex, subtractString.length() );
+         }
+      }
+
       if ( resultNegative ) { subtractString = '-' + subtractString; }
 
       BrobInt subtract = new BrobInt ( subtractString );
@@ -336,7 +357,7 @@ public class BrobInt {
       if ( !specialCondition ) { 
          answerBrobInt = subtract.removeLeadingZeros( subtract );
       }
-      
+
       return answerBrobInt;
    }
 
