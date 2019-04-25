@@ -443,7 +443,7 @@ public class BrobInt {
    *  @return BrobInt that is the remainder of division of this BrobInt by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt remainder( BrobInt bint ) {
-      //return b1.subtract(b1.divide(b2).multiply(b2));
+      //return this.subtract( this.divide( bint ).multiply( bint ) );
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
