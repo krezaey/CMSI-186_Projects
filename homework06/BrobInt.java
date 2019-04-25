@@ -338,7 +338,12 @@ public class BrobInt {
       }
 
       for ( int i = result.length - 1; i >= 0; i-- ) { 
-         subtractString += result[i];
+         if ( i < result.length - 3 ) {
+            subtractString += df.format( (double) result[i] );
+         }
+         else {
+            subtractString += result[i];
+         }
       }
 
       for ( int i = 0; i < subtractString.length(); i++ ) {
