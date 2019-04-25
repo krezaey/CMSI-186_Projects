@@ -259,6 +259,7 @@ public class BrobInt {
       boolean bothPositive = ( this.sign == 0 && bint.sign == 0 ) ? true : false; //0 can indicate no sign
       boolean bothNegative = ( bothPositive ) ? false : true; 
       boolean differentSigns = ( this.sign != bint.sign ) ? true : false;
+      boolean specialCondition = false;
 
       int max = Math.max( this.intChunks.length, bint.intChunks.length );
       int min = Math.min( this.intChunks.length, bint.intChunks.length );
@@ -270,20 +271,24 @@ public class BrobInt {
       int[] shortArray;
       int[] result = new int[ max + 2 ];
 
+      BrobInt answerBrobInt = new BrobInt("0");
+
       if ( ( bothPositive ) && ( this.compareTo( bint ) < 0 ) ) {
          resultNegative = true;
       } 
       else if ( ( differentSigns ) && ( this.compareTo( bint ) > 0 ) ) {
          String switchArg = bint.internalValue.substring( 1, bint.internalValue.length() );
          BrobInt nowPositive = new BrobInt( switchArg );
-         return this.add( nowPositive );
+         specialCondition = true;
+         answerBrobInt = new BrobInt( String.valueOf( this.add( nowPositive ) ) );
       }
       else if ( ( differentSigns ) && ( this.compareTo( bint ) < 0 ) ) {
          resultNegative = true;
          String switchOriginal = this.internalValue.substring( 1, this.internalValue.length() );
          BrobInt newOriginal = new BrobInt( switchOriginal );
          String answer = '-' + bint.add( newOriginal ).toString();
-         return new BrobInt( answer );
+         specialCondition = true;
+         answerBrobInt = new BrobInt( answer );
       }
       else if ( ( bothNegative ) && ( this.compareTo( bint ) > 0 ) ) {
          resultNegative = true;
@@ -319,16 +324,20 @@ public class BrobInt {
          result[i] = longArray[i] - shortArray[i];
          k++;
       }
-      
+
       for ( int i = result.length - 1; i >= 0; i-- ) { 
          subtractString += result[i];
       }
 
-      if ( resultNegative ) { subtractString += '-' + subtractString; }
+      if ( resultNegative ) { subtractString = '-' + subtractString; }
 
       BrobInt subtract = new BrobInt ( subtractString );
 
-      return subtract.removeLeadingZeros( subtract );
+      if ( !specialCondition ) { 
+         answerBrobInt = subtract.removeLeadingZeros( subtract );
+      }
+      
+      return answerBrobInt;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
