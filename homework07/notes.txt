@@ -18,6 +18,19 @@ BETTER: use dynamic programming!
     - create a table that has a potential solution in each cell
     - use a tuple (use integer miniture tuples, which are like mini lists)
         - tuples have specific names based on how many elements they have
+    - number of columns = desired value + 1
+        - ex: java DynamicChangeMaker 2, 3 5
+        
+            5 cents | 0       | 1        | 2        | 3        | 4        | 5        |
+     ---------------|-------------------------------------------------------------------
+            { 2 }   | {0 , 0} | IMP      | {1 , 0}  | {1 , 0}  | {1 , 0}  | {1, 0}   |
+                    |         | IMP      | {0 , 0}  | IMP      | {1 , 0}  | IMP      |
+     adding result  |         | IMP      | {1 , 0}  | IMP      | {2 , 0}  | IMP      |
+     ---------------|-------------------------------------------------------------------
+             { 3 }  | {0 , 0} | IMP      | IMP      | {0 , 1}  | {0 , 1}  | {0 , 1}  |
+                    |         | IMP      | IMP      | {0 , 0}  | IMP      | {1 , 0}  |
+     adding result  |         | IMP      | {1 , 0 } | {0 , 1}  | {2 , 0}  | {1 , 1}  | <<<<<<<<< SOLUTION
+
 
     USING THE TUPLE CLASS
         - have different constructors
