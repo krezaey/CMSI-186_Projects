@@ -262,7 +262,12 @@ public class BrobInt {
 
       int max = Math.max( this.intChunks.length, bint.intChunks.length );
       int min = Math.min( this.intChunks.length, bint.intChunks.length );
+      int k = 0;
 
+      String subtractString = "";
+
+      int[] longArray;
+      int[] shortArray;
       int[] result = new int[ max + 2 ];
 
       if ( ( bothPositive ) && ( this.compareTo( bint ) < 0 ) ) {
@@ -283,10 +288,47 @@ public class BrobInt {
       else if ( ( bothNegative ) && ( this.compareTo( bint ) > 0 ) ) {
          resultNegative = true;
       }
+
+      longArray = new int[ max ];
+      shortArray = new int[ min ];
+
+      if ( this.internalValue.length() > bint.internalValue.length() ) {
+         for ( int i = 0; i < max; i++ ) {
+            longArray[i] = this.intChunks[i];
+         }
+         for ( int j = 0; j < min; j++ ) {
+            shortArray[j] = bint.intChunks[j];
+         }
+      }
+      else {
+         for ( int i = 0; i < max; i++ ) {
+            longArray[i] = bint.intChunks[i];
+         }
+         for ( int j = 0; j < min; j++ ) {
+            shortArray[j] = this.intChunks[j];
+         }
+      }
       
-      //do subtraction loop
+      for ( int i = 0; i < min; i++ ) {
+         if ( longArray[i] < shortArray[i] ) {
+            longArray[i] += 10;
+            if ( i != shortArray.length - 1) {
+               longArray[ i + 1 ]--;
+            }
+         }
+         result[i] = longArray[i] - shortArray[i];
+         k++;
+      }
       
-      return new BrobInt("1");
+      for ( int i = result.length - 1; i >= 0; i-- ) { 
+         subtractString += result[i];
+      }
+
+      if ( resultNegative ) { subtractString += '-' + subtractString; }
+
+      BrobInt subtract = new BrobInt ( subtractString );
+
+      return subtract.removeLeadingZeros( subtract );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

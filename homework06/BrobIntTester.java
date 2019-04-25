@@ -461,7 +461,9 @@ public class BrobIntTester {
          System.out.println( "      expecting: 765432\n" +
                              "        and got: " + g14.subtract( g16 ) );
       }
-      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " ); 
+      System.out.println( String.valueOf( e ) ); //delete
+      }
 
       System.out.println( "\n    Test " + df.format( testNumber++ ) + ": Subtracting g16 take away g14 [(-999999) - (-234567)] using bytes: " );
       try {
