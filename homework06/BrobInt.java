@@ -275,7 +275,6 @@ public class BrobInt {
 
       int max = Math.max( this.intChunks.length, bint.intChunks.length );
       int min = Math.min( this.intChunks.length, bint.intChunks.length );
-      int k = 0;
 
       String subtractString = "";
 
@@ -286,7 +285,7 @@ public class BrobInt {
       BrobInt answerBrobInt = new BrobInt("0");
 
       if ( ( bothPositive ) && ( this.compareTo( bint ) < 0 ) ) {
-         resultNegative = true;
+         // resultNegative = true;
       } 
       else if ( ( differentSigns ) && ( this.compareTo( bint ) > 0 ) ) {
          String switchArg = bint.internalValue.substring( 1, bint.internalValue.length() );
@@ -334,7 +333,6 @@ public class BrobInt {
             }
          }
          result[i] = longArray[i] - shortArray[i];
-         k++;
       }
 
       for ( int i = result.length - 1; i >= 0; i-- ) { 
