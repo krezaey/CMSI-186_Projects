@@ -116,7 +116,7 @@ public class BrobInt {
             if ( internalValue.length() == 0 ) {
                throw new IllegalArgumentException( "\n         Please enter at least one digit." );
             }
-            else if ( Character.isDigit( internalValue.charAt(i) ) == false ) {
+            else if ( !Character.isDigit( internalValue.charAt(i) ) ) {
                throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
             }
             else if ( i != this.intChunks.length - 1 ) {
@@ -305,7 +305,7 @@ public class BrobInt {
       else if ( ( bothNegative ) && ( this.compareTo( bint ) > 0 ) ) {
          resultNegative = true;
       }
-
+   
       longArray = new int[ max ];
       shortArray = new int[ min ];
 
@@ -350,7 +350,7 @@ public class BrobInt {
          int actualIndex = 0;
          if ( ( i != 0 ) && ( subtractString.charAt(i) == '-' ) ) {
             actualIndex = i;
-            if ( resultNegative == false ) { actualIndex++; }
+            if ( !resultNegative ) { actualIndex++; }
             subtractString = subtractString.substring( actualIndex, subtractString.length() );
          }
       }
