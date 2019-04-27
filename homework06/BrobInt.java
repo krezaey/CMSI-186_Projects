@@ -419,14 +419,25 @@ public class BrobInt {
          for ( int j = 0; j < longArray.length; j++ ) {
             if ( result[k] > 9 ) {
                carry = 1;
-               // carry = (long) result[k] / 10;
-               // result[k] = (long) result[k] % 10;
             } 
             else {
                carry = 0;
             }
             result[k] += ( (long) longArray[j] * (long) shortArray[i] ) + carry;
+
+            if ( result[k] > MAX_INT_VALUE ) {
+               carry = result[k] / 1000000000;
+               result[k] = result[k] % 1000000000;
+            }
+            else {
+               carry = 0;
+            }
             k++;
+         }
+         
+         if ( carry != 0 ) {
+            result[ k - 1 ] += carry;
+            carry = 0;
          }
          
          multiplyString = String.valueOf( result[i] );
@@ -441,7 +452,12 @@ public class BrobInt {
       }
 
       for ( int i = result.length - 1; i >= 0; i-- ) {
-         resultString += result[i];
+         if ( i < result.length - 3 ) {
+            resultString += df.format( (double) result[i] );
+         }
+         else {
+            resultString += result[i];
+         }
       }
 
       if ( newSign == 1 ) { resultString = "-" + resultString; }
