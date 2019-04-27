@@ -54,11 +54,29 @@ public class Collatz {
 
     public void sequence() {
         int steps = 0;
+        String result = "";
+
+        BrobInt answer = new BrobInt( this.bint.toString() );
 
         System.out.println("\n         COLLATZ SEQUENCE");
         System.out.println("\n         For BrobInt: \n         " + this.bint.toString());
         System.out.println("\n         =======================================================" );
-        //code here
+        
+        if ( answer.remainder( BrobInt.TWO ).equals( BrobInt.ZERO ) ) {
+            answer.divide( BrobInt.TWO );
+            result += answer.toString() + " ";
+            steps++;
+        }
+        else {
+            answer.multiply( BrobInt.THREE ).add( BrobInt.ONE );
+            result += answer.toString() + " ";
+            steps++;
+        }
+
+        if ( answer.equals( BrobInt.ONE ) ) {
+            return;
+        }
+
         System.out.println("\n         It takes " + steps + " steps for the sequence to converge to 1.\n\n");
     }
 
