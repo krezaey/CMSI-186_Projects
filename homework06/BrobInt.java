@@ -523,6 +523,8 @@ public class BrobInt {
          remain = remain.multiply( TEN );
          quotient = quotient.multiply( TEN );
 
+         remain = remain.add( new BrobInt( this.toString().substring( nlength - 1, nlength ) ) );
+
       }
       return this.removeLeadingZeros( quotient );
    }
