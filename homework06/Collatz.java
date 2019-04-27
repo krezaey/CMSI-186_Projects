@@ -63,7 +63,6 @@ public class Collatz {
         int steps = 0;
 
         BrobInt answer = new BrobInt( this.internalValue );
-        boolean equal = false;
 
         System.out.println("\n         COLLATZ SEQUENCE");
         System.out.println("\n         For BrobInt: \n         " + this.bint.toString());
@@ -71,12 +70,12 @@ public class Collatz {
 
         result += this.bint.toString() + " \n";
 
-        while ( !equal ) {
+        while ( !answer.equals( BrobInt.ONE ) ) {
             if ( answer.toString().charAt(answer.toString().length() - 1) == '2' || 
                  answer.toString().charAt(answer.toString().length() - 1) == '4' || 
                  answer.toString().charAt(answer.toString().length() - 1) == '6' || 
                  answer.toString().charAt(answer.toString().length() - 1) == '8' || 
-                 answer.toString().charAt(answer.toString().length() - 1) == '0' ) {
+                 answer.toString().charAt(answer.toString().length() - 1) == '0'   ) {
                 answer = answer.divide( BrobInt.TWO );
                 steps++;
                 result += answer.toString() + " \n";
@@ -86,10 +85,6 @@ public class Collatz {
                 answer = answer.add( BrobInt.ONE );
                 steps++;
                 result += answer.toString() + " \n";
-            }
-
-            if ( answer.equals( BrobInt.ONE ) ) {
-                equal = true;
             }
         }
 
