@@ -266,7 +266,6 @@ public class BrobInt {
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtract( BrobInt bint ) {
-
       boolean resultNegative = false;
       boolean bothPositive = ( this.sign == 0 && bint.sign == 0 ) ? true : false;
       boolean bothNegative = ( bothPositive ) ? false : true; 
@@ -282,10 +281,10 @@ public class BrobInt {
       int[] shortArray;
       int[] result = new int[ max + 2 ];
 
-      BrobInt answerBrobInt = new BrobInt("0");
+      BrobInt answerBrobInt = ZERO;
 
       if ( ( bothPositive ) && ( this.compareTo( bint ) < 0 ) ) {
-         // resultNegative = true;
+         resultNegative = true;
       } 
       else if ( ( differentSigns ) && ( this.compareTo( bint ) > 0 ) ) {
          String switchArg = bint.internalValue.substring( 1, bint.internalValue.length() );
@@ -327,7 +326,7 @@ public class BrobInt {
       
       for ( int i = 0; i < min; i++ ) {
          if ( longArray[i] < shortArray[i] ) {
-            longArray[i] += 10;
+            longArray[i] += 0;
             if ( i != shortArray.length - 1) {
                longArray[ i + 1 ]--;
             }
@@ -474,7 +473,58 @@ public class BrobInt {
    *  @return BrobInt that is the dividend of this BrobInt divided by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt divide( BrobInt bint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      int nlength = 0;
+
+      BrobInt remain = ZERO;
+      BrobInt quotient = ZERO;
+
+      if ( bint.equals( ZERO ) ) {
+         throw new IllegalArgumentException("\n         You can't divide by 0.");
+      }    
+      else if ( this.equals( bint ) ) {
+         return ONE;
+      }
+      else if ( this.compareTo( bint ) < 0 ) {
+         return ZERO;
+      }
+      else {
+         nlength = bint.internalValue.length();
+         remain = new BrobInt( this.toString().substring( 0, nlength ) );
+
+         if ( this.compareTo( remain ) < 0 ) {
+            nlength++;
+            remain = new BrobInt( this.toString().substring( 0, nlength ) );
+         }
+      }
+
+      while ( nlength <= this.toString().length() ) {
+
+         while ( remain.compareTo( bint ) > 0 ) {
+            
+            if ( allZeroDetect( remain ) ) {
+               break;
+            }
+
+            remain = remain.subtract( bint );
+            quotient = quotient.add( ONE );
+         }
+
+         if ( remain.equals( bint ) ) {
+            remain = ZERO;
+            quotient = quotient.add( ONE );
+         }
+
+         nlength++;
+
+         if ( nlength > this.toString().length() ) {
+            break;
+         }
+
+         remain = remain.multiply( TEN );
+         quotient = quotient.multiply( TEN );
+
+      }
+      return this.removeLeadingZeros( quotient );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -483,8 +533,7 @@ public class BrobInt {
    *  @return BrobInt that is the remainder of division of this BrobInt by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt remainder( BrobInt bint ) {
-      //return this.subtract( this.divide( bint ).multiply( bint ) );
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      return this.subtract( this.divide( bint ).multiply( bint ) );
    }
 
  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

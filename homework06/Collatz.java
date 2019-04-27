@@ -26,25 +26,31 @@ public class Collatz {
             this.bint = new BrobInt( args[0] );
             this.internalValue = args[0];
         }
-        catch ( Exception e ) { 
+        catch ( Exception e ) {
             System.out.println("\n         Please enter an appopriate argument." +
-                               "\n         Only decimal numbers and no more than one argument.\n"); 
+                               "\n         Only decimal numbers and no more than one argument.\n");
             System.exit(0);
         }
     }
 
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to validate digits in argument. 
+   *  Method to validate digits in argument.
    *  @param   String args from the argument line
    *  @throws  IllegalArgumentException if have more than one argument or non-decimal values
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     public void validArgs( String[] args ) {
         boolean valid = true;
-        for ( int i = 0; i < args.length - 1; i++ ) {
-            if ( args.length > 1 || args.length == 0 || Character.isDigit( this.bint.internalValue.charAt(i) ) == false ) {
+        for ( int i = 0; i < args[0].length() - 1; i++ ) {
+            if ( args.length > 1 ) {
                 throw new IllegalArgumentException();
-            } 
+            }
+            if ( args.length == 0 ) {
+                throw new IllegalArgumentException();
+            }
+            if ( (i != 0) && (!Character.isDigit( args[0].charAt(i) ) ) ) {
+                throw new IllegalArgumentException();
+            }
         }
     }
 
@@ -56,27 +62,37 @@ public class Collatz {
     public void sequence() {
         int steps = 0;
 
-        BrobInt answer = new BrobInt( this.bint.toString() );
+        BrobInt answer = new BrobInt( this.internalValue );
+        boolean equal = false;
 
         System.out.println("\n         COLLATZ SEQUENCE");
         System.out.println("\n         For BrobInt: \n         " + this.bint.toString());
         System.out.println("\n         =======================================================" );
-        
-        if ( answer.remainder( BrobInt.TWO ).equals( BrobInt.ZERO ) ) {
-            answer.divide( BrobInt.TWO );
-            result += answer.toString() + " ";
-            steps++;
-        }
-        else {
-            answer.multiply( BrobInt.THREE ).add( BrobInt.ONE );
-            result += answer.toString() + " ";
-            steps++;
+
+        result += this.bint.toString() + " \n";
+
+        while ( !equal ) {
+            if ( answer.toString().charAt(answer.toString().length() - 1) == '2' || 
+                 answer.toString().charAt(answer.toString().length() - 1) == '4' || 
+                 answer.toString().charAt(answer.toString().length() - 1) == '6' || 
+                 answer.toString().charAt(answer.toString().length() - 1) == '8' || 
+                 answer.toString().charAt(answer.toString().length() - 1) == '0' ) {
+                answer = answer.divide( BrobInt.TWO );
+                steps++;
+                result += answer.toString() + " \n";
+            }
+            else {
+                answer = answer.multiply( BrobInt.THREE );
+                answer = answer.add( BrobInt.ONE );
+                steps++;
+                result += answer.toString() + " \n";
+            }
+
+            if ( answer.equals( BrobInt.ONE ) ) {
+                equal = true;
+            }
         }
 
-        if ( answer.equals( BrobInt.ONE ) ) {
-            return;
-        }
-        
         System.out.println( "\n         " + result);
         System.out.println("\n         It takes " + steps + " steps for the sequence to converge to 1.\n\n");
     }
@@ -94,4 +110,3 @@ public class Collatz {
 
     }
 }
-
