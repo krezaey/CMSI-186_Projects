@@ -12,6 +12,7 @@ public class Collatz {
     BrobInt bint;
 
     String internalValue;
+    String result = "";
 
    /**
    *  Constructor takes a string and assigns it to the internal storage. Creates a BrobInt instance
@@ -54,7 +55,6 @@ public class Collatz {
 
     public void sequence() {
         int steps = 0;
-        String result = "";
 
         BrobInt answer = new BrobInt( this.bint.toString() );
 
@@ -76,7 +76,8 @@ public class Collatz {
         if ( answer.equals( BrobInt.ONE ) ) {
             return;
         }
-
+        
+        System.out.println( "\n         " + result);
         System.out.println("\n         It takes " + steps + " steps for the sequence to converge to 1.\n\n");
     }
 
@@ -90,7 +91,7 @@ public class Collatz {
         Collatz collatzBint = new Collatz( args );
 
         collatzBint.sequence();
-        
+
     }
 }
 
