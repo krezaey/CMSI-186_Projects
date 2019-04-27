@@ -93,7 +93,7 @@ public class Collatz {
             }
         }
 
-        System.out.println( "\n         " + result);
+        System.out.println( result );
         System.out.println("\n         It takes " + steps + " steps for the sequence to converge to 1.\n\n");
     }
 

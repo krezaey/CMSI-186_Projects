@@ -80,26 +80,32 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String s ) {
-      internalValue = new String(s);
-      this.chunks = (internalValue.length() / CHUNK_SIZE);
-      if ( s.length() % CHUNK_SIZE != 0 ) { this.chunks++; }
-
-      if ( s.charAt(0) == '-' ) { this.sign = 1; }
-      else { this.sign = 0; }
-      
-      this.intChunks = new int[this.chunks];
-      this.stop = internalValue.length();
-      this.start = this.stop - 9;
-
-      if ( chunks == 1 ) { start = 0; }
-
-      for ( int i = 0; i < chunks; i++ ) {
-         this.intChunks[i] = Integer.parseInt( internalValue.substring(this.start,this.stop) );
-         this.stop -= 9;
-
-         if ( i == this.intChunks.length - 2 ) { this.start = 0; }
-         else { this.start -= 9; }
+      try {
+         internalValue = new String(s);
+         this.chunks = (internalValue.length() / CHUNK_SIZE);
+         if ( s.length() % CHUNK_SIZE != 0 ) { this.chunks++; }
+   
+         if ( s.charAt(0) == '-' ) { this.sign = 1; }
+         else { this.sign = 0; }
+         
+         this.intChunks = new int[this.chunks];
+         this.stop = internalValue.length();
+         this.start = this.stop - 9;
+   
+         if ( chunks == 1 ) { start = 0; }
+   
+         for ( int i = 0; i < chunks; i++ ) {
+            this.intChunks[i] = Integer.parseInt( internalValue.substring(this.start,this.stop) );
+            this.stop -= 9;
+   
+            if ( i == this.intChunks.length - 2 ) { this.start = 0; }
+            else { this.start -= 9; }
+         }
       }
+      catch ( Exception e ) {
+         System.out.println("\n         Please enter valid decimal numbers for the BrobInt.");
+      }
+      
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -114,15 +120,15 @@ public class BrobInt {
       for ( int i = 0; i < this.intChunks.length; i++) {
          for ( int j = 0; j < CHUNK_SIZE; j++ ) {
             if ( internalValue.length() == 0 ) {
-               throw new IllegalArgumentException( "\n         Please enter at least one digit." );
+               throw new IllegalArgumentException();
             }
             else if ( (i != 0) && (!Character.isDigit( internalValue.charAt(i) ) ) ) {
-               throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
+               throw new IllegalArgumentException();
             }
             else if ( i != this.intChunks.length - 1 ) {
                //no digits other than the first digit can contain a negative or positive sign
                if ( j != 0 && ( this.internalValue.charAt(j) == '-' || this.internalValue.charAt(j) == '+' ) ) {
-                  throw new IllegalArgumentException( "\n         Please enter valid decimel numbers." );
+                  throw new IllegalArgumentException();
                }
             } 
             else { 
