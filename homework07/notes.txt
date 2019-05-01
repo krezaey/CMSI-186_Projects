@@ -18,7 +18,8 @@ BETTER: use dynamic programming!
     - create a table that has a potential solution in each cell
     - use a tuple (use integer miniture tuples, which are like mini lists)
         - tuples have specific names based on how many elements they have
-    - number of columns = desired value + 1
+    - number of columns = desired value + 1 ( to account for 0 )
+    - number of rows = denominations
         - ex: java DynamicChangeMaker 2, 3 5
         
             5 cents | 0       | 1        | 2        | 3        | 4        | 5        |
@@ -36,3 +37,16 @@ BETTER: use dynamic programming!
         - have different constructors
             - one will take in an integer and create a tuple of size integer; all elements will be 0
             - one will take in an integer array and use values to create tuple
+
+GENERAL PROGRAM TIPS
+    - use the .split(",") method to remove commas
+    - validate arguments, no zeros, duplicates, negative numbers, or letters
+    - parse as integers in try, say in catch that it cannot work
+    - makeChangeWithDynamicProgramming()
+        - public static Tuple makeChangeWithDynamicProgramming( int[] denom, int target ) {}
+    - do not sort the denomination coins in order
+    - two dimensional array of tuple objects
+        - Tuple[][] table = new Tuple[ rows ][ columns ]
+    - when looking back, it is adding solutions
+    - when looking up, it is comparing solutions, if better solution above, use better solution
+    - always go back number you're working with, the last number in tuple
