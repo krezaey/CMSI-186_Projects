@@ -36,14 +36,12 @@ public class DynamicChangeMaker {
    *  @returns boolean true if targetValue is acceptable, false otherwise
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-    public static boolean validateTarget( String args[] ) {
-        boolean valid = false;
-
+    public static void validateTarget( String args[] ) {
         try {
             target = Integer.parseInt( args[1] );
 
-            if ( target > 0 ) {
-                valid = true;
+            if ( target < 0 ) {
+                throw new IllegalArgumentException();
             }
             for ( int i = 0; i < args[1].length(); i++ ) {
                 if ( !Character.isDigit( args[1].charAt(i) ) ) {
@@ -54,8 +52,6 @@ public class DynamicChangeMaker {
         catch ( Exception e ) {
             System.out.println("\n         The target value is required and must be a non-negative integer value.");
         }
-
-        return valid;
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,35 +61,35 @@ public class DynamicChangeMaker {
    *  @returns boolean true if denominations are valid, false otherwise
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-   //need to check if repeat values are included
-   //negative values not working??
-    public static boolean validateDenominations( String args[] ) {
-        boolean valid = false;
-
-        String[] tempDenoms = args[0].split(",");
-        denoms = Arrays.asList( tempDenoms );
-
+    public static void validateDenominations( String args[] ) {
         try {
+            String[] tempDenoms = args[0].split(",");
+            denoms = Arrays.asList( tempDenoms );
+
             for ( int i = 0; i < denoms.size(); i++ ) {
-                if ( ( Integer.parseInt( denoms.get(i) ) > 0 ) && ( Integer.parseInt( denoms.get(i) ) < target ) ) {
-                    parseDenoms.add( Integer.parseInt( denoms.get(i) ) );
-                    valid = true;
+                if ( Integer.parseInt( denoms.get(i) ) < 0 ) {
+                    throw new IllegalArgumentException();
+                } 
+                else if ( Integer.parseInt( denoms.get(i) ) > target ) {
+                    throw new IllegalArgumentException();
                 }
-                if ( parseDenoms.contains( Integer.parseInt( denoms.get(i) ) ) ) {
-                    valid = false;
+                else if ( parseDenoms.contains( Integer.parseInt( denoms.get(i) ) ) ) {
+                    throw new IllegalArgumentException();
                 }
-                for ( int j = 0; j < tempDenoms[i].length(); j++ ) {
-                    if ( !Character.isDigit( tempDenoms[i].charAt(j) ) ) {
-                        valid = false;
-                    }
-                }  
+                else {
+                    for ( int j = 0; j < tempDenoms[i].length(); j++ ) {
+                        if ( !Character.isDigit( tempDenoms[i].charAt(j) ) ) {
+                            throw new IllegalArgumentException();
+                        }
+                    }  
+                }
+
+                parseDenoms.add( Integer.parseInt( denoms.get(i) ) );
             }
         }
         catch ( Exception e ) {
             System.out.println("\n         Coin denominations must be unique non-negative integer values and the denominations cannot be greater than the target value.");
         }
-
-        return valid;
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -102,24 +98,18 @@ public class DynamicChangeMaker {
    *  @throws  IllegalArgumentException if have input is invalid
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-   //change back to void method when finished testing
-    public static boolean validateArguments( String args[] ) {
-        boolean allArgsValid = false;
-
+    public static void validateArguments( String args[] ) {
         try {
-            if ( validateTarget( args ) && validateDenominations( args ) ) {
-                allArgsValid = true;
-            }
-            else if ( args.length != 2 ) {
+          validateDenominations( args );
+          validateTarget( args );
+          if ( args.length != 2 ) {
                 throw new IllegalArgumentException();
             }
         }
         catch ( Exception e ) {
-            System.out.println( "\n         BAD DATA: Illegal arguments." 
+            System.out.println( "\n         BAD DATA: Illegal arguments. Must have 2 valid arguments." 
             +  "\n         Usage: java DynamicChangeMaker denoms(separated by commas) targetValue\n");
         }
-        
-        return allArgsValid;
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -138,6 +128,7 @@ public class DynamicChangeMaker {
    *  @param  args  String array which contains command line arguments
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public static void main ( String args[] ) {
+        validateArguments(args);
     
     }
 
