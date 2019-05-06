@@ -7,13 +7,21 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DynamicChangeMaker {
 
     public static int target;
 
-    public static String[] denoms;
+    //public static String[] denoms;
 
-    public static int[] parseDenoms;
+    //public static int[] parseDenoms;
+
+    static List <String> denoms;
+
+    static ArrayList <Integer> parseDenoms = new ArrayList <Integer> (); 
 
     /**
      * Constructor method here!
@@ -23,17 +31,28 @@ public class DynamicChangeMaker {
 
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to validate targetValue in args[1].
-   *  @param   String args from the argument line
+   *  @param   String[] args from the argument line
+   *  @throws  IllegalArgumentException if have input is invalid
    *  @returns boolean true if targetValue is acceptable, false otherwise
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     public static boolean validateTarget( String args[] ) {
         boolean valid = false;
 
-        target = Integer.parseInt( args[1] );
+        try {
+            target = Integer.parseInt( args[1] );
 
-        if ( target > 0 ) {
-            valid = true;
+            if ( target > 0 ) {
+                valid = true;
+            }
+            for ( int i = 0; i < args[1].length(); i++ ) {
+                if ( !Character.isDigit( args[1].charAt(i) ) ) {
+                    throw new IllegalArgumentException();
+                }
+            } 
+        }
+        catch ( Exception e ) {
+            System.out.println("\n         The target value is required and must be a non-negative integer value.");
         }
 
         return valid;
@@ -41,7 +60,8 @@ public class DynamicChangeMaker {
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to validate denominations in args[0].
-   *  @param   String args from the argument line
+   *  @param   String[] args from the argument line
+   *  @throws  IllegalArgumentException if have input is invalid
    *  @returns boolean true if denominations are valid, false otherwise
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
@@ -50,14 +70,27 @@ public class DynamicChangeMaker {
     public static boolean validateDenominations( String args[] ) {
         boolean valid = false;
 
-        denoms = args[0].split(",");
-        parseDenoms = new int[ denoms.length ];
+        String[] tempDenoms = args[0].split(",");
+        denoms = Arrays.asList( tempDenoms );
 
-        for ( int i = 0; i < denoms.length; i++ ) {
-            parseDenoms[i] = Integer.parseInt( denoms[i] );
-            if ( ( Integer.parseInt( denoms[i] ) > 0 ) && ( Integer.parseInt( denoms[i] ) < target) ) {
-                valid = true;
+        try {
+            for ( int i = 0; i < denoms.size(); i++ ) {
+                if ( ( Integer.parseInt( denoms.get(i) ) > 0 ) && ( Integer.parseInt( denoms.get(i) ) < target ) ) {
+                    parseDenoms.add( Integer.parseInt( denoms.get(i) ) );
+                    valid = true;
+                }
+                if ( parseDenoms.contains( Integer.parseInt( denoms.get(i) ) ) ) {
+                    valid = false;
+                }
+                for ( int j = 0; j < tempDenoms[i].length(); j++ ) {
+                    if ( !Character.isDigit( tempDenoms[i].charAt(j) ) ) {
+                        valid = false;
+                    }
+                }  
             }
+        }
+        catch ( Exception e ) {
+            System.out.println("\n         Coin denominations must be unique non-negative integer values and the denominations cannot be greater than the target value.");
         }
 
         return valid;
@@ -65,7 +98,7 @@ public class DynamicChangeMaker {
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to track validation of the target value and entered denominations. Also checks general argument errors.
-   *  @param   String args from the argument line
+   *  @param   String[] args from the argument line
    *  @throws  IllegalArgumentException if have input is invalid
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
@@ -73,17 +106,19 @@ public class DynamicChangeMaker {
     public static boolean validateArguments( String args[] ) {
         boolean allArgsValid = false;
 
-        if ( validateTarget( args ) && validateDenominations( args ) ) {
-            allArgsValid = true;
+        try {
+            if ( validateTarget( args ) && validateDenominations( args ) ) {
+                allArgsValid = true;
+            }
+            else if ( args.length != 2 ) {
+                throw new IllegalArgumentException();
+            }
         }
-        else if ( args.length > 1 ) {
-            throw new IllegalArgumentException("\n         Only 2 arguments for program accepted." 
-                                            +  "\n         Usage: java DynamicChangeMaker denoms(separated by commas) targetValue");
+        catch ( Exception e ) {
+            System.out.println( "\n         BAD DATA: Illegal arguments." 
+            +  "\n         Usage: java DynamicChangeMaker denoms(separated by commas) targetValue\n");
         }
-        else {
-            throw new IllegalArgumentException("\n         Coin denominations must be non-negative integer values and the denominations cannot be greater than the target value."); 
-        }
-
+        
         return allArgsValid;
     }
 
@@ -103,9 +138,7 @@ public class DynamicChangeMaker {
    *  @param  args  String array which contains command line arguments
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public static void main ( String args[] ) {
-        
-        System.out.println( DynamicChangeMaker.validateArguments(args));
-
+    
     }
 
  }
