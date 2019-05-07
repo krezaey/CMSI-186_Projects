@@ -113,6 +113,10 @@ public class DynamicChangeMaker {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     public static Tuple makeChangeWithDynamicProgramming( int[] denom, int target ) {
+        int rows = denom.length;
+        int columns = target + 1;
+        Tuple[][] table = new Tuple[rows][columns];
+        
         return new Tuple(1);
 
     }
@@ -123,6 +127,14 @@ public class DynamicChangeMaker {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public static void main ( String args[] ) {
         validateArguments(args);
+
+        int[] finalDenoms = new int[ parseDenoms.size() ];
+
+        for ( int i = 0; i < finalDenoms.length; i++ ) {
+            finalDenoms[i] = parseDenoms.get(i);
+        }
+
+        makeChangeWithDynamicProgramming( finalDenoms, target );
     }
 
  }
