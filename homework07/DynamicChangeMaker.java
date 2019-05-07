@@ -13,11 +13,7 @@ import java.util.List;
 
 public class DynamicChangeMaker {
 
-    public static int target;
-
-    //public static String[] denoms;
-
-    //public static int[] parseDenoms;
+    static int target = 0;
 
     static List <String> denoms;
 
@@ -39,7 +35,6 @@ public class DynamicChangeMaker {
     public static void validateTarget( String args[] ) {
         try {
             target = Integer.parseInt( args[1] );
-
             if ( target < 0 ) {
                 throw new IllegalArgumentException();
             }
@@ -63,6 +58,7 @@ public class DynamicChangeMaker {
 
     public static void validateDenominations( String args[] ) {
         try {
+            validateTarget( args );
             String[] tempDenoms = args[0].split(",");
             denoms = Arrays.asList( tempDenoms );
 
@@ -83,7 +79,6 @@ public class DynamicChangeMaker {
                         }
                     }  
                 }
-
                 parseDenoms.add( Integer.parseInt( denoms.get(i) ) );
             }
         }
@@ -101,7 +96,6 @@ public class DynamicChangeMaker {
     public static void validateArguments( String args[] ) {
         try {
           validateDenominations( args );
-          validateTarget( args );
           if ( args.length != 2 ) {
                 throw new IllegalArgumentException();
             }
@@ -118,8 +112,8 @@ public class DynamicChangeMaker {
    *  @return  Tuple object with optimized change with given arguments
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-    //change to return Tuple instead of void method
-    public static void makeChangeWithDynamicProgramming( int[] denom, int target ) {
+    public static Tuple makeChangeWithDynamicProgramming( int[] denom, int target ) {
+        return new Tuple(1);
 
     }
 
@@ -129,7 +123,6 @@ public class DynamicChangeMaker {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public static void main ( String args[] ) {
         validateArguments(args);
-    
     }
 
  }
