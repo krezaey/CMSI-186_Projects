@@ -119,20 +119,53 @@ public class DynamicChangeMaker {
         Tuple[][] table = new Tuple[rows][columns];
 
         Tuple answer = Tuple.IMPOSSIBLE;
+        Tuple cellSolution = Tuple.IMPOSSIBLE;
 
         for ( int i = 0; i < rows; i++ ) {
             for ( int j = 0; j < columns; j++) {
                 if ( j == 0 ) {
-                    return answer;
+                    table[i][j] = new Tuple( i );
                 }
                 else {
-                    if ( j - 1 > 0 ) {
+                    if ( j < denom[i] ) {
+                        table[i][j] = new Tuple ( 0 );
+                        if ( j - denom[i] >= 0 ) {
+                            if ( ( table[i][j].getElement(j) - denom[j] ) > 0 ) {
+                                table[i][j].add( new Tuple ( table[i][j].getElement(j) - denom[j] ) );
+                            }
+                        }
+                        if ( i != 0 ) {
+                            if ( table[i-1][j].getElement(j) > 0 ) {
+                                if ( ( table[i-1][j].total() < table[i][j].total() ) || ( table[i][j].isImpossible() ) ) {
+                                    table[i][j] = table[i-1][j];
+                                 }
+                            }
+                        }
+                    }
+                    table[i][j] = new Tuple( denom.length );
+                    table[i][j].setElement(i, 1);
 
+                    if ( j - denom[i] >= 0 ) {
+                        if ( table[i][j - denom[i]].isImpossible() ) {
+                            table[i][j] = new Tuple ( 0 );
+                        }
+                        else {
+                            table[i][j] = table[i][j].add( table[i][j-denom[i]] );
+                        }
+                    }
+
+                    if ( i != 0 ) {
+                        if ( table[i][j-1].isImpossible() ) {
+                            if ( ( table[i-1][j].total() < table[i][j].total() ) || ( table[i][j].isImpossible() ) ) {
+                                table[i][j] = table[i-1][j];
+                            }
+                        }
                     }
                 }
-            }
-        }
-        return answer;
+                answer = table[i][j];
+            }     
+        }    
+        return answer; 
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,7 +173,7 @@ public class DynamicChangeMaker {
    *  @param  args  String array which contains command line arguments
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public static void main ( String args[] ) {
-        validateArguments(args);
+        DynamicChangeMaker.validateArguments(args);
 
         int[] finalDenoms = new int[ parseDenoms.size() ];
 
@@ -148,8 +181,7 @@ public class DynamicChangeMaker {
             finalDenoms[i] = parseDenoms.get(i);
         }
 
-        makeChangeWithDynamicProgramming( finalDenoms, target );
-        System.out.println( target );
+        System.out.println( DynamicChangeMaker.makeChangeWithDynamicProgramming( finalDenoms, target ) );
     }
 
  }
