@@ -35,7 +35,7 @@ public class DynamicChangeMaker {
     public static void validateTarget( String args[] ) {
         try {
             target = Integer.parseInt( args[1] );
-            if ( target < 0 ) {
+            if ( target <= 0 ) {
                 throw new IllegalArgumentException();
             }
             for ( int i = 0; i < args[1].length(); i++ ) {
@@ -63,7 +63,7 @@ public class DynamicChangeMaker {
             denoms = Arrays.asList( tempDenoms );
 
             for ( int i = 0; i < denoms.size(); i++ ) {
-                if ( Integer.parseInt( denoms.get(i) ) < 0 ) {
+                if ( Integer.parseInt( denoms.get(i) ) <= 0 ) {
                     throw new IllegalArgumentException();
                 } 
                 else if ( Integer.parseInt( denoms.get(i) ) > target ) {
@@ -115,15 +115,24 @@ public class DynamicChangeMaker {
     public static Tuple makeChangeWithDynamicProgramming( int[] denom, int target ) {
         int rows = denom.length;
         int columns = target + 1;
+        
         Tuple[][] table = new Tuple[rows][columns];
+
+        Tuple answer = Tuple.IMPOSSIBLE;
 
         for ( int i = 0; i < rows; i++ ) {
             for ( int j = 0; j < columns; j++) {
+                if ( j == 0 ) {
+                    return answer;
+                }
+                else {
+                    if ( j - 1 > 0 ) {
 
+                    }
+                }
             }
         }
-        return new Tuple(1);
-
+        return answer;
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,6 +149,7 @@ public class DynamicChangeMaker {
         }
 
         makeChangeWithDynamicProgramming( finalDenoms, target );
+        System.out.println( target );
     }
 
  }
