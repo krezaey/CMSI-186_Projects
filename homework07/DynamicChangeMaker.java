@@ -45,7 +45,7 @@ public class DynamicChangeMaker {
             } 
         }
         catch ( Exception e ) {
-            System.out.println("\n         The target value is required and must be a non-negative integer value.");
+            System.out.println("\n         BAD DATA: The target value is required and must be a non-negative integer value.");
         }
     }
 
@@ -83,7 +83,7 @@ public class DynamicChangeMaker {
             }
         }
         catch ( Exception e ) {
-            System.out.println("\n         Coin denominations must be unique non-negative integer values and the denominations cannot be greater than the target value.");
+            System.out.println("\n         BAD DATA: Coin denominations must be unique non-negative integer values and the denominations cannot be greater than the target value.\n");
         }
     }
 
@@ -101,7 +101,7 @@ public class DynamicChangeMaker {
             }
         }
         catch ( Exception e ) {
-            System.out.println( "\n         BAD DATA: Illegal arguments. Must have 2 valid arguments." 
+            System.out.println( "\n         BAD DATA: Illegal arguments. Must have only 2 valid arguments." 
             +  "\n         Usage: java DynamicChangeMaker denoms(separated by commas) targetValue\n");
         }
     }
@@ -116,7 +116,12 @@ public class DynamicChangeMaker {
         int rows = denom.length;
         int columns = target + 1;
         Tuple[][] table = new Tuple[rows][columns];
-        
+
+        for ( int i = 0; i < rows; i++ ) {
+            for ( int j = 0; j < columns; j++) {
+
+            }
+        }
         return new Tuple(1);
 
     }
