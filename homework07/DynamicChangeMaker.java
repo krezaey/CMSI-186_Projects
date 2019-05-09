@@ -133,9 +133,10 @@ public class DynamicChangeMaker {
                 else {
                     if ( j < denom[i] ) {
                         table[i][j] = Tuple.IMPOSSIBLE;
-                        if ( j - denom[i] >= 0 ) {
+                        if ( ( j - denom[i] ) >= 0 ) {
                             if ( !( table[i][j - denom[i]].isImpossible() ) ) {
-                                table[i][j] = table[i][j].add( new Tuple ( table[i][j].getElement(j) - denom[j] ) );
+                                // table[i][j] = table[i][j].add( new Tuple ( table[i][j].getElement(j) - denom[j] ) );
+                                table[i][j] = table[i][j].add( table[i][j - denom[i]] );
                             }
                         }
                         if ( i != 0 ) {
@@ -146,28 +147,52 @@ public class DynamicChangeMaker {
                             }
                         }
                     }
-                    table[i][j] = new Tuple( denom.length );
-                    table[i][j].setElement(i, 1);
+                    else {
+                        //System.out.println( table[i][j].setElement( denom[i], 1 ) );
+                        table[i][j] = new Tuple( denom.length );
+                        table[i][j].setElement( i, 1 );
 
-                    if ( j - denom[i] >= 0 ) {
-                        if ( table[i][j - denom[i]].isImpossible() ) {
-                            table[i][j] = new Tuple ( 0 );
+                        if ( ( j - denom[i] ) >= 0 ) {
+                            if ( table[i][j - denom[i]].isImpossible() ) {
+                                table[i][j] = Tuple.IMPOSSIBLE;
+                            }
+                            else {
+                                table[i][j] = table[i][j].add( table[i][j - denom[i] ]);
+                            }
                         }
-                        else {
-                            table[i][j] = table[i][j].add( table[i][j-denom[i]] );
-                        }
-                    }
 
-                    if ( i != 0 ) {
-                        if ( !( table[i][j-1].isImpossible() ) ) {
-                            if ( ( table[i-1][j].total() < table[i][j].total() ) || ( table[i][j].isImpossible() ) ) {
-                                table[i][j] = table[i-1][j];
+                        if ( i != 0 ) {
+                            if ( !( table[i][j-1].isImpossible() ) ) {
+                                if ( ( table[i-1][j].total() < table[i][j].total() ) || ( table[i][j].isImpossible() ) ) {
+                                    table[i][j] = table[i-1][j];
+                                }
                             }
                         }
                     }
                 }
-                answer = table[i][j];
-            }     
+            }
+            //         table[i][j] = new Tuple( denom.length );
+            //         table[i][j].setElement(i, 1);
+
+            //         if ( j - denom[i] >= 0 ) {
+            //             if ( table[i][j - denom[i]].isImpossible() ) {
+            //                 table[i][j] = new Tuple ( 0 );
+            //             }
+            //             else {
+            //                 table[i][j] = table[i][j].add( table[i][j-denom[i]] );
+            //             }
+            //         }
+
+            //         if ( i != 0 ) {
+                        // if ( !( table[i][j-1].isImpossible() ) ) {
+                        //     if ( ( table[i-1][j].total() < table[i][j].total() ) || ( table[i][j].isImpossible() ) ) {
+                        //         table[i][j] = table[i-1][j];
+                        //     }
+                        // }
+            //         }
+            //     }
+            //     answer = table[i][j];
+            //}     
         }    
         return answer; 
     }
