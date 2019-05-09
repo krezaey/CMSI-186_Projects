@@ -55,13 +55,11 @@ public class DynamicChangeMaker {
    *  @throws  IllegalArgumentException if have input is invalid
    *  @returns boolean true if denominations are valid, false otherwise
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
     public static void validateDenominations( String args[] ) {
         try {
             validateTarget( args );
             String[] tempDenoms = args[0].split(",");
             denoms = Arrays.asList( tempDenoms );
-
             for ( int i = 0; i < denoms.size(); i++ ) {
                 if ( Integer.parseInt( denoms.get(i) ) <= 0 ) {
                     throw new IllegalArgumentException();
@@ -118,24 +116,30 @@ public class DynamicChangeMaker {
         
         Tuple[][] table = new Tuple[rows][columns];
 
-        Tuple answer = Tuple.IMPOSSIBLE;
-        Tuple cellSolution = Tuple.IMPOSSIBLE;
+        Tuple answer = new Tuple( denom.length );
+        Tuple cellSolution = new Tuple( denom.length );
+
+        int[] zeroTuple = new int[denom.length];
+
+        for ( int i = 0; i < denom.length; i++ ) {
+            zeroTuple[i] = 0;
+        }
 
         for ( int i = 0; i < rows; i++ ) {
             for ( int j = 0; j < columns; j++) {
                 if ( j == 0 ) {
-                    table[i][j] = new Tuple( i );
+                    table[i][j] = new Tuple( zeroTuple );
                 }
                 else {
                     if ( j < denom[i] ) {
-                        table[i][j] = new Tuple ( 0 );
+                        table[i][j] = Tuple.IMPOSSIBLE;
                         if ( j - denom[i] >= 0 ) {
-                            if ( ( table[i][j].getElement(j) - denom[j] ) > 0 ) {
-                                table[i][j].add( new Tuple ( table[i][j].getElement(j) - denom[j] ) );
+                            if ( !( table[i][j - denom[i]].isImpossible() ) ) {
+                                table[i][j] = table[i][j].add( new Tuple ( table[i][j].getElement(j) - denom[j] ) );
                             }
                         }
                         if ( i != 0 ) {
-                            if ( table[i-1][j].getElement(j) > 0 ) {
+                            if ( !( table[i-1][j].isImpossible() ) ) {
                                 if ( ( table[i-1][j].total() < table[i][j].total() ) || ( table[i][j].isImpossible() ) ) {
                                     table[i][j] = table[i-1][j];
                                  }
@@ -155,7 +159,7 @@ public class DynamicChangeMaker {
                     }
 
                     if ( i != 0 ) {
-                        if ( table[i][j-1].isImpossible() ) {
+                        if ( !( table[i][j-1].isImpossible() ) ) {
                             if ( ( table[i-1][j].total() < table[i][j].total() ) || ( table[i][j].isImpossible() ) ) {
                                 table[i][j] = table[i-1][j];
                             }
