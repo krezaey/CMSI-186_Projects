@@ -116,7 +116,7 @@ public class DynamicChangeMaker {
 
     public static Tuple makeChangeWithDynamicProgramming( int[] denom, int target ) {
         int rows = denom.length;
-        int columns = target + 1;
+        int columns = Math.abs( target + 1 );
         Tuple[][] table = new Tuple[rows][columns];
     
     
@@ -145,7 +145,7 @@ public class DynamicChangeMaker {
                 } 
             }     
         }    
-        return table[rows - 1][target];
+        return table[rows - 1][Math.abs( target )];
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
